@@ -1,7 +1,8 @@
-## Personal Blog with cms
-This is a personal blog that I'm creating for myself.
+## Dynamic Blogging Application: Independent Project
+Currently designing and developing a custom cms from the ground up, with a focus on understanding the complete modern web application development lifecycle.
 
 ### ⚡ Current Status: 
 - ✅ Completed - Visual Design with Figma
-- ⏳ Setting up Vite and Tailwindcss on the local drive.
+- ✅ Completed - Set up Vite and Tailwindcss on the local drive.
+- ⏳ In Progress - Develop client-side frontend
 
