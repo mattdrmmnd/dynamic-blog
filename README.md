@@ -1,7 +1,7 @@
-# personal-blog
-A personal blog for myself
----------------------------
-Current Status: 
--> Developing a Flowchart
--> Creating visual design with Figma
+## Personal Blog with cms
+This is a personal blog that I'm creating for myself.
+
+### ⚡ Current Status: 
+- ✅ Completed - Visual Design with Figma
+- ⏳ Setting up Vite and Tailwindcss on the local drive.
 
