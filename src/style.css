@@ -2,4 +2,5 @@
 
 @theme {
     --background-image-hero: url('/images/bg_img_no_overflow_dark.webp');
+    --font-inter: "Inter", sans-serif;
 }
