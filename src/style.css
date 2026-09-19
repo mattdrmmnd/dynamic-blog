@@ -1,5 +1,4 @@
 @import "tailwindcss";
-
 @theme {
     --background-image-hero: url('/images/bg_img_no_overflow_dark.webp');
     --font-inter: "Inter", sans-serif;
@@ -7,10 +6,11 @@
     --color-xlight-purple: oklch(89.707% 0.09076 324.455);
     --color-light-purple: oklch(56.385% 0.26293 325.016);
     --color-dark-purple: oklch(33.557% 0.15575 325.14);
+    --color-darkest-purple: oklch(11.336% 0.0549 318.321);
 }
 
 @layer components {
     .button {
         @apply inline-block bg-light-purple py-3 px-5 rounded-md hover:bg-dark-purple transition-colors;
     }
-}
+}0C0011
