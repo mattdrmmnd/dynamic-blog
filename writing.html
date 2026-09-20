@@ -77,37 +77,37 @@
       </section>
 
       <nav aria-label="Pagination" class="flex justify-center mt-20 pb-10">
-        <ul class="flex items-stretch divide-x divide-light-purple overflow-hidden rounded-md border border-light-purple text-white">
+        <ul class="flex items-stretch divide-x divide-light-purple overflow-hidden rounded-md border border-light-purple text-white text-sm sm:text-base">
 
           <li>
-            <a href="?page=1" class="flex h-12 items-center gap-2 px-4 hover:bg-purple-900/40">
-              <svg class="h-5 w-5 text-light-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <a href="?page=1" class="flex h-10 sm:h-12 items-center gap-2 px-2 sm:px-4 hover:bg-purple-900/40">
+              <svg class="h-4 w-4 sm:h-5 sm:w-5 text-light-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M15 5l-7 7 7 7" />
               </svg>
-              Prev.
+              <span class="hidden sm:inline">Prev.</span>
             </a>
           </li>
 
           <li>
-            <a href="?page=1" aria-current="page" class="flex h-12 w-12 items-center justify-center bg-light-purple/40">1</a>
+            <a href="?page=1" aria-current="page" class="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center bg-light-purple/40">1</a>
           </li>
           <li>
-            <a href="?page=2" class="flex h-12 w-12 items-center justify-center hover:bg-light-purple/40">2</a>
+            <a href="?page=2" class="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center hover:bg-light-purple/40">2</a>
           </li>
-          <li>
+          <li class="hidden sm:block">
             <a href="?page=3" class="flex h-12 w-12 items-center justify-center hover:bg-light-purple/40">3</a>
           </li>
-          <li>
+          <li class="hidden sm:block">
             <span class="flex h-12 w-12 items-center justify-center" aria-hidden="true">&hellip;</span>
           </li>
-          <li>
+          <li class="hidden sm:block">
             <a href="?page=7" class="flex h-12 w-12 items-center justify-center hover:bg-light-purple/40">7</a>
           </li>
 
           <li>
-            <a href="?page=2" class="flex h-12 items-center gap-2 px-4 hover:bg-light-purple/40">
-              Next
-              <svg class="h-5 w-5 text-light-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <a href="?page=2" class="flex h-10 sm:h-12 items-center gap-2 px-2 sm:px-4 hover:bg-light-purple/40">
+              <span class="hidden sm:inline">Next</span>
+              <svg class="h-4 w-4 sm:h-5 sm:w-5 text-light-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <path d="M9 5l7 7-7 7" />
               </svg>
             </a>
