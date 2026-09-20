@@ -25,23 +25,30 @@
 
         <div class="flex flex-col items-center w-full flex-1 sm:flex-row sm:justify-between sm:items-center">
           <div>
-            <a href="index.html" alt="Matt Likes Stacks Logo"><img class="mb-10" src="public/images/logo.svg" /></a>
+            <a href="index.html"><img class="mb-10" src="public/images/logo.svg" alt="Matt Likes Stacks Logo" /></a>
           </div>
 
           <nav class="mt-auto sm:mt-2">
             <ul class="tracking-wider flex gap-x-6 gap-y-1 text-sm sm:text-base justify-center sm:justify-between flex-wrap">
-              <li><a href="" class="hover:bg-light-purple transition-colors p-1 rounded-sm font-semibold">What I'm Writing</a></li>
-              <li><a href="" class="hover:bg-light-purple transition-colors p-1 rounded-sm font-semibold">What I'm Reading</a></li>
-              <li><a href="" class="hover:bg-light-purple transition-colors p-1 rounded-sm font-semibold">About Me</a></li>
+              <li><a href="" aria-current="page" class="hover:bg-light-purple transition-colors p-2 rounded-sm font-semibold">What I'm Writing</a></li>
+              <li><a href="" class="hover:bg-light-purple transition-colors p-2 rounded-sm font-semibold">What I'm Reading</a></li>
+              <li><a href="" class="hover:bg-light-purple transition-colors p-2 rounded-sm font-semibold">About Me</a></li>
             </ul>
           </nav>
         </div>
       </div>
     </header>
 
-      <section class="flex flex-col items-center max-w-2xl mx-auto mt-3 px-5 py-3">
+      <div class="max-w-5xl mx-auto px-5 mt-9 pb-5">
+        <h1 class="font-semibold text-lg sm:text-xl uppercase text-xlight-purple tracking-wider">What I'm writing</h1>
+      </div>
+      
+      <section class="flex flex-col items-center max-w-2xl mx-auto mt-3 px-5 pb-3">
+        
         <div>
-          <h1 class="font-semibold text-2xl sm:text-3xl">Let's talk about code !</h1>
+          <h2 class="font-semibold text-2xl sm:text-3xl">
+            <a href="">Let's talk about code!</a>
+          </h2>
           <p class="text-sm mt-2">Sept 19, 2026</p>
           <a href=""><img src="public/images/post_img_00.jpg" class="mt-4" /></a>
           <p class="text-sm text-center text-gray-400 mt-1">
@@ -49,13 +56,15 @@
           </p>
         </div>
         <p class="text-base mt-4 max-w-lg">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam placerat tortor ut magna consequat scelerisque.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam placerat tortor ut magna consequat scelerisque. <a href="" aria-label="More: Let's talk about code!" class="text-xlight-purple">More</a>
           </p>
       </section>
 
-      <section class="flex flex-col items-center max-w-2xl mx-auto mt-20 px-5 py-3">
+      <section class="flex flex-col items-center max-w-2xl mx-auto mt-20 px-5 pb-3">
         <div>
-          <h1 class="font-semibold text-2xl sm:text-3xl">Welcome to my blog !</h1>
+          <h2 class="font-semibold text-2xl sm:text-3xl">
+            <a href="">Welcome to my blog!</a>
+          </h2>
           <p class="text-sm mt-2">Sept 19, 2026</p>
           <a href=""><img src="public/images/post_img_01.jpg" class="mt-4" /></a>
           <p class="text-sm text-center text-gray-400 mt-1">
@@ -63,7 +72,7 @@
           </p>
         </div>
         <p class="text-base mt-4 max-w-lg">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam placerat tortor ut magna consequat scelerisque.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam placerat tortor ut magna consequat scelerisque. <a href="" aria-label="More: Welcome to my blog!" class="text-xlight-purple">More</a>
           </p>
       </section>
 
@@ -110,8 +119,8 @@
     <footer class="w-full h-20 p-4 sm:p-6 bg-darkest-purple">
 
       <div class="flex flex-col space-y-1 sm:grid sm:grid-cols-[1fr_auto_1fr] max-w-5xl mx-auto justify-center items-center tracking-wider">
-        <p class="col-start-2 text-center text-orange-200" aria-label="Read article: Lorem ipsum dolor sit amet">Matt Likes Stacks | 2027</p>
-        <a href="https://optmzd.net" target="_blank" rel="noopener noreferrer" class="col-start-3 justify-self-end underline decoration-1 transition-colors hover:decoration-transparent text-sm">Powered by OPTMZD</a>
+        <p class="col-start-2 text-center text-orange-200">Matt Likes Stacks | 2027</p>
+        <a href="https://optmzd.net" target="_blank" rel="noopener noreferrer" class="col-start-3 justify-self-end transition-colors hover:text-orange-200 text-xs">Powered by OPTMZD</a>
       </div>
 
     </footer>
