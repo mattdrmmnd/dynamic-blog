@@ -67,6 +67,46 @@
           </p>
       </section>
 
+      <nav aria-label="Pagination" class="flex justify-center mt-20 pb-10">
+        <ul class="flex items-stretch divide-x divide-light-purple overflow-hidden rounded-md border border-light-purple text-white">
+
+          <li>
+            <a href="?page=1" class="flex h-12 items-center gap-2 px-4 hover:bg-purple-900/40">
+              <svg class="h-5 w-5 text-light-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M15 5l-7 7 7 7" />
+              </svg>
+              Prev.
+            </a>
+          </li>
+
+          <li>
+            <a href="?page=1" aria-current="page" class="flex h-12 w-12 items-center justify-center bg-light-purple/40">1</a>
+          </li>
+          <li>
+            <a href="?page=2" class="flex h-12 w-12 items-center justify-center hover:bg-light-purple/40">2</a>
+          </li>
+          <li>
+            <a href="?page=3" class="flex h-12 w-12 items-center justify-center hover:bg-light-purple/40">3</a>
+          </li>
+          <li>
+            <span class="flex h-12 w-12 items-center justify-center" aria-hidden="true">&hellip;</span>
+          </li>
+          <li>
+            <a href="?page=7" class="flex h-12 w-12 items-center justify-center hover:bg-light-purple/40">7</a>
+          </li>
+
+          <li>
+            <a href="?page=2" class="flex h-12 items-center gap-2 px-4 hover:bg-light-purple/40">
+              Next
+              <svg class="h-5 w-5 text-light-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <path d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </li>
+
+        </ul>
+      </nav>
+
     <footer class="w-full h-20 p-4 sm:p-6 bg-darkest-purple">
 
       <div class="flex flex-col space-y-1 sm:grid sm:grid-cols-[1fr_auto_1fr] max-w-5xl mx-auto justify-center items-center tracking-wider">
