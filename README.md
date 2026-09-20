@@ -1,4 +1,5 @@
-## Dynamic Blogging Application: Independent Project
+## Dynamic Blogging Application: 
+### ❤️ Independent Project
 Currently designing and developing a custom cms from the ground up, with a focus on understanding the complete modern web application development lifecycle.
 
 ### ⚡ Current Status: 
