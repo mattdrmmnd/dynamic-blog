@@ -69,6 +69,37 @@
             </div>
     </section>
 
+    <section class="flex flex-col max-w-2xl mx-auto mt-3 pb-27 px-12">
+            <div class="flex flex-row gap-2 items-center pb-12 tracking-wider">
+              <p>Share:</p>
+              <img src="public/images/share_icon.svg" class="h-5 cursor-pointer" id="share-icon" />
+            </div>
+
+            <!--Toast Message--> 
+            <div id="share-toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-xlight-purple text-darkest-purple px-4 py-2 rounded-md opacity-0 pointer-events-none transition-opacity duration-300">
+            </div>
+
+            <h3 class="uppercase font-bold tracking-wider pb-6">More Posts</h3>
+            <ul>
+              <li class="flex flex-col sm:flex-row justify-between border-b-[0.25px] border-gray-800 py-4">
+                <p class="text-light-purple hover:text-xlight-purple text-xl">Welcome to my blog!</p>
+                <p class="text-md">Sept 15, 2026</p>
+              </li>
+              <li class="flex flex-col sm:flex-row justify-between border-b-[0.25px] border-gray-800 py-4">
+                <p class="text-light-purple hover:text-xlight-purple text-xl">Git Bash commands I use the most</p>
+                <p class="text-md">Sept 12, 2026</p>
+              </li>
+              <li class="flex flex-col sm:flex-row justify-between border-b-[0.25px] border-gray-800 py-4">
+                <p class="text-light-purple hover:text-xlight-purple text-xl">How to setup Tailwind</p>
+                <p class="text-md">Sept 9, 2026</p>
+              </li>
+              <li class="flex flex-col sm:flex-row justify-between border-b-[0.25px] border-gray-800 py-4">
+                <p class="text-light-purple hover:text-xlight-purple text-xl">Tips and Tricks: resizing images</p>
+                <p class="text-md">Sept 1, 2026</p>
+              </li>
+            </ul>
+    </section>
+
     <footer class="w-full h-45 sm:h-20 p-6 bg-darkest-purple">
 
       <div class="flex flex-col space-y-6 sm:space-y-1 sm:grid sm:grid-cols-[1fr_auto_1fr] max-w-5xl mx-auto justify-center items-center tracking-wider">
@@ -84,7 +115,42 @@
 
   </div>
     
-   
+    <script>
+      const shareIcon = document.getElementById('share-icon');
+      const toast = document.getElementById('share-toast');
+
+      function showToast(message) {
+        toast.textContent = message;
+        toast.classList.remove('opacity-0');
+        toast.classList.add('opacity-100');
+        setTimeout(() => {
+          toast.classList.remove('opacity-100');
+          toast.classList.add('opacity-0');
+        }, 2000);
+      }
+
+      shareIcon.addEventListener('click', async () => {
+        const shareData = {
+          title: document.title,
+          url: window.location.href,
+        };
+        
+        if (navigator.share) { // .share connects to the OS's default share options
+          try {
+            await navigator.share(shareData);
+          } catch (err) {
+            if (err.name !== 'AbortError') console.error(err);
+          }
+        } else {
+          try {
+            await navigator.clipboard.writeText(window.location.href);
+            showToast('Link copied');
+          } catch (err) {
+            console.error('Copy failed:', err);
+          }
+        }
+      });
+    </script>
   </body>
 </html>
  
