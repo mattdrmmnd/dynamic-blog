@@ -13,6 +13,9 @@ body {
     --color-dark-purple: oklch(33.557% 0.15575 325.14);
     --color-darkest-purple: oklch(11.336% 0.0549 318.321);
 }
+@utility grid-cols-autofit {
+    grid-template-columns: repeat(auto-fit, minmax(8.75rem,1fr));
+}
 
 @layer components {
     .button {
