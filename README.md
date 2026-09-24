@@ -5,7 +5,8 @@ Currently designing and developing a custom cms from the ground up, with a focus
 ### ⚡ Current Status: 
 - ✅ Completed - Visual Design with Figma
 - ✅ Completed - Set up Vite and Tailwindcss on the local drive.
-- ⏳ In Progress - Develop client-side frontend
+- ✅ Completed- Develop client-side frontend
+- ⏳ In Progress - Develop admin / cms frontend
 
 ### 🛠️ Strategy
 - Building the application with PHP and MySQL, including server-side logic, database architecture, and dynamic content management
