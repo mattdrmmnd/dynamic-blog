@@ -10,14 +10,18 @@
 
     <title>Matt Likes Stacks</title>
   </head>
-  <body class="bg-hero bg-cover bg-center bg-fixed font-inter text-white">
+
+    <!--Footer - flex flex-col min-h-screen is here to keep footer at bottom of the browser window-->
+  <body class="flex flex-col min-h-screen bg-hero bg-cover bg-center bg-fixed font-inter text-white">
 
      <!--To Top Gradient for background-->
-    <div class="fixed inset-0 top-30vh bg-linear-to-t from-[#0C0C0C] from-50% to-transparent to-100%"></div>
+    <div class="fixed inset-0 top-[30vh] bg-linear-to-t from-[#0C0C0C] from-50% to-transparent to-100%"></div>
 
     <script type="module" src="/src/main.ts"></script>
 
-    <div class="relative z-10">
+    <!--Footer - flex-1 used in conjuction with body flex to push content downward-->
+    <!--footer must be under this div-->
+    <div class="flex-1 relative z-10">
 
     <header class="max-w-5xl mx-auto px-5 py-3 min-h-40 flex">
       <div class="flex flex-col items-center sm:items-end w-full">
@@ -65,27 +69,28 @@
 
         <div class="mt-5 flex flex-col mid:flex-row justify-center items-center gap-22">
           <div class="flex flex-col items-center tracking-wider">
-            <a href=""><img src="public/images/post_img_01.jpg" alt="Read the second feature story" class="w-auto h-auto max-w-full max-h-65 mid:max-h-40" /></a>
+            <a href=""><img src="public/images/post_img_01.jpg" alt="Read the first feature story" class="w-auto h-auto max-w-full max-h-65 mid:max-h-40" /></a>
             <p class="pt-3">Lorem ipsum dolor sit amet...</p>
-            <a href="" class="button mt-7" aria-label="Read article: Lorem ipsum dolor sit amet">Read the article</a>
+            <a href="" class="button mt-7" aria-label="Read article: The First article">Read the article</a>
           </div>
 
           <div class="flex flex-col items-center tracking-wider">
             <a href=""><img src="public/images/post_img_00.jpg" alt="Read the second feature story" class="w-auto h-auto max-w-full max-h-65 mid:max-h-40" /></a>
             <p class="pt-3">Lorem ipsum dolor sit amet...</p>
-            <a href="" class="button mt-7" aria-label="Read article: Lorem ipsum dolor sit amet">Read the article</a>
+            <a href="" class="button mt-7" aria-label="Read article: The second">Read the article</a>
           </div>
 
           <div class="flex flex-col items-center tracking-wider">
-            <a href=""><img src="public/images/post_img_03.jpg" alt="Read the second feature story" class="w-auto h-auto max-w-full max-h-65 mid:max-h-40" /></a>
+            <a href=""><img src="public/images/post_img_03.jpg" alt="Read the third feature story" class="w-auto h-auto max-w-full max-h-65 mid:max-h-40" /></a>
             <p class="pt-3">Lorem ipsum dolor sit amet...</p>
-            <a href="" class="button mt-7" aria-label="Read article: Lorem ipsum dolor sit amet">Read the article</a>
+            <a href="" class="button mt-7" aria-label="Read article: The third article">Read the article</a>
           </div>
         </div>
 
     </section>
+  </div>
 
-    <footer class="w-full h-45 sm:h-20 p-6 bg-darkest-purple">
+    <footer class="relative z-10 w-full h-45 sm:h-20 p-6 bg-darkest-purple">
 
       <div class="flex flex-col space-y-6 sm:space-y-1 sm:grid sm:grid-cols-[1fr_auto_1fr] max-w-5xl mx-auto justify-center items-center tracking-wider">
         <a href="https://github.com/mattdrmmnd" target="_blank" rel="noopener noreferrer" class="col-start-1 justify-self-start transition-colors hover:text-orange-200 text-xs" aria-label="Visit Matt's Github repository.">
@@ -97,9 +102,6 @@
       </div>
 
     </footer>
-
-  </div>
-    
    
   </body>
 </html>

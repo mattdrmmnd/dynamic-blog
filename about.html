@@ -10,11 +10,15 @@
 
     <title>Matt Likes Stacks - What I'm Writing</title>
   </head>
-  <body class="font-inter text-white">
+
+  <!--Footer - flex flex-col min-h-screen is here to keep footer at bottom of the browser window-->
+  <body class="flex flex-col min-h-screen font-inter text-white">
 
     <script type="module" src="/src/main.ts"></script>
 
-    <div>
+    <!--Footer - flex-1 used in conjuction with body flex to push content downward-->
+    <!--footer must be under this div-->
+    <div class="flex-1">
 
     <header class="max-w-5xl mx-auto px-7 py-3 min-h-40 flex">
       <div class="flex flex-col items-center sm:items-end w-full">
@@ -99,6 +103,7 @@
             </div>
             
     </section>
+  </div>
 
   
     <footer class="w-full h-45 sm:h-20 p-6 bg-darkest-purple">
@@ -113,9 +118,6 @@
       </div>
 
     </footer>
-
-  </div>
-    
 
   </body>
 </html>
