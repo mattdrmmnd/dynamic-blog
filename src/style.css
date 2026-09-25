@@ -12,6 +12,7 @@ body {
     --color-light-purple: oklch(56.385% 0.26293 325.016);
     --color-dark-purple: oklch(33.557% 0.15575 325.14);
     --color-darkest-purple: oklch(11.336% 0.0549 318.321);
+    --color-mango: oklch(82.389% 0.1492 75.247);
 }
 @utility grid-cols-autofit {
     grid-template-columns: repeat(auto-fit, minmax(8.75rem,1fr));
