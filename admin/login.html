@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <title>ADMIN</title>
+  </head>
+
+    <!--Footer - flex flex-col min-h-screen is here to keep footer at bottom of the browser window-->
+  <body class="flex flex-col min-h-screen bg-hero bg-cover bg-center bg-fixed font-inter text-white">
+
+     <!--To Top Gradient for background-->
+    <div class="fixed inset-0 top-[30vh] bg-linear-to-t from-[#0C0C0C] from-50% to-transparent to-100%"></div>
+
+    <script type="module" src="/src/main.ts"></script>
+
+    <!--Footer - flex-1 used in conjuction with body flex to push content downward-->
+    <!--footer must be under this div-->
+    <div class="flex-1 relative z-10">
+
+        <header class="max-w-5xl mx-auto px-5 py-3 min-h-40 flex">
+        <div class="flex flex-col items-center sm:items-end w-full">
+            <a href="" class="self-end mb-2 sm:mt-2 uppercase tracking-wider text-xs bg-black p-2 rounded-sm">Login</a>
+
+            <div class="flex flex-col items-center w-full flex-1 sm:flex-row sm:justify-between sm:items-center">
+            <div>
+                <a href="index.html"><img class="mb-10" src="../public/images/logo.svg" alt="Matt Likes Stacks Logo" /></a>
+            </div>
+
+            </div>
+        </div>
+        </header>
+
+        <section class="max-w-sm mx-auto mt-3 p-5">
+        <div class="min-h-full bg-black rounded-4xl p-7">
+
+            <div class="flex flex-col gap-3 items-center ">
+                <h1 class="font-normal text-lg sm:text-lg tracking-wider">ADMIN Login</h1>
+
+                <form action="" method="post" class="flex flex-col gap-4 pb-3">
+                    <input type="text" name="username" placeholder="Username" class="border border-amber-50 bg-white text-gray-500 p-1 rounded-sm">
+                    <input type="password" name="pwd" placeholder="Password" class="border border-amber-50 bg-white text-gray-500 p-1 rounded-sm">
+
+                    <div class="flex flex-col gap-2">
+                        <p class="text-light-purple text-sm cursor-pointer hover:text-white">Need help?</p>
+
+                        <div>
+                            <label class="flex flex-row items-center gap-2 text-sm tracking-wider cursor-pointer">
+                                <input
+                                    type="checkbox"
+                                    name="remember"
+                                    class="h-5 w-5 shrink-0 appearance-none rounded-sm border border-white bg-white bg-center bg-no-repeat bg-contain checked:bg-light-purple cursor-pointer checked:border-0 checked:bg-[url('/images/check_mark.svg')] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-xlight-purple"
+                                >
+                                Keep me logged in
+                            </label>
+                        </div>
+
+                    </div>
+                    
+                    <button class="bg-light-purple w-full p-2 pb-3 rounded-full cursor-pointer">Login</button>
+
+                    <a href="" class="flex flex-row m-auto text-sm tracking-wider mt-2 hover:text-light-purple">Sign up</a>
+                </form>
+            </div>
+        </div>
+        </section>
+    </div>
+
+    <footer class="relative z-10 w-full h-45 sm:h-20 p-6 bg-darkest-purple">
+
+      <div class="flex flex-col space-y-6 sm:space-y-1 sm:grid sm:grid-cols-[1fr_auto_1fr] max-w-5xl mx-auto justify-center items-center tracking-wider">
+        <a href="https://github.com/mattdrmmnd" target="_blank" rel="noopener noreferrer" class="col-start-1 justify-self-start transition-colors hover:text-orange-200 text-xs" aria-label="Visit Matt's Github repository.">
+          <img src="/public/images/github_logo_footer.svg" class="h-8" />
+        </a>
+
+        <p class="col-start-2 text-center text-orange-200">Matt Likes Stacks | 2027</p>
+        <a href="https://optmzd.net" target="_blank" rel="noopener noreferrer" class="col-start-3 justify-self-end transition-colors hover:text-orange-200 text-xs">Powered by OPTMZD</a>
+      </div>
+
+    </footer>
+   
+  </body>
+</html>
+ 
