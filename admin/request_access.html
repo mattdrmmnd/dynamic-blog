@@ -25,7 +25,7 @@
 
         <header class="max-w-5xl mx-auto px-5 py-3 min-h-40 flex">
         <div class="flex flex-col items-center sm:items-end w-full">
-            <p class="self-end mb-2 sm:mt-2 tracking-wider text-xs bg-black p-2 rounded-sm">Please LOGIN to get started !</p>
+            <p class="self-end mb-2 sm:mt-2 tracking-wider text-xs bg-black p-2 rounded-sm">Request access to get started !</p>
 
             <div class="flex flex-col items-center w-full flex-1 sm:flex-row sm:justify-between sm:items-center">
             <div>
@@ -40,29 +40,16 @@
         <div class="min-h-full bg-black rounded-4xl p-7">
 
             <div class="flex flex-col gap-3 items-center ">
-                <h1 class="font-normal text-lg sm:text-lg tracking-wider">ADMIN Login</h1>
+                <h1 class="font-normal text-lg sm:text-lg tracking-wider">ADMIN Access Request</h1>
 
                 <form action="" method="post" class="flex flex-col gap-4 pb-3">
                     <input type="text" name="username" placeholder="Username" class="border border-amber-50 bg-white text-gray-500 p-1 rounded-sm">
+                    <input type="email" name="eamil" placeholder="Email" class="border border-amber-50 bg-white text-gray-500 p-1 rounded-sm">
                     <input type="password" name="pwd" placeholder="Password" class="border border-amber-50 bg-white text-gray-500 p-1 rounded-sm">
 
-                    <div class="flex flex-col gap-2">
-                        <p class="text-light-purple text-sm cursor-pointer hover:text-white">Need help?</p>
-
-                        <div>
-                            <label class="flex flex-row items-center gap-2 text-sm tracking-wider cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    name="remember"
-                                    class="h-5 w-5 shrink-0 appearance-none rounded-sm border border-white bg-white bg-center bg-no-repeat bg-contain checked:bg-light-purple cursor-pointer checked:border-0 checked:bg-[url('/images/check_mark.svg')] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-xlight-purple"
-                                >
-                                Keep me logged in
-                            </label>
-                        </div>
-
-                    </div>
                     
-                    <button class="bg-light-purple w-full p-2 pb-3 rounded-full cursor-pointer">Login</button>
+                    
+                    <button class="bg-light-purple w-full p-2 pb-3 mt-5 rounded-full cursor-pointer">Request</button>
 
                     <div class="flex flex-row items-center gap-3" aria-hidden="true">
                         <span class="h-px flex-1 bg-gray-400/40"></span>
@@ -70,7 +57,7 @@
                         <span class="h-px flex-1 bg-gray-400/40"></span>
                     </div>
 
-                    <a href="request_access.html" class="flex flex-row m-auto text-sm tracking-wider mt-2 hover:text-light-purple">Request access</a>
+                    <a href="login.html" class="flex flex-row m-auto text-sm tracking-wider mt-2 hover:text-light-purple">Login</a>
                 </form>
             </div>
         </div>
