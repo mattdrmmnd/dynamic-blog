@@ -4,11 +4,8 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <title>ADMIN</title>
+    <title>ADMIN Login</title>
   </head>
 
     <!--Footer - flex flex-col min-h-screen is here to keep footer at bottom of the browser window-->
@@ -43,11 +40,17 @@
                 <h1 class="font-normal text-lg sm:text-lg tracking-wider">ADMIN Login</h1>
 
                 <form action="" method="post" class="flex flex-col gap-4 pb-3">
-                    <input type="text" name="username" placeholder="Username" class="border border-amber-50 bg-white text-gray-500 p-1 rounded-sm">
-                    <input type="password" name="pwd" placeholder="Password" class="border border-amber-50 bg-white text-gray-500 p-1 rounded-sm">
+                    
+                    <div class="flex flex-col gap-2">
+                      <p class="text-xlight-purple text-sm tracking-wider">Email</p>
+                      <input type="text" name="email" placeholder="" class="border border-amber-50 bg-white text-gray-500 p-1 rounded-sm">  
+
+                      <p class="text-xlight-purple text-sm tracking-wider mt-4">Password</p>
+                      <input type="password" name="password" placeholder="" class="border border-amber-50 bg-white text-gray-500 p-1 rounded-sm">  
+                    </div>
 
                     <div class="flex flex-col gap-2">
-                        <p class="text-light-purple text-sm cursor-pointer hover:text-white">Need help?</p>
+                        <p class="text-light-purple text-sm cursor-pointer hover:text-white tracking-wider">Need help?</p>
 
                         <div>
                             <label class="flex flex-row items-center gap-2 text-sm tracking-wider cursor-pointer">
