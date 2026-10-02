@@ -8,7 +8,9 @@ body {
 @theme {
     --background-image-hero: url('/images/bg_img_no_overflow_dark.webp');
     --font-inter: "Inter", sans-serif;
+    --breakpoint-xmid: 800px;
     --breakpoint-mid: 900px;
+    --breakpoint-mid1000: 1000px;
     --color-xlight-purple: oklch(89.707% 0.09076 324.455);
     --color-light-purple: oklch(56.385% 0.26293 325.016);
     --color-dark-purple: oklch(33.557% 0.15575 325.14);
