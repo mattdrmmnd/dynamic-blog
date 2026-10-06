@@ -1,24 +1,39 @@
-## Dynamic Blogging Application: 
-### ❤️ Independent Project
-Currently designing and developing a custom cms from the ground up, with a focus on understanding the complete modern web application development lifecycle.
+## Dynamic Blogging Application
 
-### ⚡ Current Status: 
-- ✅ Completed - Visual Design with Figma
-- ✅ Completed - Set up Vite and Tailwindcss on the local drive.
-- ✅ Completed- Develop client-side frontend
-- ⏳ In Progress - Develop admin / cms frontend
+A custom blogging platform with a public frontend and an admin CMS for managing posts. I'm building it to learn how the whole web stack fits together.
 
-### 🛠️ Strategy
-- Building the application with PHP and MySQL, including server-side logic, database architecture, and dynamic content management
+**Stack:** Vite, Tailwind CSS, Figma. Backend planned with PHP and MySQL.
 
-- Developing custom authentication and authorization functionality for user registration, login, and protected content
+### Status
+- [x] Visual design in Figma
+- [x] Vite and Tailwind setup
+- [x] Client-side frontend
+- [ ] Admin / CMS frontend (in progress)
 
-- Designing and implementing a relational database to manage users, posts, categories, comments, and other application data
+### Planned
+- User authentication and protected content
+- Relational database for users, posts, categories, and comments
+- REST API endpoints between frontend and backend
 
-- Building RESTful API endpoints to handle communication between the application’s front-end and back-end systems
 
-- Implementing secure coding practices including input validation, password hashing, prepared statements, session management, and access control
+### Screenshots
+  <img src="public/images/frontend_home.jpg" alt="Home page of the blog frontend" width="700">
 
-- Optimizing application performance through efficient database queries, server-side processing, caching, and responsive front-end development
+  &nbsp;
 
-- Expanding the application toward a modern full-stack architecture using JavaScript and contemporary web development technologies
+  <img src="public/images/frontend_post_writing.jpg" alt="Post page of the blog frontend" width="700">
+
+  &nbsp;
+
+  <img src="public/images/frontend_preview_reading.jpg" alt="Post page of the blog frontend" 
+  width="700">
+
+  &nbsp;
+
+  <img src="public/images/frontend_about.jpg" alt="About me page of the blog frontend" width="700">
+
+  &nbsp;
+
+  <img src="public/images/admin_home.jpg" alt="Admin login page of the blog admin" width="700">
+
+
