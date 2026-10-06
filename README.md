@@ -15,25 +15,37 @@ A custom blogging platform with a public frontend and an admin CMS for managing 
 - Relational database for users, posts, categories, and comments
 - REST API endpoints between frontend and backend
 
+&nbsp;
 
-### Screenshots
-  <img src="public/images/frontend_home.jpg" alt="Home page of the blog frontend" width="700">
+### Screenshots - Client Side
 
-  &nbsp;
+<img src="public/images/frontend_home.jpg" alt="Home page of the blog frontend" width="700">
 
-  <img src="public/images/frontend_post_writing.jpg" alt="Post page of the blog frontend" width="700">
+&nbsp;
 
-  &nbsp;
+<img src="public/images/frontend_post_writing.jpg" alt="Post page of the blog frontend" width="700">
 
-  <img src="public/images/frontend_preview_reading.jpg" alt="Post page of the blog frontend" 
-  width="700">
+&nbsp;
 
-  &nbsp;
+<img src="public/images/frontend_preview_reading.jpg" alt="Post page of the blog frontend" 
+width="700">
 
-  <img src="public/images/frontend_about.jpg" alt="About me page of the blog frontend" width="700">
+&nbsp;
 
-  &nbsp;
+<img src="public/images/frontend_about.jpg" alt="About me page of the blog frontend" width="700">
 
-  <img src="public/images/admin_home.jpg" alt="Admin login page of the blog admin" width="700">
+&nbsp;
+
+### Screenshots - Admin
+
+<img src="public/images/admin_home.jpg" alt="Admin login page of the blog admin" width="700">
+
+&nbsp;
+
+<img src="public/images/admin_dashboard.jpg" alt="Admin login page of the blog admin" width="700">
+
+&nbsp;
+
+<img src="public/images/admin_posts_blog.jpg" alt="Admin login page of the blog admin" width="700">
 
 
