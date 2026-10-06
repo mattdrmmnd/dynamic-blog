@@ -23,6 +23,6 @@ body {
 
 @layer components {
     .button {
-        @apply inline-block bg-light-purple py-3 px-5 rounded-md hover:bg-dark-purple transition-colors;
+        @apply inline-block bg-light-purple/50 py-3 px-5 rounded-md hover:bg-dark-purple transition-colors;
     }
 }
