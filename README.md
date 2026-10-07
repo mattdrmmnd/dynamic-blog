@@ -32,10 +32,6 @@ width="700">
 
 &nbsp;
 
-<img src="public/images/frontend_about.jpg" alt="About me page of the blog frontend" width="700">
-
-&nbsp;
-
 ### Screenshots - Admin
 
 <img src="public/images/admin_home.jpg" alt="Admin login page of the blog admin" width="700">
