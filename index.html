@@ -28,14 +28,16 @@
 
         <div class="flex flex-col items-center w-full flex-1 sm:flex-row sm:justify-between sm:items-center">
           <div>
-            <a href="index.html"><img class="mb-10" src="public/images/logo.svg" alt="Matt Likes Stacks Logo" /></a>
+            <a href="index.html">
+              <img class="mb-10 transition hover:filter-[brightness(0)_saturate(100%)_invert(85%)_sepia(40%)_saturate(600%)_hue-rotate(320deg)]" src="public/images/logo.svg" alt="Matt Likes Stacks Logo" />
+            </a>
           </div>
 
           <nav class="mt-auto sm:mt-2">
-            <ul class="tracking-wider flex gap-x-6 gap-y-1 justify-center sm:justify-between flex-wrap">
-              <li><a href="/post_previews_writing.html" class="hover:bg-light-purple transition-colors p-2 rounded-sm font-semibold">What I'm Writing</a></li>
-              <li><a href="/post_previews_reading.html" class="hover:bg-light-purple transition-colors p-2 rounded-sm font-semibold">What I'm Reading</a></li>
-              <li><a href="/about.html" class="hover:bg-light-purple transition-colors p-2 rounded-sm font-semibold">About Me</a></li>
+            <ul class="tracking-wider flex gap-x-6 gap-y-5 justify-center sm:justify-between flex-wrap">
+              <li><a href="/post_previews_writing.html" class="hover:text-orange-200 transition-colors p-2 rounded-sm font-semibold">What I'm Writing</a></li>
+              <li><a href="/post_previews_reading.html" class="hover:text-orange-200 transition-colors p-2 rounded-sm font-semibold">What I'm Reading</a></li>
+              <!--<li><a href="/about.html" class="hover:bg-light-purple transition-colors p-2 rounded-sm font-semibold">About Me</a></li>-->
             </ul>
           </nav>
         </div>
@@ -43,7 +45,7 @@
     </header>
 
     <section class="max-w-3xl mx-auto mt-3 px-5 py-3">
-      <div class="w-full max-w-[725px] min-h-full dark:bg-black/60 rounded-xl p-7 text-center">
+      <div class="w-full max-w-[725px] min-h-full dark:bg-black/60 rounded-xl p-12 text-center">
 
         <h1 class="font-semibold text-3xl sm:text-4xl tracking-wider">Matt Drummond</h1>
         <p class="mt-5 font-extralight text-lg sm:text-2xl tracking-wider"><span class="text-xlight-purple">Full-Stack</span> Software Developer</p>
@@ -65,11 +67,95 @@
       </div>
     </section>
 
-    <section class="max-w-5xl mx-auto mt-14 px-12 sm:px-5 py-3 pb-20">
 
-      <h2 class="font-semibold text-xl text-center text-orange-200 tracking-wider">Featured Posts</h2>
+    <section class="flex flex-col max-w-3xl mx-auto mt-3 px-7 sm:px-5">
+            <div class="flex flex-col mt-4 m-auto pb-5 w-full max-w-[725px] min-h-full dark:bg-black/60 rounded-xl p-7 sm:pl-25">
 
-        <div class="mt-5 flex flex-col mid1000:flex-row justify-center items-center gap-22">
+                <div class="flex flex-row items-center gap-4 mt-7">
+                  
+                  <img src="public/images/avatar.webp" alt="Matt's profile image: a Hand-drawn M and @ symbol" class="w-15 h-15 rounded-full object-cover" />
+                  
+                  <div>
+                    <p class="text-lg tracking-wider"><b>Location: </b>USA</p>
+                    <p class="text-md max-w-71 tracking-wider mt-1">Contact me: <a href="mailto:matt@optmzd.net" class="text-gray-400 hover:text-white" target="_blank" rel="noopener noreferrer">matt@optmzd.net</a></p>
+                  </div>
+                  
+                </div> 
+                
+                <p class="text-lg mt-7 pb-8 max-w-lg tracking-wider  leading-10">
+                I'm an Alumnus of Full Sail University where I completed the <a href="https://www.fullsail.edu/degrees/digital-arts-design-bachelor-degree-program" class="text-xlight-purple hover:text-white" target="_blank" rel="noopener noreferrer">Digital Arts & Design</a> program and achieved a Bachelors of Science degree. My interests include developing secure three-tier applications. <!--My workflow includes the use of AI tools like Claude to accelerate learning & debugging.-->
+                </p>
+                
+                <p class="text-lg pb-8 max-w-lg tracking-wider">Visit <a href="https://github.com/mattdrmmnd" class="text-xlight-purple hover:text-white" target="_blank" rel="noopener noreferrer">my GitHub</a> profile to see the latest.</p>
+
+                <div class="w-full max-w-lg min-h-full">
+                  <h2 class="font-bold text-xl sm:text-xl tracking-wider pb-3">
+                  Experience:
+                  </h2>
+
+                  <p class="text-md sm:text-lg pb-3 max-w-lg tracking-wider">Software Developer @ <a href="https://optmzd.net" class="text-xlight-purple hover:text-white" target="_blank" rel="noopener noreferrer">OPTMZD</a></p>
+
+                  <p class="text-md sm:text-lg max-w-lg tracking-wider pb-8">Front-End Development @ <a href="https://sieb.com/" class="text-xlight-purple hover:text-white" target="_blank" rel="noopener noreferrer">SIEB</a></p>
+                </div>
+
+
+            </div>
+    </section>
+
+    <section class="flex flex-col max-w-3xl mx-auto px-7 sm:px-5">
+
+            <div class="flex flex-col p-7 pt-12 pb-12 sm:pl-15 mt-12 dark:bg-black/60 rounded-xl ">
+              <h2 class="font-semibold text-orange-200 text-xl sm:text-xl tracking-wider">
+                  Skills
+              </h2>
+
+
+                <div class="grid grid-cols-autofit gap-5 tracking-wider pt-3 m-auto sm:m-0">
+                  <div>
+                  <h3 class="text-orange-200 pb-2">Front-End</h3>
+                      <ul>
+                          <li>CSS</li>
+                          <li>HTML</li>
+                          <li>Javascript</li>
+                          <li>React.js</li>
+                          <li>Tailwind</li>
+                          <li>TypeScript</li>
+                      </ul>
+                  </div>
+                  
+                  <div>
+                  <h3 class="text-orange-200 pb-2">Server-Side</h3>
+                      <ul>
+                          <li>MySQL</li>
+                          <li>Node.js</li>
+                          <li>PHP</li>
+                      </ul>
+                  </div>
+
+                  <div>
+                  <h3 class="text-orange-200 pb-2">Tools & Design</h3>
+                      <ul>
+                          <li>Adobe CC Pro</li>
+                          <li>Figma</li>
+                          <li>Git / GitHub</li>
+                          <li>phpMyAdmin</li>
+                          <li>Vite</li>
+                          <li>Xampp</li>
+                          
+                      </ul>
+                  </div>
+                </div>
+                
+            </div>
+            
+    </section>
+
+    <section class="max-w-fit mx-auto my-12 px-7 sm:px-5">
+      
+      <div class="px-12 sm:px-8 py-12 dark:bg-black/60 rounded-xl">
+        <h2 class="font-semibold text-xl text-center text-white tracking-wider">Featured Posts</h2>
+
+        <div class="mt-5 flex flex-col mid1000:flex-row justify-center items-center gap-15">
           <div class="flex flex-col items-center tracking-wider">
             <a href=""><img src="public/images/post_img_01.jpg" alt="Read the first feature story" class="w-auto h-auto max-w-full max-h-65 mid1000:max-h-40 rounded-md" /></a>
             <p class="pt-3 tracking-wider">Lorem ipsum dolor sit amet...</p>
@@ -89,7 +175,10 @@
           </div>
         </div>
 
+      </div>
+        
     </section>
+
   </div>
 
     <footer class="relative z-10 w-full h-45 sm:h-20 p-6 bg-darkest-purple">
