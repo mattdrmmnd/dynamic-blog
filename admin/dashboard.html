@@ -9,10 +9,9 @@
   </head>
 
     <!--Footer - flex flex-col min-h-screen is here to keep footer at bottom of the browser window-->
-  <body class="flex flex-col min-h-screen bg-hero bg-cover bg-center bg-fixed font-inter text-white">
+  <body class="flex flex-col min-h-screen font-inter text-white">
 
-     <!--To Top Gradient for background-->
-    <div class="fixed inset-0 top-[30vh] bg-linear-to-t from-[#0C0C0C] from-50% to-transparent to-100%"></div>
+
 
     <script type="module" src="/src/main.ts"></script>
 
@@ -31,7 +30,7 @@
         <div class="flex flex-col sm:flex-row flex-1 max-w-5xl mx-auto w-full px-5 gap-6 pb-10">
 
             <!-- Sidebar -->
-            <aside aria-label="Admin navigation" class="sm:w-48 shrink-0 mt-5">
+            <aside aria-label="Admin navigation" class="sm:w-48 shrink-0 mt-5 dark:bg-black/40 rounded-2xl p-4 h-fit">
                 <nav>
                     <ul class="flex flex-row sm:flex-col gap-2 tracking-wider text-sm overflow-x-auto sm:overflow-visible">
                         <li>
@@ -40,7 +39,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="posts-blog.php" class="block p-2 rounded-sm hover:bg-light-purple/40 transition-colors whitespace-nowrap">
+                            <a href="http://localhost:5173/admin/posts_blog.html" class="block p-2 rounded-sm hover:bg-light-purple/40 transition-colors whitespace-nowrap">
                                 Posts - Blog
                             </a>
                         </li>
@@ -86,12 +85,18 @@
             <!-- Main content -->
             <main class="flex-1 min-w-0 mt-5">
 
-                <section class="bg-black rounded-2xl p-7 mb-6">
+                <section>
+                  <h1 class="font-bold text-lg tracking-wider mb-4">
+                    Welcome back Matt !
+                  </h1>  
+                </section>
+
+                <section class="dark:bg-black/60 rounded-2xl p-7 mb-6">
                     <h1 class="font-normal text-lg tracking-wider mb-4">Overview</h1>
                     <p class="text-sm text-gray-400">Dashboard content goes here.</p>
                 </section>
 
-                <section class="bg-black rounded-2xl p-7">
+                <section class="dark:bg-black/60 rounded-2xl p-7">
                     <h2 class="font-normal text-lg tracking-wider mb-4">Recent Activity</h2>
                     <p class="text-sm text-gray-400">Another section goes here.</p>
                 </section>
