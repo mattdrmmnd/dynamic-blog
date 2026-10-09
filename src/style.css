@@ -32,3 +32,55 @@ body {
         @apply inline-block border border-light-purple/50 py-3 px-5 rounded-md hover:bg-dark-purple transition-colors;
     }
 }
+
+/*Dropdown menu*/
+.dropdown {
+            position: relative;
+            display: inline-block;
+            
+        }
+
+        .dropdown label {
+            color: #000;
+        }
+
+        .dropdown-button {
+            padding: 10px 16px;
+            background: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background: white;
+            min-width: 220px;
+            max-height: 230px;
+            overflow-y: auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+        }
+
+        .dropdown-menu label {
+            display: block;
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        .dropdown-menu label:hover {
+            background: #f2f2f2;
+        }
+
+        .dropdown-menu input {
+            margin-right: 8px;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
