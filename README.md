@@ -38,10 +38,14 @@ width="700">
 
 &nbsp;
 
-<img src="public/images/admin_dashboard.jpg" alt="Admin login page of the blog admin" width="700">
+<img src="public/images/admin_dashboard.jpg" alt="Admin Dashboard" width="700">
 
 &nbsp;
 
-<img src="public/images/admin_posts_blog.jpg" alt="Admin login page of the blog admin" width="700">
+<img src="public/images/admin_posts_blog.jpg" alt="Admin Post Page" width="700">
+
+&nbsp;
+
+<img src="public/images/admin_posts_blog_new.jpg" alt="Admin Post Page for a new post" width="700">
 
 
