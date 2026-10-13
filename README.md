@@ -32,6 +32,8 @@ width="700">
 
 &nbsp;
 
+***
+
 ### Screenshots - Admin
 
 <img src="public/images/admin_home.jpg" alt="Admin login page of the blog admin" width="700">
@@ -48,4 +50,7 @@ width="700">
 
 <img src="public/images/admin_posts_blog_new.jpg" alt="Admin Post Page for a new post" width="700">
 
+&nbsp;
+
+<img src="public/images/admin_featured_posts.jpg" alt="Admin Post Page for a new post" width="700">
 
