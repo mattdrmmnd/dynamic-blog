@@ -51,10 +51,31 @@ body {
             border: none;
             cursor: pointer;
             border-radius: 5px;
+            list-style: none;
+            user-select: none;
         }
 
-        .dropdown-menu {
+        /* Hide the default disclosure triangle (Safari) */
+        .dropdown-button::-webkit-details-marker {
             display: none;
+        }
+
+        .dropdown-arrow {
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        .dropdown[open] .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-button:focus-visible {
+            outline: 2px solid #fff;
+            outline-offset: 2px;
+        }
+
+        /* <details> hides the menu until it's open, no display rule needed */
+        .dropdown-menu {
             position: absolute;
             background: white;
             min-width: 220px;
@@ -81,6 +102,3 @@ body {
             margin-right: 8px;
         }
 
-        .dropdown:hover .dropdown-menu {
-            display: block;
-        }

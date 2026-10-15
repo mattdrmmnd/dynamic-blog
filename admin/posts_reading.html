@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>ADMIN - posts-blog</title>
+    <title>ADMIN - Reading Posts</title>
   </head>
 
   <body class="flex flex-col min-h-screen font-inter text-white">
@@ -43,7 +43,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="http://localhost:5173/admin/posts_reading.html" aria-current="page" class="block p-2 rounded-sm bg-light-purple/40 transition-colors whitespace-nowrap">
+                            <a href="http://localhost:5173/admin/posts_reading.html" aria-current="page" class="block p-2 rounded-sm bg-light-purple/40 font-semibold transition-colors whitespace-nowrap">
                                 Posts - Reading
                             </a>
                         </li>
@@ -109,9 +109,9 @@
                                 <td class="py-3 pr-4">
                                     <p>My first post!</p>
                                     <div class="flex gap-2 text-xs mt-1">
-                                        <a href="posts-blog-edit.php?id=1" class="text-light-purple hover:text-white transition-colors">Edit</a>
+                                        <a href="posts_reading_edit.php?id=1" class="text-light-purple hover:text-white transition-colors">Edit</a>
                                         <span aria-hidden="true" class="text-gray-500">|</span>
-                                        <form action="posts-blog-delete.php" method="post" class="inline">
+                                        <form action="posts_reading_delete.php" method="post" class="inline">
                                             <input type="hidden" name="id" value="1">
                                             <button type="submit" class="text-red-400 hover:text-red-300 transition-colors" aria-label="Trash: My first post!">Trash</button>
                                         </form>
@@ -128,9 +128,9 @@
                                 <td class="py-3 pr-4">
                                     <p>Second Post</p>
                                     <div class="flex gap-2 text-xs mt-1">
-                                        <a href="posts-blog-edit.php?id=2" class="text-light-purple hover:text-white transition-colors">Edit</a>
+                                        <a href="posts_reading_edit.php?id=2" class="text-light-purple hover:text-white transition-colors">Edit</a>
                                         <span aria-hidden="true" class="text-gray-500">|</span>
-                                        <form action="posts-blog-delete.php" method="post" class="inline">
+                                        <form action="posts_reading_delete.php" method="post" class="inline">
                                             <input type="hidden" name="id" value="2">
                                             <button type="submit" class="text-red-400 hover:text-red-300 transition-colors" aria-label="Trash: Second Post">Trash</button>
                                         </form>
@@ -147,9 +147,9 @@
                                 <td class="py-3 pr-4">
                                     <p>The third post you need to...</p>
                                     <div class="flex gap-2 text-xs mt-1">
-                                        <a href="posts-blog-edit.php?id=3" class="text-light-purple hover:text-white transition-colors">Edit</a>
+                                        <a href="posts_reading_edit.php?id=3" class="text-light-purple hover:text-white transition-colors">Edit</a>
                                         <span aria-hidden="true" class="text-gray-500">|</span>
-                                        <form action="posts-blog-delete.php" method="post" class="inline">
+                                        <form action="posts_reading_delete.php" method="post" class="inline">
                                             <input type="hidden" name="id" value="3">
                                             <button type="submit" class="text-red-400 hover:text-red-300 transition-colors" aria-label="Trash: The third post you need to...">Trash</button>
                                         </form>
@@ -166,9 +166,9 @@
                                 <td class="py-3 pr-4">
                                     <p>Okay one more I promise</p>
                                     <div class="flex gap-2 text-xs mt-1">
-                                        <a href="posts-blog-edit.php?id=4" class="text-light-purple hover:text-white transition-colors">Edit</a>
+                                        <a href="posts_reading_edit.php?id=4" class="text-light-purple hover:text-white transition-colors">Edit</a>
                                         <span aria-hidden="true" class="text-gray-500">|</span>
-                                        <form action="posts-blog-delete.php" method="post" class="inline">
+                                        <form action="posts_reading_delete.php" method="post" class="inline">
                                             <input type="hidden" name="id" value="4">
                                             <button type="submit" class="text-red-400 hover:text-red-300 transition-colors" aria-label="Trash: Okay one more I promise">Trash</button>
                                         </form>
@@ -237,7 +237,7 @@
           <img src="/public/images/github_logo_footer.svg" class="h-8" alt="" />
         </a>
 
-        <p class="col-start-2 text-center text-orange-200">Matt Likes Stacks | 2027</p>
+        <p class="col-start-2 text-center text-orange-200">Matt Likes Stacks | 2026</p>
         <a href="https://optmzd.net" target="_blank" rel="noopener noreferrer" class="col-start-3 justify-self-end transition-colors hover:text-orange-200 text-xs">Powered by OPTMZD</a>
       </div>
 

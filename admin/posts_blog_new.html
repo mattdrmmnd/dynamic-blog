@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>ADMIN - posts-blog-new</title>
+    <title>ADMIN - New Blog Post</title>
   </head>
 
   <body class="flex flex-col min-h-screen font-inter text-white">
@@ -87,7 +87,7 @@
 
                 <div class="flex items-center justify-between mb-5">
                     <h1 class="font-bold text-lg tracking-wider">New - Blog Post</h1>
-                    <a href="posts_blog.html" class="inline-flex items-center gap-1 bg-dark-purple hover:bg tracking-wider-light-purple/80 transition-colors text-sm font-semibold px-4 py-2 rounded-sm">
+                    <a href="posts_blog.html" class="inline-flex items-center gap-1 bg-dark-purple hover:bg-light-purple/80 tracking-wider transition-colors text-sm font-semibold px-4 py-2 rounded-sm">
                         <span aria-hidden="true">x</span> Close
                     </a>
                 </div>
@@ -96,90 +96,98 @@
 
                     <!-- Form -->
                     <section class="flex flex-col gap-3 dark:bg-black/60 rounded-2xl p-7 overflow-x-auto">
-                        <div class="flex flex-col gap-2">
+                       
 
-                            <!-- Title Field -->
-                            <label for="title" class="font-medium text-gray-300">Title:</label>
-                            <input type="text" id="title" name="title" placeholder="Enter article title..." class="w-120 border border-amber-50 bg-white text-gray-500 p-2 rounded-sm focus:outline-none focus:ring-1 focus:ring-xlight-purple">  
+                            <form action="posts_blog_new.html" method="post" enctype="multipart/form-data" class="flex flex-col gap-3">
+                                <!-- Title Field -->
+                                <label for="title" class="font-medium text-gray-300">Title:</label>
+                                <input type="text" id="title" name="title" placeholder="Enter article title..." class="w-full max-w-120 border border-amber-50 bg-white text-gray-500 p-2 rounded-sm focus:outline-none focus:ring-1 focus:ring-xlight-purple">  
 
-                            <!-- Image Upload Field -->
-                            <label for="image-upload" class="font-medium text-gray-300 mt-2">Choose a featured image:</label>
+                                <!-- Image Upload Field -->
+                                <label for="image-upload" class="font-medium text-gray-300 mt-2">Choose a featured image:</label>
 
-                            <input type="file" id="image-upload" name="featured_image" accept="image/png, image/jpeg, image/webp"
-                                    class="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:font-semibold file:bg-gray-600 file:text-white hover:file:bg-gray-500 cursor-pointer">
+                                <input type="file" id="image-upload" name="featured_image" accept="image/png, image/jpeg, image/webp"
+                                        class="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:font-semibold file:bg-gray-600 file:text-white hover:file:bg-gray-500 cursor-pointer">
 
-                            <div class="dropdown mt-3 w-31">
-                                    <button class="dropdown-button">
-                                        Category ▼
-                                    </button>
+                                <details class="dropdown mt-3 w-31">
+                                        <summary class="dropdown-button">
+                                            Category <span class="dropdown-arrow" aria-hidden="true">▼</span>
+                                        </summary>
 
-                                    <div class="dropdown-menu">
+                                        <div class="dropdown-menu">
 
-                                        <label>
-                                            <input type="checkbox" name="items[]" value="item1">
-                                            Item 1
-                                        </label>
+                                            <label>
+                                                <input type="checkbox" name="items[]" value="item1">
+                                                Item 1
+                                            </label>
 
-                                        <label>
-                                            <input type="checkbox" name="items[]" value="item2">
-                                            Item 2
-                                        </label>
+                                            <label>
+                                                <input type="checkbox" name="items[]" value="item2">
+                                                Item 2
+                                            </label>
 
-                                        <label>
-                                            <input type="checkbox" name="items[]" value="item3">
-                                            Item 3
-                                        </label>
+                                            <label>
+                                                <input type="checkbox" name="items[]" value="item3">
+                                                Item 3
+                                            </label>
 
-                                        <label>
-                                            <input type="checkbox" name="items[]" value="item4">
-                                            Item 4
-                                        </label>
+                                            <label>
+                                                <input type="checkbox" name="items[]" value="item4">
+                                                Item 4
+                                            </label>
 
-                                        <label>
-                                            <input type="checkbox" name="items[]" value="item5">
-                                            Item 5
-                                        </label>
+                                            <label>
+                                                <input type="checkbox" name="items[]" value="item5">
+                                                Item 5
+                                            </label>
 
-                                        <label>
-                                            <input type="checkbox" name="items[]" value="item6">
-                                            Item 6
-                                        </label>
+                                            <label>
+                                                <input type="checkbox" name="items[]" value="item6">
+                                                Item 6
+                                            </label>
 
-                                        <label>
-                                            <input type="checkbox" name="items[]" value="item7">
-                                            Item 7
-                                        </label>
+                                            <label>
+                                                <input type="checkbox" name="items[]" value="item7">
+                                                Item 7
+                                            </label>
 
-                                        <label>
-                                            <input type="checkbox" name="items[]" value="item8">
-                                            Item 8
-                                        </label>
+                                            <label>
+                                                <input type="checkbox" name="items[]" value="item8">
+                                                Item 8
+                                            </label>
 
-                                        <label>
-                                            <input type="checkbox" name="items[]" value="item9">
-                                            Item 9
-                                        </label>
+                                            <label>
+                                                <input type="checkbox" name="items[]" value="item9">
+                                                Item 9
+                                            </label>
 
-                                        <label>
-                                            <input type="checkbox" name="items[]" value="item10">
-                                            Item 10
-                                        </label>
+                                            <label>
+                                                <input type="checkbox" name="items[]" value="item10">
+                                                Item 10
+                                            </label>
 
-                                    </div>
-                            </div>
+                                        </div>
+                                </details>
 
-                            <!-- Blog Body Text Field -->
-                            <label for="body" class="font-medium text-gray-300 mt-2">Body Content:</label>
-                            <textarea id="body" name="body" rows="10" placeholder="Write your blog post content here..." 
-                                        class="border border-amber-50 bg-white text-gray-700 p-2 rounded-sm focus:outline-none focus:ring-1 focus:ring-xlight-purple resize-y w-full"></textarea>
-                        </div>
+                                <!-- Blog Body Text Field -->
+                                <label for="body" class="font-medium text-gray-300 mt-2">Body Content:</label>
+                                <textarea id="body" name="body" rows="10" placeholder="Write your blog post content here..." 
+                                            class="border border-amber-50 bg-white text-gray-500 p-2 rounded-sm focus:outline-none focus:ring-1 focus:ring-xlight-purple resize-y w-full"></textarea>
+                                
+
+                                <div class="flex flex-row justify-center sm:justify-end items-center gap-5 mt-3">
+                                    <a href="" class="text-white hover:text-xlight-purple tracking-wider">Preview Post
+                                    </a>  
+                                    <button type="submit" class="bg-light-purple hover:bg-dark-purple transition w-50 p-2 pb-3 rounded-full cursor-pointer tracking-wider">
+                                        Post
+                                    </button>  
+                                </div>  
+                            </form>
+                            
                             
                     </section>
 
-                    <div class="flex flex-row justify-center sm:justify-end items-center gap-5 mt-3">
-                      <a href="" class="text-white hover:text-xlight-purple tracking-wider">Preview Post</a>  
-                      <button class="bg-light-purple hover:bg-dark-purple transition w-50 p-2 pb-3 rounded-full cursor-pointer tracking-wider">Post</button>  
-                    </div>
+                    
                     
                 
             </main>
@@ -195,7 +203,7 @@
           <img src="/public/images/github_logo_footer.svg" class="h-8" alt="" />
         </a>
 
-        <p class="col-start-2 text-center text-orange-200">Matt Likes Stacks | 2027</p>
+        <p class="col-start-2 text-center text-orange-200">Matt Likes Stacks | 2026</p>
         <a href="https://optmzd.net" target="_blank" rel="noopener noreferrer" class="col-start-3 justify-self-end transition-colors hover:text-orange-200 text-xs">Powered by OPTMZD</a>
       </div>
 
