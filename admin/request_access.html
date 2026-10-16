@@ -46,14 +46,14 @@
             <div class="flex flex-col gap-3 items-center ">
                 <h1 class="font-normal text-lg sm:text-lg tracking-wider">ADMIN Access Request</h1>
 
-                <form action="" method="post" class="flex flex-col gap-4 pb-3">
+                <form action="" method="post" class="flex flex-col gap-4 pb-3 tracking-wider">
                     
                     <div class="flex flex-col gap-2">
-                      <p class="text-xlight-purple text-sm tracking-wider">Name</p>
-                      <input type="text" name="name" placeholder="" class="border border-amber-50 bg-white text-gray-500 p-1 rounded-sm">  
+                      <label for="name" class="text-xlight-purple text-sm tracking-wider">Name</label>
+                      <input type="text" id="name" name="name" placeholder="" autocomplete="name" required class="border border-amber-50 bg-white text-gray-500 p-1 rounded-sm">
 
-                      <p class="text-xlight-purple text-sm tracking-wider mt-4">Email</p>
-                      <input type="text" name="email" placeholder="" class="border border-amber-50 bg-white text-gray-500 p-1 rounded-sm">  
+                      <label for="email" class="text-xlight-purple text-sm tracking-wider mt-4">Email</label>
+                      <input type="email" id="email" name="email" placeholder="" autocomplete="email" required class="border border-amber-50 bg-white text-gray-500 p-1 rounded-sm">
                     </div>
         
                     <button class="bg-light-purple w-full p-2 pb-3 mt-5 rounded-full cursor-pointer">Request</button>
