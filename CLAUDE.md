@@ -31,7 +31,8 @@ There are no tests and no linter.
 ## Admin pages and the future PHP backend
 
 - The admin pages are mockups of the CMS: login, request access, dashboard, blog and reading post lists, new-post forms, and featured posts.
-- Some links and form actions already point at `.php` files that don't exist yet: `logout.php`, `users.php`, `requests.php`, `settings.php`.
+- Some form actions already point at `.php` handlers that don't exist yet: `logout.php`, `posts_blog_delete.php`, `posts_reading_delete.php`.
+- The sidebar links to `requests.html` and `settings.html`, which don't exist yet.
 - **New-post forms** (`posts_blog_new.html`, `posts_reading_new.html`):
   - Each form submits back to its own `.html` page for now. **When the PHP backend exists, switch each `action` to the `.php` handler.**
   - The submit button must stay inside the `<form>`.
