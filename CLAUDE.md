@@ -20,7 +20,7 @@ There are no tests and no linter.
   - Public pages are in the root: `index.html`, `about.html`, `post_writing.html`, `post_previews_*.html`. `writing.html` is a leftover stub. `about.html` is obsolete because its content moved to `index.html`, so don't fix or update it.
   - Admin pages are in `admin/`.
 - **[vite.config.ts](vite.config.ts) builds every `.html` file in the root and `admin/`** automatically. New pages in those folders need no config change. Pages in any other folder must be added to it.
-- **[src/main.ts](src/main.ts) is the only script, and every page loads it** with `<script type="module" src="/src/main.ts">`. It imports the CSS and holds small shared behavior. Right now that's closing an open `details.dropdown` menu when the user clicks outside it.
+- **[src/main.ts](src/main.ts) is the only script, and every page loads it** with `<script type="module" src="/src/main.ts">`. It imports the CSS and holds small shared behavior. Right now that's closing an open `details.dropdown` menu when the user clicks outside it, and the show/hide password toggle: a `<button type="button" data-password-toggle aria-controls="<input id>">` placed next to a password input.
 - **[src/style.css](src/style.css)** is the Tailwind v4 entry point:
   - `@source "../admin"` makes Tailwind scan the admin pages for classes.
   - The `@theme` block defines the custom tokens used throughout the markup: the colors `xlight-purple`, `light-purple`, `dark-purple`, `darkest-purple`, and `mango`; the `font-inter` font; and the extra breakpoints `xmid`, `mid`, and `mid1000`.
@@ -42,6 +42,7 @@ There are no tests and no linter.
 ## Do not change
 
 - **The hardcoded `http://localhost:5173/admin/...` links in the admin sidebars are intentional.** The user uses them for local testing until the site moves to `htdocs` for PHP. Leave them alone unless asked.
+- **The Edit link in `admin/users.html` points to `users_edit_current.html` on purpose,** for local testing. Leave it alone unless asked.
 
 ## When moving to htdocs
 
@@ -52,5 +53,9 @@ When the user says they're ready to move the site to `htdocs`, remind them of th
 - **`base`:** set `base: '/<subfolder>/'` in the Vite config if the site is served from a subfolder rather than the server root.
 - **Sidebar links:** replace the hardcoded `http://localhost:5173/...` links with relative paths.
 - **Form actions:** switch the `.html` form actions to their `.php` handlers.
+- **User password handling:** hash every password with `password_hash()` before saving it, and never store plain text. On the add-user page, check the 12-character minimum in PHP too, because the browser check can be bypassed. On the edit-user page the password field is optional: only hash and update the password when `$_POST['password']` isn't empty, and leave the existing hash alone otherwise.
+- **Help email:** the "Need help?" link in `admin/login.html` is a `mailto:` to the placeholder address `matt@email.com`. Swap in the real address.
+- **Merge add/edit pages:** combine `users_add_new.html` and `users_edit_current.html` into one `users_form.php`. With no `?id` it's the Add page (empty fields, password required, "Add user" button, `INSERT`). With `?id=N` it loads that user and becomes the Edit page (filled-in fields, optional password, hidden `id`, "Update" button, `UPDATE`). Escape every printed value with `htmlspecialchars()`, and check the user is a logged-in admin before saving, because the hidden `id` can be changed in the browser. If the `if ($isEdit)` checks pile up, put the form markup in a shared include instead. Do the same for the blog and reading post new/edit pages.
+- **User Edit link:** in `admin/users.html`, the Edit link points to `users_edit_current.html` for local testing only. Switch it to the PHP edit page with the user's id (e.g. `users_edit.php?id=1`).
 - **Image paths:** make the mixed `public/images/`, `/public/images/` and `../public/images/` references consistent.
 - **Footer year:** the year in every page footer (`Matt Likes Stacks | 2026`) is hardcoded. Once pages are PHP, replace it with `<?= date('Y') ?>` so it updates automatically.
