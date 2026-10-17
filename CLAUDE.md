@@ -30,9 +30,9 @@ There are no tests and no linter.
 
 ## Admin pages and the future PHP backend
 
-- The admin pages are mockups of the CMS: login, request access, dashboard, blog and reading post lists, new-post forms, and featured posts.
-- Some form actions already point at `.php` handlers that don't exist yet: `logout.php`, `posts_blog_delete.php`, `posts_reading_delete.php`.
-- The sidebar links to `requests.html` and `settings.html`, which don't exist yet.
+- The admin pages are mockups of the CMS: login, request access, dashboard, blog and reading post lists, new-post forms, featured posts, users, and access requests.
+- Some form actions already point at `.php` handlers that don't exist yet: `logout.php`, `posts_blog_delete.php`, `posts_reading_delete.php`, `users_delete.php`, `requests_delete.php`.
+- The sidebar links to `settings.html`, which doesn't exist yet.
 - **New-post forms** (`posts_blog_new.html`, `posts_reading_new.html`):
   - Each form submits back to its own `.html` page for now. **When the PHP backend exists, switch each `action` to the `.php` handler.**
   - The submit button must stay inside the `<form>`.
@@ -57,5 +57,6 @@ When the user says they're ready to move the site to `htdocs`, remind them of th
 - **Help email:** the "Need help?" link in `admin/login.html` is a `mailto:` to the placeholder address `matt@email.com`. Swap in the real address.
 - **Merge add/edit pages:** combine `users_add_new.html` and `users_edit_current.html` into one `users_form.php`. With no `?id` it's the Add page (empty fields, password required, "Add user" button, `INSERT`). With `?id=N` it loads that user and becomes the Edit page (filled-in fields, optional password, hidden `id`, "Update" button, `UPDATE`). Escape every printed value with `htmlspecialchars()`, and check the user is a logged-in admin before saving, because the hidden `id` can be changed in the browser. If the `if ($isEdit)` checks pile up, put the form markup in a shared include instead. Do the same for the blog and reading post new/edit pages.
 - **User Edit link:** in `admin/users.html`, the Edit link points to `users_edit_current.html` for local testing only. Switch it to the PHP edit page with the user's id (e.g. `users_edit.php?id=1`).
+- **Access request "Add user" link:** in `admin/requests.html`, each row's "Add user" link points to `users_add_new.html`. Switch it to the PHP add-user page with the request id (e.g. `users_form.php?request_id=1`) so the name and email are filled in, and delete the request once the user is created.
 - **Image paths:** make the mixed `public/images/`, `/public/images/` and `../public/images/` references consistent.
 - **Footer year:** the year in every page footer (`Matt Likes Stacks | 2026`) is hardcoded. Once pages are PHP, replace it with `<?= date('Y') ?>` so it updates automatically.
