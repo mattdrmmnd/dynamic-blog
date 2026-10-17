@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-A personal blog ("Matt Likes Stacks") with a public frontend and an admin CMS, built to learn the full web stack. It is currently **static HTML only**: Vite + Tailwind CSS v4, designed in Figma. A **PHP + MySQL backend is planned but not started**. The planned features are auth and protected content, tables for users/posts/categories/comments, and REST endpoints. The README tracks progress: the client frontend is done, and the admin CMS frontend is in progress.
+A personal blog ("Matt Likes Stacks") with a public frontend and an admin CMS, built to learn the full web stack. It is currently **static HTML only**: Vite + Tailwind CSS v4, designed in Figma. A **PHP + MySQL backend is planned but not started**. The planned features are auth and protected content, tables for users/posts/categories/comments, and REST endpoints. The README tracks progress: the client frontend and the admin CMS frontend are done, and the move to htdocs and server-side development is next.
 
 ## Commands
 
@@ -30,10 +30,8 @@ There are no tests and no linter.
 
 ## Admin pages and the future PHP backend
 
-- The admin pages are mockups of the CMS: login, request access, dashboard, blog and reading post lists, new-post forms, featured posts, users, and access requests.
-- Some form actions already point at `.php` handlers that don't exist yet: `logout.php`, `posts_blog_delete.php`, `posts_reading_delete.php`, `users_delete.php`, `requests_delete.php`.
-- The sidebar links to `settings.html`, which doesn't exist yet.
-- **New-post forms** (`posts_blog_new.html`, `posts_reading_new.html`):
+- The admin pages are mockups of the CMS: login, request access, dashboard, blog and reading post lists, new-post forms, featured posts, users, access requests, and settings.
+- Some form actions already point at `.php` handlers that don't exist yet: `logout.php`, `posts_blog_delete.php`, `posts_reading_delete.php`, `users_delete.php`, `requests_delete.php`.- **New-post forms** (`posts_blog_new.html`, `posts_reading_new.html`):
   - Each form submits back to its own `.html` page for now. **When the PHP backend exists, switch each `action` to the `.php` handler.**
   - The submit button must stay inside the `<form>`.
   - Every field needs a unique `name`, since that's the `$_POST` key.
