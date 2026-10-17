@@ -8,7 +8,10 @@ A custom blogging platform with a public frontend and an admin CMS for managing 
 - [x] Visual design in Figma
 - [x] Vite and Tailwind setup
 - [x] Client-side frontend
-- [ ] Admin / CMS frontend (in progress)
+- [x] Admin / CMS frontend
+- [ ] Apache htdocs migration / server-side preparation (in progress)
+
+Project notes and the htdocs migration checklist are in [CLAUDE.md](CLAUDE.md).
 
 ### Planned
 - User authentication and protected content
@@ -53,4 +56,12 @@ width="700">
 &nbsp;
 
 <img src="public/images/admin_featured_posts.jpg" alt="Admin Post Page for a new post" width="700">
+
+&nbsp;
+
+<img src="public/images/admin_users_add_new.jpg" alt="Admin Post Page for a new post" width="700">
+
+&nbsp;
+
+<img src="public/images/admin_settings.jpg" alt="Admin Post Page for a new post" width="700">
 
