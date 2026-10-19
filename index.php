@@ -1,50 +1,17 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="darkreader-lock">
-    <meta name="color-scheme" content="dark">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <title>Matt Likes Stacks</title>
-  </head>
-    <!--Footer - flex flex-col min-h-screen is here to keep footer at bottom of the browser window-->
-  <body class="home flex flex-col min-h-screen bg-hero bg-cover bg-center bg-fixed font-inter text-white">
+<?php
+$pageTitle = 'Matt Likes Stacks';
+$bodyClass = 'home flex flex-col min-h-screen bg-cover bg-center bg-fixed font-inter text-white';
+require __DIR__ . '/includes/head.php';
+?>
 
      <!--To Top Gradient for background-->
     <div class="fixed inset-0 top-[30vh] bg-linear-to-t from-[#0C0C0C] from-50% to-transparent to-100%"></div>
-
-    <script type="module" src="/src/main.ts"></script>
 
     <!--Footer - flex-1 used in conjuction with body flex to push content downward-->
     <!--footer must be under this div-->
     <div class="flex-1 relative z-10">
 
-    <header class="max-w-5xl mx-auto px-5 py-3 min-h-40 flex">
-      <div class="flex flex-col items-center sm:items-end w-full">
-        <a href="admin/login.html" class="self-end mb-2 sm:mt-2 uppercase tracking-wider text-xs bg-black p-2 rounded-sm hover:bg-light-purple transition-colors">Login</a>
-
-        <div class="flex flex-col items-center w-full flex-1 sm:flex-row sm:justify-between sm:items-center">
-          <div class="mb-10">
-            <a href="index.html" class="inline-block bg-black/50 rounded-md">
-              <img class="block transition hover:filter-[brightness(0)_saturate(100%)_invert(85%)_sepia(40%)_saturate(600%)_hue-rotate(320deg)]" src="public/images/logo.svg" alt="Matt Likes Stacks Logo" />
-            </a>
-          </div>
-
-          <nav class="mt-auto sm:mt-2">
-            <ul class="tracking-wider flex gap-x-6 gap-y-5 justify-center sm:justify-between flex-wrap">
-              <li><a href="/post_previews_writing.html" class="hover:text-orange-200 transition-colors p-2 rounded-sm font-semibold">What I'm Writing</a></li>
-              <li><a href="/post_previews_reading.html" class="hover:text-orange-200 transition-colors p-2 rounded-sm font-semibold">What I'm Reading</a></li>
-              <!--<li><a href="/about.html" class="hover:bg-light-purple transition-colors p-2 rounded-sm font-semibold">About Me</a></li>-->
-            </ul>
-          </nav>
-        </div>
-      </div>
-    </header>
+    <?php require __DIR__ . '/includes/header.php'; ?>
 
     <section class="max-w-3xl mx-auto mt-3 px-5 py-3">
       <div class="w-full max-w-[725px] min-h-full dark:bg-black/50 rounded-xl p-12 text-center">
@@ -60,11 +27,11 @@
 
         <h2 class="font-semibold text-xl text-center text-xlight-purple tracking-wider">Visit Me:</h2>
 
-        <a href="https://github.com/mattdrmmnd" target="_blank" rel="noopener noreferrer" aria-label="Visit Matt on GitHub"><img src="public/images/github_logo.svg" class="h-8 hover:opacity-50" /></a>
+        <a href="https://github.com/mattdrmmnd" target="_blank" rel="noopener noreferrer" aria-label="Visit Matt on GitHub"><img src="<?= BASE_URL ?>public/images/github_logo.svg" class="h-8 hover:opacity-50" /></a>
 
-        <a href="https://dev.to/mattdrmmnd" target="_blank" rel="noopener noreferrer" aria-label="Visit Matt on The Dev Community"><img src="public/images/dev_logo.svg" class="h-8 hover:opacity-50" /></a>
+        <a href="https://dev.to/mattdrmmnd" target="_blank" rel="noopener noreferrer" aria-label="Visit Matt on The Dev Community"><img src="<?= BASE_URL ?>public/images/dev_logo.svg" class="h-8 hover:opacity-50" /></a>
 
-        <a href="https://www.linkedin.com/in/mattdrummond" target="_blank" rel="noopener noreferrer" aria-label="Visit Matt on Linkedin"><img src="public/images/linkedin_logo.webp" class="h-8 hover:opacity-50" /></a>
+        <a href="https://www.linkedin.com/in/mattdrummond" target="_blank" rel="noopener noreferrer" aria-label="Visit Matt on Linkedin"><img src="<?= BASE_URL ?>public/images/linkedin_logo.webp" class="h-8 hover:opacity-50" /></a>
     
       </div>
     </section>
@@ -75,7 +42,7 @@
 
                 <div class="flex flex-row items-center gap-4 mt-7">
                   
-                  <img src="public/images/avatar.webp" alt="Matt's profile image: a Hand-drawn M and @ symbol" class="w-15 h-15 rounded-full object-cover" />
+                  <img src="<?= BASE_URL ?>public/images/avatar.webp" alt="Matt's profile image: a Hand-drawn M and @ symbol" class="w-15 h-15 rounded-full object-cover" />
                   
                   <div>
                     <p class="text-lg tracking-wider"><b>Location: </b>USA</p>
@@ -159,19 +126,19 @@
 
         <div class="mt-5 flex flex-col mid1000:flex-row justify-center items-center gap-15">
           <div class="flex flex-col items-center tracking-wider">
-            <a href=""><img src="public/images/post_img_01.jpg" alt="Read the first feature story" class="w-auto h-auto max-w-full max-h-65 mid1000:max-h-40 rounded-md" /></a>
+            <a href=""><img src="<?= BASE_URL ?>public/images/post_img_01.jpg" alt="Read the first feature story" class="w-auto h-auto max-w-full max-h-65 mid1000:max-h-40 rounded-md" /></a>
             <p class="pt-3 tracking-wider">Lorem ipsum dolor sit amet...</p>
             <a href="" class="button mt-7" aria-label="Read article: The First article">Read the article</a>
           </div>
 
           <div class="flex flex-col items-center tracking-wider">
-            <a href=""><img src="public/images/post_img_00.jpg" alt="Read the second feature story" class="w-auto h-auto max-w-full max-h-65 mid1000:max-h-40 rounded-md" /></a>
+            <a href=""><img src="<?= BASE_URL ?>public/images/post_img_00.jpg" alt="Read the second feature story" class="w-auto h-auto max-w-full max-h-65 mid1000:max-h-40 rounded-md" /></a>
             <p class="pt-3 tracking-wider">Lorem ipsum dolor sit amet...</p>
             <a href="" class="button mt-7" aria-label="Read article: The second">Read the article</a>
           </div>
 
           <div class="flex flex-col items-center tracking-wider">
-            <a href=""><img src="public/images/post_img_03.jpg" alt="Read the third feature story" class="w-auto h-auto max-w-full max-h-65 mid1000:max-h-40 rounded-md" /></a>
+            <a href=""><img src="<?= BASE_URL ?>public/images/post_img_03.jpg" alt="Read the third feature story" class="w-auto h-auto max-w-full max-h-65 mid1000:max-h-40 rounded-md" /></a>
             <p class="pt-3 tracking-wider">Lorem ipsum dolor sit amet...</p>
             <a href="" class="button mt-7" aria-label="Read article: The third article">Read the article</a>
           </div>
@@ -183,19 +150,4 @@
 
   </div>
 
-    <footer class="relative z-10 w-full h-45 sm:h-20 p-6 bg-darkest-purple">
-
-      <div class="flex flex-col space-y-6 sm:space-y-1 sm:grid sm:grid-cols-[1fr_auto_1fr] max-w-5xl mx-auto justify-center items-center tracking-wider">
-        <a href="https://github.com/mattdrmmnd" target="_blank" rel="noopener noreferrer" class="col-start-1 justify-self-start transition-colors hover:text-orange-200 text-xs" aria-label="Visit Matt's Github repository.">
-          <img src="/public/images/github_logo_footer.svg" class="h-8 hover:opacity-50" />
-        </a>
-
-        <p class="col-start-2 text-center text-orange-200">Matt Likes Stacks | 2026</p>
-        <a href="https://optmzd.net" target="_blank" rel="noopener noreferrer" class="col-start-3 justify-self-end transition-colors hover:text-orange-200 text-xs">Powered by OPTMZD</a>
-      </div>
-
-    </footer>
-   
-  </body>
-</html>
- 
+<?php require __DIR__ . '/includes/footer.php'; ?>

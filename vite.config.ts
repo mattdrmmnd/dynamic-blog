@@ -1,21 +1,29 @@
 import { defineConfig } from 'vite'
 import { resolve } from 'node:path'
-import { readdirSync } from 'node:fs'
 import tailwindcss from '@tailwindcss/vite'
 
-// Build every .html page in the root and admin/ folders, not just index.html
-const htmlPages = (dir: string) =>
-  readdirSync(resolve(__dirname, dir))
-    .filter((file) => file.endsWith('.html'))
-    .map((file) => resolve(__dirname, dir, file))
-
-export default defineConfig({
+// npm run dev: Vite serves the static .html mockups at http://localhost:5173
+// npm run build / npm run watch: Vite only builds the CSS and JS into build/,
+// and Apache serves the PHP pages at http://localhost/dynamic-blog/
+export default defineConfig(({ command }) => ({
   plugins: [
     tailwindcss(),
   ],
+  // Asset URLs inside the built CSS (like the hero background) point at build/
+  base: command === 'build' ? '/dynamic-blog/build/' : '/',
+  // PHP pages link to public/ directly, so don't copy it into build/
+  publicDir: command === 'build' ? false : 'public',
   build: {
+    outDir: 'build',
+    // build/ only holds build output, never put PHP files in it
+    emptyOutDir: true,
     rollupOptions: {
-      input: [...htmlPages('.'), ...htmlPages('admin')],
+      input: resolve(import.meta.dirname, 'src/main.ts'),
+      // Fixed file names so PHP pages can link build/main.css and build/main.js
+      output: {
+        entryFileNames: '[name].js',
+        assetFileNames: '[name][extname]',
+      },
     },
   },
-})
+}))

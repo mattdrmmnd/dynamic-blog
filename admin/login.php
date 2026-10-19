@@ -1,46 +1,19 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="darkreader-lock">
-
-    <title>ADMIN - Login</title>
-  </head>
-
-    <!--Footer - flex flex-col min-h-screen is here to keep footer at bottom of the browser window-->
-  <body class="home flex flex-col min-h-screen bg-hero bg-cover bg-center bg-fixed font-inter text-white">
+<?php
+$pageTitle = 'ADMIN - Login';
+$bodyClass = 'home flex flex-col min-h-screen bg-cover bg-center bg-fixed font-inter text-white';
+$headerMessage = 'Please LOGIN to get started !';
+require __DIR__ . '/../includes/head.php';
+?>
 
      <!--To Top Gradient for background-->
     <div class="fixed inset-0 top-[30vh] bg-linear-to-t from-[#0C0C0C] from-50% to-transparent to-100%"></div>
 
-    <script type="module" src="/src/main.ts"></script>
 
     <!--Footer - flex-1 used in conjuction with body flex to push content downward-->
     <!--footer must be under this div-->
     <div class="flex-1 relative z-10">
 
-        <header class="max-w-5xl mx-auto px-5 py-3 min-h-40 flex">
-        <div class="flex flex-col items-center sm:items-end w-full">
-            <p class="self-end mb-2 sm:mt-2 tracking-wider text-xs bg-black p-2 rounded-sm">Please LOGIN to get started !</p>
-
-            <div class="flex flex-col items-center w-full flex-1 sm:flex-row sm:justify-between sm:items-center">
-
-            <div class="flex flex-col items-center w-full flex-1 sm:flex-row sm:justify-between sm:items-center">
-
-            <div class="mb-10">
-              <a href="../index.html" class="inline-block bg-black/50 rounded-md">
-                <img class="block transition hover:filter-[brightness(0)_saturate(100%)_invert(85%)_sepia(40%)_saturate(600%)_hue-rotate(320deg)]" src="../public/images/logo.svg" alt="Matt Likes Stacks Logo" />
-              </a>
-            </div>
-
-            </div>
-        </div>
-        </header>
+        <?php require __DIR__ . '/../includes/auth_header.php'; ?>
 
         <section class="max-w-sm mx-auto mt-3 p-5">
         <div class="min-h-full dark:bg-black/60 rounded-4xl p-7">
@@ -69,7 +42,7 @@
                                 <input
                                     type="checkbox"
                                     name="remember"
-                                    class="h-5 w-5 shrink-0 appearance-none rounded-sm border border-white bg-white bg-center bg-no-repeat bg-contain checked:bg-light-purple cursor-pointer checked:border-0 checked:bg-[url('/images/check_mark.svg')] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-xlight-purple"
+                                    class="h-5 w-5 shrink-0 appearance-none rounded-sm border border-white bg-white bg-center bg-no-repeat bg-contain checked:bg-light-purple cursor-pointer checked:border-0 checked:bg-check focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-xlight-purple"
                                 >
                                 Keep me logged in
                             </label>
@@ -85,26 +58,11 @@
                         <span class="h-px flex-1 bg-gray-400/40"></span>
                     </div>
 
-                    <a href="request_access.html" class="flex flex-row m-auto text-sm tracking-wider mt-2 hover:text-light-purple">Request access</a>
+                    <a href="<?= BASE_URL ?>admin/request_access.php" class="flex flex-row m-auto text-sm tracking-wider mt-2 hover:text-light-purple">Request access</a>
                 </form>
             </div>
         </div>
         </section>
     </div>
 
-    <footer class="relative z-10 w-full h-45 sm:h-20 p-6 bg-darkest-purple">
-
-      <div class="flex flex-col space-y-6 sm:space-y-1 sm:grid sm:grid-cols-[1fr_auto_1fr] max-w-5xl mx-auto justify-center items-center tracking-wider">
-        <a href="https://github.com/mattdrmmnd" target="_blank" rel="noopener noreferrer" class="col-start-1 justify-self-start transition-colors hover:text-orange-200 text-xs" aria-label="Visit Matt's Github repository.">
-          <img src="/public/images/github_logo_footer.svg" class="h-8" />
-        </a>
-
-        <p class="col-start-2 text-center text-orange-200">Matt Likes Stacks | 2026</p>
-        <a href="https://optmzd.net" target="_blank" rel="noopener noreferrer" class="col-start-3 justify-self-end transition-colors hover:text-orange-200 text-xs">Powered by OPTMZD</a>
-      </div>
-
-    </footer>
-   
-  </body>
-</html>
- 
+<?php require __DIR__ . '/../includes/footer.php'; ?>

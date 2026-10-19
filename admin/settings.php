@@ -1,86 +1,18 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title>ADMIN - Settings</title>
-  </head>
-
-  <body class="flex flex-col min-h-screen font-inter text-white">
-
-
-    <script type="module" src="/src/main.ts"></script>
+<?php
+$pageTitle = 'ADMIN - Settings';
+$bodyClass = 'flex flex-col min-h-screen font-inter text-white';
+$activePage = 'settings';
+require __DIR__ . '/../includes/head.php';
+?>
 
     <div class="flex-1 relative z-10 flex flex-col">
 
-        <header class="max-w-5xl mx-auto px-5 py-3 w-full flex items-center justify-between">
-            <a href="dashboard.html"><img class="h-10" src="../public/images/logo.svg" alt="Matt Likes Stacks Logo" /></a>
-
-            <form action="logout.php" method="post">
-                <button type="submit" class="uppercase tracking-wider text-xs bg-black p-2 rounded-sm hover:bg-light-purple transition-colors">Logout</button>
-            </form>
-        </header>
+        <?php require __DIR__ . '/../includes/admin_header.php'; ?>
 
         <!-- Sidebar & Settings -->
         <div class="flex flex-col sm:flex-row flex-1 max-w-5xl mx-auto w-full px-5 gap-6 pb-10">
 
-            <!-- Sidebar -->
-            <aside aria-label="Admin navigation" class="sm:w-48 shrink-0 mt-5 dark:bg-black/40 rounded-2xl p-4 h-fit">
-                <nav>
-                    <ul class="flex flex-row sm:flex-col gap-2 tracking-wider text-sm overflow-x-auto sm:overflow-visible">
-                        <li>
-                            <a href="http://localhost:5173/admin/dashboard.html" class="block p-2 rounded-sm hover:bg-light-purple/40 transition-colors whitespace-nowrap">
-                                Overview
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://localhost:5173/admin/posts_blog.html" class="block p-2 rounded-sm hover:bg-light-purple/40 transition-colors whitespace-nowrap">
-                                Posts - Blog
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://localhost:5173/admin/posts_reading.html" class="block p-2 rounded-sm hover:bg-light-purple/40 transition-colors whitespace-nowrap">
-                                Posts - Reading
-                            </a>
-                        </li>
-                        <li>
-                            <details class="group">
-                                <summary class="flex items-center p-2 rounded-sm hover:bg-light-purple/40 transition-colors whitespace-nowrap cursor-pointer list-none">
-                                    Home
-                                    <span class="ml-2 transition-transform group-open:rotate-45" aria-hidden="true">+</span>
-                                </summary>
-                                <ul class="flex flex-col gap-1 mt-1 sm:ml-4">
-                                    <li>
-                                        <a href="http://localhost:5173/admin/featured_posts.html" class="block p-2 rounded-sm hover:bg-light-purple/40 transition-colors whitespace-nowrap">
-                                            Featured Posts
-                                        </a>
-                                    </li>
-                                </ul>
-                            </details>
-                        </li>
-                        <li>
-                            <a href="users.html" class="block p-2 rounded-sm hover:bg-light-purple/40 transition-colors whitespace-nowrap">
-                                Users
-                            </a>
-                        </li>
-                        <li>
-                            <a href="requests.html" class="block p-2 rounded-sm hover:bg-light-purple/40 transition-colors whitespace-nowrap">
-                                Access Requests
-                            </a>
-                        </li>
-                        <li>
-                            <a href="settings.html" aria-current="page" class="block p-2 rounded-sm bg-light-purple/40 font-semibold whitespace-nowrap">
-                                Settings
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            </aside>
+            <?php require __DIR__ . '/../includes/admin_sidebar.php'; ?>
 
             <!-- Main content -->
             <main class="flex-1 min-w-0 mt-5 flex flex-col gap-6">
@@ -91,7 +23,7 @@
                 <section aria-labelledby="site-heading" class="flex flex-col gap-3 dark:bg-black/60 rounded-2xl p-7 overflow-x-auto">
                     <h2 id="site-heading" class="font-bold tracking-wider text-orange-200">Site info</h2>
 
-                    <form action="settings.html" method="post" class="flex flex-col gap-3 tracking-wider">
+                    <form action="<?= BASE_URL ?>admin/settings.php" method="post" class="flex flex-col gap-3 tracking-wider">
                         <label for="site_title" class="font-medium text-gray-300">Site title:</label>
                         <input type="text" id="site_title" name="site_title" value="Matt Likes Stacks" placeholder="Enter site title..." required class="w-full max-w-120 border border-amber-50 bg-white text-gray-500 p-2 rounded-sm focus:outline-none focus:ring-1 focus:ring-xlight-purple">
 
@@ -114,7 +46,7 @@
                 <section aria-labelledby="account-heading" class="flex flex-col gap-3 dark:bg-black/60 rounded-2xl p-7 overflow-x-auto">
                     <h2 id="account-heading" class="font-bold tracking-wider text-orange-200">Your account</h2>
 
-                    <form action="settings.html" method="post" class="flex flex-col gap-3 tracking-wider">
+                    <form action="<?= BASE_URL ?>admin/settings.php" method="post" class="flex flex-col gap-3 tracking-wider">
                         <label for="display_name" class="font-medium text-gray-300">Display name:</label>
                         <input type="text" id="display_name" name="display_name" value="Matt D" placeholder="Enter display name..." required class="w-full max-w-120 border border-amber-50 bg-white text-gray-500 p-2 rounded-sm focus:outline-none focus:ring-1 focus:ring-xlight-purple">
 
@@ -140,7 +72,7 @@
                 <section aria-labelledby="posts-heading" class="flex flex-col gap-3 dark:bg-black/60 rounded-2xl p-7 overflow-x-auto">
                     <h2 id="posts-heading" class="font-bold tracking-wider text-orange-200">Post defaults</h2>
 
-                    <form action="settings.html" method="post" class="flex flex-col gap-3 tracking-wider">
+                    <form action="<?= BASE_URL ?>admin/settings.php" method="post" class="flex flex-col gap-3 tracking-wider">
                         <label for="posts_per_page" class="font-medium text-gray-300">Posts per page:</label>
                         <input type="number" id="posts_per_page" name="posts_per_page" value="10" min="1" max="50" required class="w-full max-w-32 border border-amber-50 bg-white text-gray-500 p-2 rounded-sm focus:outline-none focus:ring-1 focus:ring-xlight-purple">
 
@@ -164,18 +96,4 @@
 
     </div>
 
-    <footer class="relative z-10 w-full h-45 sm:h-20 p-6 bg-darkest-purple">
-
-      <div class="flex flex-col space-y-6 sm:space-y-1 sm:grid sm:grid-cols-[1fr_auto_1fr] max-w-5xl mx-auto justify-center items-center tracking-wider">
-        <a href="https://github.com/mattdrmmnd" target="_blank" rel="noopener noreferrer" class="col-start-1 justify-self-start transition-colors hover:text-orange-200 text-xs" aria-label="Visit Matt's Github repository." >
-          <img src="/public/images/github_logo_footer.svg" class="h-8" alt="" />
-        </a>
-
-        <p class="col-start-2 text-center text-orange-200">Matt Likes Stacks | 2026</p>
-        <a href="https://optmzd.net" target="_blank" rel="noopener noreferrer" class="col-start-3 justify-self-end transition-colors hover:text-orange-200 text-xs">Powered by OPTMZD</a>
-      </div>
-
-    </footer>
-
-  </body>
-</html>
+<?php require __DIR__ . '/../includes/footer.php'; ?>

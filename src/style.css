@@ -12,7 +12,7 @@ body {
 }
 
 @theme {
-    --background-image-hero: url('/images/bg_img_no_overflow_dark.webp');
+    --background-image-check: url('../public/images/check_mark.svg');
     --font-inter: "Inter", sans-serif;
     --breakpoint-xmid: 800px;
     --breakpoint-mid: 900px;
