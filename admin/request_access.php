@@ -2,6 +2,7 @@
 $pageTitle = 'ADMIN - Request Access';
 $bodyClass = 'home flex flex-col min-h-screen bg-cover bg-center bg-fixed font-inter text-white';
 $headerMessage = 'Request access to get started !';
+
 require __DIR__ . '/../includes/head.php';
 ?>
 

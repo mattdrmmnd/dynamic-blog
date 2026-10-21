@@ -2,6 +2,9 @@
 $pageTitle = 'ADMIN - Access Requests';
 $bodyClass = 'flex flex-col min-h-screen font-inter text-white';
 $activePage = 'requests';
+
+require_once __DIR__ . '/../includes/auth.inc.php';
+
 require __DIR__ . '/../includes/head.php';
 ?>
 

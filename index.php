@@ -1,6 +1,7 @@
 <?php
 $pageTitle = 'Matt Likes Stacks';
 $bodyClass = 'home flex flex-col min-h-screen bg-cover bg-center bg-fixed font-inter text-white';
+
 require __DIR__ . '/includes/head.php';
 ?>
 

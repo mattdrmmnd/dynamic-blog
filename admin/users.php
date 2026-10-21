@@ -2,6 +2,9 @@
 $pageTitle = 'ADMIN - Users';
 $bodyClass = 'flex flex-col min-h-screen font-inter text-white';
 $activePage = 'users';
+
+require_once __DIR__ . '/../includes/auth.inc.php';
+
 require __DIR__ . '/../includes/head.php';
 ?>
 

@@ -1,7 +1,20 @@
 <?php
+declare(strict_types=1);
+
 $pageTitle = 'ADMIN - Login';
 $bodyClass = 'home flex flex-col min-h-screen bg-cover bg-center bg-fixed font-inter text-white';
 $headerMessage = 'Please LOGIN to get started !';
+
+require_once __DIR__ . '/../includes/config.php';
+require_once __DIR__ . '/../includes/config.session.inc.php';
+require_once __DIR__ . '/../includes/login_view.inc.php';
+
+if (isset($_SESSION["user_id"])) {
+    
+        header('Location: ' . BASE_URL . 'admin/dashboard.php');
+        exit;
+    }   
+
 require __DIR__ . '/../includes/head.php';
 ?>
 
@@ -18,18 +31,18 @@ require __DIR__ . '/../includes/head.php';
         <section class="max-w-sm mx-auto mt-3 p-5">
         <div class="min-h-full dark:bg-black/60 rounded-4xl p-7">
 
-            <div class="flex flex-col gap-3 items-center ">
+            <div class="flex flex-col gap-3 items-center">
                 <h1 class="font-normal text-lg sm:text-lg tracking-wider">ADMIN Login</h1>
 
-                <form action="" method="post" class="flex flex-col gap-4 pb-3 tracking-wider">
+                <form action="<?= BASE_URL ?>includes/login.inc.php" method="post" class="flex flex-col gap-4 pb-3 tracking-wider">
                     
                     <div class="flex flex-col gap-2">
-                      <label for="email" class="text-xlight-purple text-sm tracking-wider">Email</label>
-                      <input type="email" id="email" name="email" placeholder="" autocomplete="email" required class="border border-amber-50 bg-white text-gray-500 p-1 rounded-sm">
+                      <label for="username" class="text-xlight-purple text-sm tracking-wider">Username</label>
+                      <input type="text" id="username" name="username" placeholder="username" autocomplete="username" required class="border border-amber-50 bg-white text-gray-500 p-1 rounded-sm">
 
                       <label for="password" class="text-xlight-purple text-sm tracking-wider mt-4">Password</label>
                       <div class="relative">
-                        <input type="password" id="password" name="password" placeholder="" autocomplete="current-password" required class="w-full border border-amber-50 bg-white text-gray-500 p-1 pr-14 rounded-sm [&::-ms-reveal]:hidden">
+                        <input type="password" id="password" name="pwd" placeholder="password" autocomplete="current-password" required class="w-full border border-amber-50 bg-white text-gray-500 p-1 pr-14 rounded-sm [&::-ms-reveal]:hidden">
                         <button type="button" data-password-toggle aria-controls="password" aria-label="Show password" class="absolute right-1 top-1/2 -translate-y-1/2 px-2 text-sm font-semibold text-dark-purple hover:text-light-purple transition-colors cursor-pointer">Show</button>
                       </div>
                     </div>
@@ -61,6 +74,13 @@ require __DIR__ . '/../includes/head.php';
                     <a href="<?= BASE_URL ?>admin/request_access.php" class="flex flex-row m-auto text-sm tracking-wider mt-2 hover:text-light-purple">Request access</a>
                 </form>
             </div>
+
+            <div class="text-center text-xlight-purple font-semibold text-xl tracking-wider">
+                <?php
+                    check_login_errors();
+                ?>
+            </div>
+
         </div>
         </section>
     </div>
