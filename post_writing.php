@@ -1,5 +1,5 @@
 <?php
-$pageTitle = 'Matt Likes Stacks - What I\'m Writing';
+$pageTitle = 'Matt The Dev - What I\'m Writing';
 $bodyClass = 'flex flex-col min-h-screen font-inter text-white';
 require __DIR__ . '/includes/head.php';
 ?>

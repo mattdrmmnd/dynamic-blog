@@ -28,7 +28,7 @@ require __DIR__ . '/../includes/head.php';
 
                     <form action="<?= BASE_URL ?>admin/settings.php" method="post" class="flex flex-col gap-3 tracking-wider">
                         <label for="site_title" class="font-medium text-gray-300">Site title:</label>
-                        <input type="text" id="site_title" name="site_title" value="Matt Likes Stacks" placeholder="Enter site title..." required class="w-full max-w-120 border border-amber-50 bg-white text-gray-500 p-2 rounded-sm focus:outline-none focus:ring-1 focus:ring-xlight-purple">
+                        <input type="text" id="site_title" name="site_title" value="Matt The Dev" placeholder="Enter site title..." required class="w-full max-w-120 border border-amber-50 bg-white text-gray-500 p-2 rounded-sm focus:outline-none focus:ring-1 focus:ring-xlight-purple">
 
                         <label for="site_tagline" class="font-medium text-gray-300 mt-5">Tagline:</label>
                         <input type="text" id="site_tagline" name="site_tagline" value="" placeholder="Enter tagline..." class="w-full max-w-120 border border-amber-50 bg-white text-gray-500 p-2 rounded-sm focus:outline-none focus:ring-1 focus:ring-xlight-purple">

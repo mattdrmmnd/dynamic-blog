@@ -1,6 +1,6 @@
 <?php require_once __DIR__ . '/config.php'; ?>
         <header class="max-w-5xl mx-auto px-5 py-3 w-full flex items-center justify-between">
-            <a href="<?= BASE_URL ?>admin/dashboard.php"><img class="h-10" src="<?= BASE_URL ?>public/images/logo.svg" alt="Matt Likes Stacks Logo" /></a>
+            <a href="<?= BASE_URL ?>admin/dashboard.php"><img class="h-10" src="<?= BASE_URL ?>public/images/logo.svg" alt="Matt The Dev Logo" /></a>
 
             <div class="mb-2 sm:mt-2 flex items-center gap-2">
                 

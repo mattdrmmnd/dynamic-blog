@@ -6,7 +6,7 @@
           <img src="<?= BASE_URL ?>public/images/github_logo_footer.svg" class="h-8 hover:opacity-50" />
         </a>
 
-        <p class="col-start-2 text-center text-orange-200">Matt Likes Stacks | <?= date('Y') ?></p>
+        <p class="col-start-2 text-center text-orange-200">Matt The Dev | <?= date('Y') ?></p>
         <a href="https://optmzd.net" target="_blank" rel="noopener noreferrer" class="col-start-3 justify-self-end transition-colors hover:text-orange-200 text-xs">Powered by OPTMZD</a>
       </div>
 

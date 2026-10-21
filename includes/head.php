@@ -5,7 +5,8 @@
 //   $bodyClass  classes for the <body> tag
 require_once __DIR__ . '/config.php';
 
-$pageTitle = $pageTitle ?? 'Matt Likes Stacks';
+// Used to set title and body on pages that forgets to do it
+$pageTitle = $pageTitle ?? 'Matt The Dev';
 $bodyClass = $bodyClass ?? 'flex flex-col min-h-screen font-inter text-white';
 
 // Resumes a session only when the browser has one

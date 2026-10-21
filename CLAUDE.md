@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-A personal blog ("Matt Likes Stacks") with a public frontend and an admin CMS, built to learn the full web stack. It uses Vite + Tailwind CSS v4 and was designed in Figma. The site now lives in `C:\xampp\htdocs\dynamic-blog` and Apache serves it at http://localhost/dynamic-blog/. **Every page is now a `.php` file built from the shared `includes/`,** but they're still mockups with hardcoded content. A **MySQL backend is planned but not started**. The planned features are auth and protected content, tables for users/posts/categories/comments, and REST endpoints. The README tracks progress.
+A personal blog ("Matt The Dev") with a public frontend and an admin CMS, built to learn the full web stack. It uses Vite + Tailwind CSS v4 and was designed in Figma. The site now lives in `C:\xampp\htdocs\dynamic-blog` and Apache serves it at http://localhost/dynamic-blog/. **Every page is now a `.php` file built from the shared `includes/`,** but they're still mockups with hardcoded content. A **MySQL backend is planned but not started**. The planned features are auth and protected content, tables for users/posts/categories/comments, and REST endpoints. The README tracks progress.
 
 A stale copy of the repo is still in `C:\Users\jerse\Documents\github\dynamic-blog`. Work in the htdocs folder only.
 

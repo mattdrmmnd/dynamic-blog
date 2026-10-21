@@ -26,7 +26,7 @@
         <div class="flex flex-col items-center w-full flex-1 sm:flex-row sm:justify-between sm:items-center">
           <div class="mb-10">
             <a href="<?= BASE_URL ?>" class="inline-block bg-black/50 rounded-md">
-              <img class="block transition hover:filter-[brightness(0)_saturate(100%)_invert(85%)_sepia(40%)_saturate(600%)_hue-rotate(320deg)]" src="<?= BASE_URL ?>public/images/logo.svg" alt="Matt Likes Stacks Logo" />
+              <img class="block transition hover:filter-[brightness(0)_saturate(100%)_invert(85%)_sepia(40%)_saturate(600%)_hue-rotate(320deg)]" src="<?= BASE_URL ?>public/images/logo.svg" alt="Matt The Dev Logo" />
             </a>
           </div>
 
