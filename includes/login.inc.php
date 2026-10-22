@@ -41,11 +41,18 @@ try {
         header("Location: ../admin/login.php");
         die();
     }   
+    // Success Block
+    // used for cookies
     session_regenerate_id(true);
     $_SESSION["user_id"] = $result["id"];
     $_SESSION["user_username"] = $result["username"];
     $_SESSION["last_regeneration"] = time();
-
+    
+    // used for sign out calculations
+    $_SESSION["login_time"] = time();
+    $_SESSION["last_activity"] = time();
+    $_SESSION["remember"] = isset($_POST['remember']); // true if "Keep me logged in" was checked
+    
     header("Location: ../admin/dashboard.php");
     die();
 
