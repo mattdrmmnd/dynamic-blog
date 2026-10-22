@@ -6,11 +6,14 @@
 
       <?php if (isset($_SESSION["user_id"])) { ?>
 
-        <div class="self-end mb-2 sm:mt-2 flex items-center gap-2">
+        <div class="self-end mb-5 sm:mb-2 mt-4 sm:mt-2 flex flex-col sm:flex-row items-center gap-4 sm:gap-2">
 
           <a class="tracking-wider text-xs hover:text-xlight-purple transition-colors" href="<?= BASE_URL ?>admin/dashboard.php">Dashboard</a>
 
           <form action="<?= BASE_URL ?>admin/logout.php" method="post">
+
+            <?php csrf_field(); ?>
+            
             <button type="submit" class="uppercase tracking-wider text-xs bg-black p-2 rounded-sm hover:bg-dark-purple transition-colors">Logout, <span class="text-orange-200 font-semibold"><?= htmlspecialchars($_SESSION["user_username"]) ?></span></button>
           </form>
 
@@ -30,7 +33,7 @@
             </a>
           </div>
 
-          <nav class="mt-auto sm:mt-2">
+          <nav>
             <ul class="tracking-wider flex gap-x-6 gap-y-5 justify-center sm:justify-between flex-wrap">
               <li><a href="<?= BASE_URL ?>post_previews_writing.php" class="hover:text-orange-200 transition-colors p-2 rounded-sm font-semibold">What I'm Writing</a></li>
               <li><a href="<?= BASE_URL ?>post_previews_reading.php" class="hover:text-orange-200 transition-colors p-2 rounded-sm font-semibold">What I'm Reading</a></li>

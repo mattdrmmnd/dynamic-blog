@@ -6,6 +6,8 @@ require_once __DIR__ . '/../includes/config.session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
+    csrf_verify();
+    
     session_unset();
 
     // Deletes Cookie

@@ -4,16 +4,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $username = trim($_POST["username"]); // Trim counts whitespace as empty
     $pwd = $_POST["pwd"];
     
-    } else {
-        header("Location: ../admin/login.php");
-        die();
-    }
+} else {
+    header("Location: ../admin/login.php");
+    die();
+}
 
 try {
     // order does matter
     require_once 'dbh.inc.php';
     require_once 'login_model.inc.php';
     require_once 'login_contr.inc.php';
+
+    // SESSION
+    require_once 'config.session.inc.php';
+
+    if (!csrf_is_valid()) {
+        $_SESSION["errors_login"] = ["csrf" => "Your session expired. Please try again."];
+        header("Location: ../admin/login.php");
+
+        die();
+    }
 
     // ERROR HANDLERS
     $errors = []; //holds errors that are returned and prevents user from signing up
@@ -31,8 +41,6 @@ try {
         $errors["login_incorrect"] = "Incorrect login info.";
     }
 
-    // SESSION
-    require_once 'config.session.inc.php';
 
     //This is the Post/Redirect/Get pattern redirecting after a POST prevents the browser from re-submitting the form if the user refreshes the error page. 
     if ($errors) {
@@ -47,7 +55,8 @@ try {
     $_SESSION["user_id"] = $result["id"];
     $_SESSION["user_username"] = $result["username"];
     $_SESSION["last_regeneration"] = time();
-    
+    $_SESSION["csrf_token"] = bin2hex(random_bytes(32));
+
     // used for sign out calculations
     $_SESSION["login_time"] = time();
     $_SESSION["last_activity"] = time();
@@ -57,7 +66,7 @@ try {
     die();
 
     
-    } catch (PDOException $e) {
-        error_log($e->getMessage());
-        die('Something went wrong. Please try again.');
-    }
+} catch (PDOException $e) {
+    error_log($e->getMessage());
+    die('Something went wrong. Please try again.');
+}

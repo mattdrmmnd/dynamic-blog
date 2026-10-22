@@ -36,6 +36,8 @@ require __DIR__ . '/../includes/head.php';
 
                 <form action="<?= BASE_URL ?>includes/login.inc.php" method="post" class="flex flex-col gap-4 pb-3 tracking-wider">
                     
+                    <?php csrf_field(); ?>
+
                     <div class="flex flex-col gap-2">
                       <label for="username" class="text-xlight-purple text-sm tracking-wider">Username</label>
                       <input type="text" id="username" name="username" placeholder="username" autocomplete="username" required class="border border-amber-50 bg-white text-gray-500 p-1 rounded-sm">

@@ -7,6 +7,9 @@
             <a class="tracking-wider text-xs hover:text-xlight-purple transition-colors" href="<?= BASE_URL ?>">Home</a>
 
             <form action="<?= BASE_URL ?>admin/logout.php" method="post">
+
+                <?php csrf_field(); ?>
+                
                 <button type="submit" class="uppercase tracking-wider text-xs bg-black p-2 rounded-sm hover:bg-dark-purple transition-colors">Logout, <span class="text-orange-200 font-semibold"><?= htmlspecialchars($_SESSION["user_username"]) ?></span></button>
             </form>
             </div>
