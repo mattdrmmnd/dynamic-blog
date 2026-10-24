@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-A personal blog ("Matt The Dev") with a public frontend and an admin CMS, built to learn the full web stack. It uses Vite + Tailwind CSS v4 and was designed in Figma. The site now lives in `C:\xampp\htdocs\dynamic-blog` and Apache serves it at http://localhost/dynamic-blog/. **Every page is now a `.php` file built from the shared `includes/`.** The **MySQL backend has started**. The login system is done: database connection, `users` table, login, logout, auth guard, session timeouts and CSRF tokens (see "Login and sessions" below). Everything else (posts, users, requests, settings) is still a mockup with hardcoded content. The planned features still to build are tables for posts/categories/comments, the admin form handlers, and small JSON endpoints for features that don't reload the page (e.g. draft autosave). A full REST API isn't planned, because the pages are server-rendered. The README tracks progress.
+A personal blog ("Matt The Dev") with a public frontend and an admin CMS, built to learn the full web stack. It uses Vite + Tailwind CSS v4 and was designed in Figma. The site now lives in `C:\xampp\htdocs\dynamic-blog` and Apache serves it at http://localhost/dynamic-blog/. **Every page is now a `.php` file built from the shared `includes/`.** The **MySQL backend has started**. The login system is done: database connection, `users` table, login, logout, auth guard, session timeouts, CSRF tokens and login attempt limiting (see "Login and sessions" below). Everything else (posts, users, requests, settings) is still a mockup with hardcoded content. The planned features still to build are tables for posts/categories/comments, the admin form handlers, and small JSON endpoints for features that don't reload the page (e.g. draft autosave). A full REST API isn't planned, because the pages are server-rendered. The README tracks progress.
 
 **The user is learning PHP and types the backend code by hand for practice.** For PHP work, explain the plan and review what they write rather than writing it for them, unless they ask. Markup, CSS and docs changes are fine to make directly when asked.
 
@@ -49,12 +49,21 @@ The old copy in `C:\Users\jerse\Documents\github\dynamic-blog` was deleted on 20
 
 ## Login and sessions
 
-- **Database:** MySQL database `dynamicblog` with one table so far, `users`: `id`, `username` (unique), `pwd` (`password_hash()` output, `VARCHAR(255)`), `email` (unique), `created_at` (defaults to `CURRENT_TIMESTAMP`). There's no signup; the admin user was inserted by hand with a hash made by `password_hash()`.
+- **Database:** MySQL database `dynamicblog` with two tables so far:
+  - `users`: `id`, `username` (unique), `pwd` (`password_hash()` output, `VARCHAR(255)`), `email` (unique), `created_at` (defaults to `CURRENT_TIMESTAMP`). There's no signup; the admin user was inserted by hand with a hash made by `password_hash()`.
+  - `login_attempts`: `id`, `ip` (`VARCHAR(45)`), `username`, `attempted_at` (defaults to `CURRENT_TIMESTAMP`), with an index on `(ip, username, attempted_at)`. One row per failed login.
 - **`includes/dbh.inc.php`** connects with PDO (`utf8mb4`, exceptions on, `FETCH_ASSOC` by default) and creates `$pdo`. It holds the credentials, so it's **gitignored**. `dbh.inc.example.php` is the committed copy with blank values.
 - **Login** follows a tutorial-style MVC split:
   - `admin/login.php` is the form. It logs in by **username**, with fields `username`, `pwd` and the `remember` checkbox, and posts to `includes/login.inc.php`. It redirects to the dashboard if already logged in.
-  - `login.inc.php` is the handler: POST only, CSRF check, empty-field and credential checks, then either `$_SESSION["errors_login"]` and a redirect back, or the success block. On success it regenerates the session ID and the CSRF token and sets `user_id`, `user_username`, `last_regeneration`, `login_time`, `last_activity` and `remember`.
-  - `login_model.inc.php` holds the prepared-statement query, `login_contr.inc.php` the checks, and `login_view.inc.php` the output (`check_login_errors()`, `output_username()`).
+  - `login.inc.php` is the handler, in this order:
+    1. POST only, then the CSRF check.
+    2. The empty-field check.
+    3. **The lockout check:** 5 or more failed attempts from this IP for this username in the last 15 minutes redirects with "Too many login attempts" before the password is checked.
+    4. The credential checks.
+    5. On failure, it records an attempt (wrong credentials only), sets `$_SESSION["errors_login"]` and redirects back.
+    6. On success, it clears this IP's attempts, regenerates the session ID and the CSRF token, and sets `user_id`, `user_username`, `last_regeneration`, `login_time`, `last_activity` and `remember`.
+  - The lockout counts per IP and username together, so someone who knows the username can't lock the real user out from another IP. Old rows aren't deleted on a timer; they just stop counting once they're older than 15 minutes, and a successful login deletes them. Times come from MySQL (`NOW()`, `CURRENT_TIMESTAMP`), never PHP's `time()`, so the two clocks can't disagree.
+  - `login_model.inc.php` holds the prepared-statement queries (`get_user()`, `recent_attempts()`, `failed_attempt()`, `clear_attempts()`), `login_contr.inc.php` the checks, and `login_view.inc.php` the output (`check_login_errors()`, `output_username()`).
   - Both credential failures show the same "Incorrect login info." message on purpose.
 - **`includes/config.session.inc.php`** is loaded on every page that has a session. In order, it:
   1. Sets strict, cookie-only sessions with `samesite Lax`, `secure` and `httponly` cookies.
@@ -88,11 +97,11 @@ The old copy in `C:\Users\jerse\Documents\github\dynamic-blog` was deleted on 20
 
 ## Backend checklist
 
-Already done: build output in `build/`, the Vite `base`, `BASE_URL`, the shared includes, every page converted to `.php`, sidebar links, consistent image paths, the automatic footer year, and the login system (database connection, `users` table, login, logout, auth guard, "Keep me logged in", session timeouts, CSRF on the login and logout forms).
+Already done: build output in `build/`, the Vite `base`, `BASE_URL`, the shared includes, every page converted to `.php`, sidebar links, consistent image paths, the automatic footer year, and the login system (database connection, `users` table, login, logout, auth guard, "Keep me logged in", session timeouts, CSRF on the login and logout forms, login attempt limiting).
 
 When the user works on the backend, or asks what's left, remind them of this checklist:
 
-- **Login attempt limiting:** the last piece of the login system. Slow down password guessing after several failed attempts, for example with a small table or columns that count failures.
+- **Optional `login_attempts` cleanup:** rows from IPs that never log in successfully stay forever. A `DELETE … WHERE attempted_at < NOW() - INTERVAL 1 DAY` in `failed_attempt()` would keep the table small.
 - **Form handling:** write the missing handlers listed above, and handle `$_POST` in the pages that submit to themselves. Every POST form gets `csrf_field()`, and every handler starts with `csrf_verify()`. Use prepared statements for every query.
 - **Drafts:** when the new-post forms start saving, add autosave or a keep-alive. Typing doesn't count as activity, so a long writing session can time out and lose the post on Save.
 - **User password handling:** hash every password with `password_hash()` before saving it, and never store plain text. On the add-user page, check the 12-character minimum in PHP too, because the browser check can be bypassed. On the edit-user page the password field is optional: only hash and update the password when `$_POST['password']` isn't empty, and leave the existing hash alone otherwise.
@@ -109,4 +118,4 @@ When the user says they're ready to put the site on a remote host (e.g. Bluehost
 - **What to upload:** the root `.php` pages, `admin/`, `includes/`, `public/` and `build/`. Leave out `node_modules/`, `src/`, `package.json`, `package-lock.json`, `vite.config.ts`, `tsconfig.json`, `.git/`, `.claude/`, `CLAUDE.md`, `README.md`, `about.html` and `writing.html`. With cPanel Git deployment, `build/` still needs a separate upload because it's gitignored.
 - **Server setup:** pick a PHP version in cPanel that matches or is newer than XAMPP's. Create the MySQL database and user, and import the tables with phpMyAdmin. The database name will likely get a cPanel account prefix. `includes/dbh.inc.php` is gitignored, so create it on the server from `dbh.inc.example.php` with the production credentials. Turn on SSL and redirect to `https`, which the `secure` session cookie requires. Turn `display_errors` off and log errors instead.
 - **Linux differences:** file names are case-sensitive. Block direct access to `includes/` (with `.htaccess`, or move it above `public_html`). Make the featured-image upload folder writable.
-- **Admin:** sessions, login, the auth guard and CSRF exist now. Before deploying `admin/`, also have login attempt limiting, https, blocked access to `includes/`, and the password handling above. Until then, deploy only the public pages.
+- **Admin:** sessions, login, the auth guard, CSRF and login attempt limiting exist now. Before deploying `admin/`, also have https, blocked access to `includes/`, and the password handling above. Import both tables, `users` and `login_attempts`. Until then, deploy only the public pages.
