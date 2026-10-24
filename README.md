@@ -12,7 +12,8 @@ Built with help from Claude Code, which I used for explanations, planning and co
 - [x] Client-side frontend
 - [x] Admin / CMS frontend
 - [x] Apache htdocs migration / server-side preparation
-- [ ] Login system and sessions (in progress: login attempt limiting left)
+- [x] Login system and sessions (login, logout, protected admin pages, "Keep me logged in", inactivity timeouts, CSRF tokens, login attempt limiting)
+- [ ] Blog posts: database table, admin list, trash, new/edit form, image upload, public pages (next)
 
 ### Planned
 - Relational database for users, posts, categories, and comments
