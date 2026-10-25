@@ -17,7 +17,7 @@ require __DIR__ . '/../includes/head.php';
         <?php require __DIR__ . '/../includes/auth_header.php'; ?>
 
         <section class="max-w-sm mx-auto mt-3 p-5">
-        <div class="min-h-full dark:bg-black/60 rounded-4xl p-7">
+        <div class="min-h-full bg-black/50 rounded-4xl p-7">
 
             <div class="flex flex-col gap-3 items-center ">
                 <h1 class="font-normal text-lg sm:text-lg tracking-wider">ADMIN Access Request</h1>

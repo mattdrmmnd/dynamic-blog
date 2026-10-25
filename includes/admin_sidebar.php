@@ -17,7 +17,7 @@ $navLink = function (string $page) use ($activePage): string {
 };
 ?>
             <!-- Sidebar -->
-            <aside aria-label="Admin navigation" class="sm:w-48 shrink-0 mt-5 dark:bg-black/40 rounded-2xl p-4 h-fit">
+            <aside aria-label="Admin navigation" class="sm:w-48 shrink-0 mt-5 bg-black/50 rounded-2xl p-4 h-fit">
                 <nav>
                     <ul class="flex flex-row sm:flex-col gap-2 tracking-wider text-sm overflow-x-auto sm:overflow-visible">
                         <li>

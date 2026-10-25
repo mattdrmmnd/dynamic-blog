@@ -15,7 +15,7 @@ require __DIR__ . '/includes/head.php';
     <?php require __DIR__ . '/includes/header.php'; ?>
 
     <section class="max-w-3xl mx-auto mt-3 px-5 py-3">
-      <div class="w-full max-w-[725px] min-h-full dark:bg-black/50 rounded-xl p-12 text-center">
+      <div class="w-full max-w-[725px] min-h-full bg-black/50 rounded-xl p-12 text-center">
 
         <h1 class="font-semibold text-3xl sm:text-4xl tracking-wider">Matt Drummond</h1>
         <p class="mt-5 font-extralight text-lg sm:text-2xl tracking-wider"><span class="text-xlight-purple">Full-Stack</span> Software Developer</p>
@@ -23,7 +23,7 @@ require __DIR__ . '/includes/head.php';
 
       </div>
 
-      <div class="flex flex-col xmid:flex-row gap-10 xmid:gap-0 justify-between items-center px-16 py-10 min-h-full max-w-87 xmid:max-w-full dark:bg-black/50 rounded-xl mt-12 mx-auto">
+      <div class="flex flex-col xmid:flex-row gap-10 xmid:gap-0 justify-between items-center px-16 py-10 min-h-full max-w-87 xmid:max-w-full bg-black/50 rounded-xl mt-12 mx-auto">
         
 
         <h2 class="font-semibold text-xl text-center text-xlight-purple tracking-wider">Visit Me:</h2>
@@ -39,7 +39,7 @@ require __DIR__ . '/includes/head.php';
 
 
     <section class="flex flex-col max-w-3xl mx-auto mt-3 px-7 sm:px-5">
-            <div class="flex flex-col mt-4 m-auto pb-5 w-full max-w-[725px] min-h-full dark:bg-black/60 rounded-xl p-7 sm:pl-25">
+            <div class="flex flex-col mt-4 m-auto pb-5 w-full max-w-[725px] min-h-full bg-black/50 rounded-xl p-7 sm:pl-25">
 
                 <div class="flex flex-row items-center gap-4 mt-7">
                   
@@ -74,7 +74,7 @@ require __DIR__ . '/includes/head.php';
 
     <section class="flex flex-col max-w-3xl mx-auto px-7 sm:px-5">
 
-            <div class="flex flex-col p-7 pt-12 pb-12 sm:pl-15 mt-12 dark:bg-black/60 rounded-xl ">
+            <div class="flex flex-col p-7 pt-12 pb-12 sm:pl-15 mt-12 bg-black/50 rounded-xl ">
               <h2 class="font-semibold text-white text-xl sm:text-xl tracking-wider">
                   Skills
               </h2>
@@ -122,7 +122,7 @@ require __DIR__ . '/includes/head.php';
 
     <section class="max-w-fit mx-auto my-12 px-7 sm:px-5">
       
-      <div class="px-12 sm:px-8 py-12 dark:bg-black/60 rounded-xl">
+      <div class="px-12 sm:px-8 py-12 bg-black/50 rounded-xl">
         <h2 class="font-semibold text-xl text-center text-white tracking-wider">Featured Posts</h2>
 
         <div class="mt-5 flex flex-col mid1000:flex-row justify-center items-center gap-15">

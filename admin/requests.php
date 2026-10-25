@@ -25,7 +25,7 @@ require __DIR__ . '/../includes/head.php';
                     <h1 class="font-bold text-lg tracking-wider">Access Requests</h1>
                 </section>
 
-                <section class="dark:bg-black/60 rounded-2xl p-7 overflow-x-auto">
+                <section class="bg-black/50 rounded-2xl p-7 overflow-x-auto">
                     <table class="w-full text-sm text-left border-collapse tracking-wider">
                         <caption class="sr-only">List of access requests</caption>
                         <thead>

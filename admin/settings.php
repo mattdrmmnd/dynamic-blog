@@ -23,7 +23,7 @@ require __DIR__ . '/../includes/head.php';
                 <h1 class="font-bold text-lg tracking-wider">Settings</h1>
 
                 <!-- Site info -->
-                <section aria-labelledby="site-heading" class="flex flex-col gap-3 dark:bg-black/60 rounded-2xl p-7 overflow-x-auto">
+                <section aria-labelledby="site-heading" class="flex flex-col gap-3 bg-black/50 rounded-2xl p-7 overflow-x-auto">
                     <h2 id="site-heading" class="font-bold tracking-wider text-orange-200">Site info</h2>
 
                     <form action="<?= BASE_URL ?>admin/settings.php" method="post" class="flex flex-col gap-3 tracking-wider">
@@ -46,7 +46,7 @@ require __DIR__ . '/../includes/head.php';
                 </section>
 
                 <!-- Account -->
-                <section aria-labelledby="account-heading" class="flex flex-col gap-3 dark:bg-black/60 rounded-2xl p-7 overflow-x-auto">
+                <section aria-labelledby="account-heading" class="flex flex-col gap-3 bg-black/50 rounded-2xl p-7 overflow-x-auto">
                     <h2 id="account-heading" class="font-bold tracking-wider text-orange-200">Your account</h2>
 
                     <form action="<?= BASE_URL ?>admin/settings.php" method="post" class="flex flex-col gap-3 tracking-wider">
@@ -72,7 +72,7 @@ require __DIR__ . '/../includes/head.php';
                 </section>
 
                 <!-- Post defaults -->
-                <section aria-labelledby="posts-heading" class="flex flex-col gap-3 dark:bg-black/60 rounded-2xl p-7 overflow-x-auto">
+                <section aria-labelledby="posts-heading" class="flex flex-col gap-3 bg-black/50 rounded-2xl p-7 overflow-x-auto">
                     <h2 id="posts-heading" class="font-bold tracking-wider text-orange-200">Post defaults</h2>
 
                     <form action="<?= BASE_URL ?>admin/settings.php" method="post" class="flex flex-col gap-3 tracking-wider">

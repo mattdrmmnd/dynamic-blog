@@ -28,12 +28,12 @@ require __DIR__ . '/../includes/head.php';
                     </h1>
                 </div>
 
-                <section class="dark:bg-black/60 rounded-2xl p-7 mb-6">
+                <section class="bg-black/50 rounded-2xl p-7 mb-6">
                     <h2 class="font-normal text-lg tracking-wider mb-4">Overview</h2>
                     <p class="text-sm text-gray-400">Dashboard content goes here.</p>
                 </section>
 
-                <section class="dark:bg-black/60 rounded-2xl p-7">
+                <section class="bg-black/50 rounded-2xl p-7">
                     <h2 class="font-normal text-lg tracking-wider mb-4">Recent Activity</h2>
                     <p class="text-sm text-gray-400">Another section goes here.</p>
                 </section>

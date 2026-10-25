@@ -30,7 +30,7 @@ require __DIR__ . '/../includes/head.php';
             
 
                     <!-- Form -->
-                    <section class="flex flex-col gap-3 dark:bg-black/60 rounded-2xl p-7 overflow-x-auto">
+                    <section class="flex flex-col gap-3 bg-black/50 rounded-2xl p-7 overflow-x-auto">
                        
 
                             <form action="<?= BASE_URL ?>admin/users_add_new.php" method="post" enctype="multipart/form-data" class="flex flex-col gap-3 tracking-wider">
