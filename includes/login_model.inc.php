@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+// Prepared statements prevent SQL injection
 function get_user(object $pdo, string $username)
 {
     $query = "SELECT *  FROM users WHERE username = :username;";
@@ -13,6 +14,8 @@ function get_user(object $pdo, string $username)
     return $result;
 }
 
+// Counts this IP's failed attempts for this username in the last 15 minutes
+// (uses the ip/username/attempted_at index)
 function recent_attempts(object $pdo, string $ip, string $username): int
 {
     $query = "SELECT COUNT(*) FROM login_attempts WHERE ip = :ip AND username = :username AND attempted_at > NOW() - INTERVAL 15 MINUTE;";
@@ -28,7 +31,7 @@ function recent_attempts(object $pdo, string $ip, string $username): int
 function failed_attempt(object $pdo, string $ip, string $username): void
 {
     $query = "DELETE FROM login_attempts WHERE attempted_at < NOW() - INTERVAL 1 DAY;";
- 
+
     $query = "INSERT INTO login_attempts (ip, username) VALUES (:ip, :username);";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":ip", $ip);

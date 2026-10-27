@@ -1,5 +1,8 @@
 <?php
-$pageTitle = 'Matt The Dev';
+$pageTitle = 'Matt Drummond - Full-Stack Developer | Matt The Dev';
+
+$pageDescription = 'Full-stack software developer Matt Drummond writes about building secure three-tier web apps with PHP, MySQL and TypeScript.';
+
 $bodyClass = 'home flex flex-col min-h-screen bg-cover bg-center bg-fixed font-inter text-white';
 
 require __DIR__ . '/includes/head.php';
@@ -53,7 +56,7 @@ require __DIR__ . '/includes/head.php';
                 </div> 
                 
                 <p class="text-lg mt-7 pb-8 max-w-lg tracking-wider  leading-10">
-                I'm an Alumnus of Full Sail University where I completed the <a href="https://www.fullsail.edu/degrees/digital-arts-design-bachelor-degree-program" class="text-xlight-purple hover:text-white" target="_blank" rel="noopener noreferrer">Digital Arts & Design</a> program and achieved a Bachelors of Science degree. My interests include developing secure three-tier applications. <!--My workflow includes the use of AI tools like Claude to accelerate learning & debugging.-->
+                I'm an alumnus of Full Sail University, where I completed the <a href="https://www.fullsail.edu/degrees/digital-arts-design-bachelor-degree-program" class="text-xlight-purple hover:text-white" target="_blank" rel="noopener noreferrer">Digital Arts & Design</a> program and achieved a Bachelor of Science degree. My interests include developing secure three-tier applications. <!--My workflow includes the use of AI tools like Claude to accelerate learning & debugging.-->
                 </p>
                 
                 <p class="text-lg pb-8 max-w-lg tracking-wider">Visit <a href="https://github.com/mattdrmmnd" class="text-xlight-purple hover:text-white" target="_blank" rel="noopener noreferrer">my GitHub</a> profile to see the latest.</p>

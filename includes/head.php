@@ -5,8 +5,9 @@
 //   $bodyClass  classes for the <body> tag
 require_once __DIR__ . '/config.php';
 
-// Used to set title and body on pages that forgets to do it
+// Used to set title and body on pages that forget to do it
 $pageTitle = $pageTitle ?? 'Matt The Dev';
+$pageDescription = $pageDescription ?? ''; // Google will write the fallback
 $bodyClass = $bodyClass ?? 'flex flex-col min-h-screen font-inter text-white';
 
 // Resumes a session only when the browser has one
@@ -36,5 +37,10 @@ if (isset($_COOKIE[session_name()])) //PHPSESSID
     <script type="module" src="<?= BASE_URL ?>build/main.js"></script>
 
     <title><?= htmlspecialchars($pageTitle) ?></title>
+
+    <?php if ($pageDescription !== ''): ?>
+      <meta name="description" content="<?= htmlspecialchars($pageDescription) ?>">
+    <?php endif; ?>
+
   </head>
   <body class="<?= htmlspecialchars($bodyClass) ?>">
