@@ -53,15 +53,24 @@ require __DIR__ . '/../includes/head.php';
                             <?php foreach ($posts as $post): ?>
                                 <tr>
                                     <td class="py-3 pr-4">
+
                                         <p><?= htmlspecialchars($post['title']) ?></p>
+
                                         <div class="flex gap-2 text-xs mt-1">
                                             <a href="<?= BASE_URL ?>admin/posts_blog_edit.php?id=<?= htmlspecialchars($post['id']) ?>" class="text-light-purple hover:text-white transition-colors">Edit</a>
+
                                             <span aria-hidden="true" class="text-gray-500">|</span>
-                                            <form action="<?= BASE_URL ?>admin/posts_blog_delete.php" method="post" class="inline">
+
+                                            <form action="<?= BASE_URL ?>admin/posts_blog_trash.php" method="post" class="inline">
+
+                                                <?php csrf_field(); ?>
+
                                                 <input type="hidden" name="id" value="<?= htmlspecialchars($post['id']) ?>">
                                                 <button type="submit" class="text-red-400 hover:text-red-300 transition-colors" aria-label="Trash: <?= htmlspecialchars($post['title']) ?>">Trash</button>
+                                                
                                             </form>
                                         </div>
+
                                     </td>
                                     <td class="py-3 pr-4"><?= htmlspecialchars($post['username'] ?? 'Unknown') ?></td>
                                     <td class="py-3">
