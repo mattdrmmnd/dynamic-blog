@@ -4,6 +4,10 @@ $bodyClass = 'flex flex-col min-h-screen font-inter text-white';
 $activePage = 'posts_blog';
 
 require_once __DIR__ . '/../includes/auth.inc.php';
+require_once __DIR__ . '/../includes/dbh.inc.php';
+require_once __DIR__ . '/../includes/posts_model.inc.php';
+
+$posts = get_blog_posts($pdo);
 
 require __DIR__ . '/../includes/head.php';
 ?>
@@ -35,87 +39,39 @@ require __DIR__ . '/../includes/head.php';
                             <tr class="text-gray-400 border-b border-white/10">
                                 <th scope="col" class="pb-3 pr-4 font-normal">Title</th>
                                 <th scope="col" class="pb-3 pr-4 font-normal">Author</th>
-                                <th scope="col" class="pb-3 pr-4 font-normal">Category</th>
                                 <th scope="col" class="pb-3 font-normal">Date</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-white/10">
-                            <tr>
-                                <td class="py-3 pr-4">
-                                    <p>My first post!</p>
-                                    <div class="flex gap-2 text-xs mt-1">
-                                        <a href="<?= BASE_URL ?>admin/posts_blog_edit.php?id=1" class="text-light-purple hover:text-white transition-colors">Edit</a>
-                                        <span aria-hidden="true" class="text-gray-500">|</span>
-                                        <form action="<?= BASE_URL ?>admin/posts_blog_delete.php" method="post" class="inline">
-                                            <input type="hidden" name="id" value="1">
-                                            <button type="submit" class="text-red-400 hover:text-red-300 transition-colors" aria-label="Trash: My first post!">Trash</button>
-                                        </form>
-                                    </div>
-                                </td>
-                                <td class="py-3 pr-4">Matt D</td>
-                                <td class="py-3 pr-4">Resources</td>
-                                <td class="py-3">
-                                    <p>Published</p>
-                                    <p class="text-xs text-gray-400">2026/08/20 at 9:20 pm</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 pr-4">
-                                    <p>Second Post</p>
-                                    <div class="flex gap-2 text-xs mt-1">
-                                        <a href="<?= BASE_URL ?>admin/posts_blog_edit.php?id=2" class="text-light-purple hover:text-white transition-colors">Edit</a>
-                                        <span aria-hidden="true" class="text-gray-500">|</span>
-                                        <form action="<?= BASE_URL ?>admin/posts_blog_delete.php" method="post" class="inline">
-                                            <input type="hidden" name="id" value="2">
-                                            <button type="submit" class="text-red-400 hover:text-red-300 transition-colors" aria-label="Trash: Second Post">Trash</button>
-                                        </form>
-                                    </div>
-                                </td>
-                                <td class="py-3 pr-4">Matt D</td>
-                                <td class="py-3 pr-4">Funny</td>
-                                <td class="py-3">
-                                    <p>Published</p>
-                                    <p class="text-xs text-gray-400">2026/08/20 at 9:20 pm</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 pr-4">
-                                    <p>The third post you need to...</p>
-                                    <div class="flex gap-2 text-xs mt-1">
-                                        <a href="<?= BASE_URL ?>admin/posts_blog_edit.php?id=3" class="text-light-purple hover:text-white transition-colors">Edit</a>
-                                        <span aria-hidden="true" class="text-gray-500">|</span>
-                                        <form action="<?= BASE_URL ?>admin/posts_blog_delete.php" method="post" class="inline">
-                                            <input type="hidden" name="id" value="3">
-                                            <button type="submit" class="text-red-400 hover:text-red-300 transition-colors" aria-label="Trash: The third post you need to...">Trash</button>
-                                        </form>
-                                    </div>
-                                </td>
-                                <td class="py-3 pr-4">Matt D</td>
-                                <td class="py-3 pr-4">Frameworks</td>
-                                <td class="py-3">
-                                    <p>Published</p>
-                                    <p class="text-xs text-gray-400">2026/08/20 at 9:20 pm</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="py-3 pr-4">
-                                    <p>Okay one more I promise</p>
-                                    <div class="flex gap-2 text-xs mt-1">
-                                        <a href="<?= BASE_URL ?>admin/posts_blog_edit.php?id=4" class="text-light-purple hover:text-white transition-colors">Edit</a>
-                                        <span aria-hidden="true" class="text-gray-500">|</span>
-                                        <form action="<?= BASE_URL ?>admin/posts_blog_delete.php" method="post" class="inline">
-                                            <input type="hidden" name="id" value="4">
-                                            <button type="submit" class="text-red-400 hover:text-red-300 transition-colors" aria-label="Trash: Okay one more I promise">Trash</button>
-                                        </form>
-                                    </div>
-                                </td>
-                                <td class="py-3 pr-4">Matt D</td>
-                                <td class="py-3 pr-4">Resources</td>
-                                <td class="py-3">
-                                    <p>Published</p>
-                                    <p class="text-xs text-gray-400">2026/08/20 at 9:20 pm</p>
-                                </td>
-                            </tr>
+
+                            <?php if (empty($posts)): ?>
+                                
+                                <tr><td colspan="3" class="py-3">No posts yet.</td></tr>
+
+                            <?php else: ?>
+
+                            <?php foreach ($posts as $post): ?>
+                                <tr>
+                                    <td class="py-3 pr-4">
+                                        <p><?= htmlspecialchars($post['title']) ?></p>
+                                        <div class="flex gap-2 text-xs mt-1">
+                                            <a href="<?= BASE_URL ?>admin/posts_blog_edit.php?id=<?= htmlspecialchars($post['id']) ?>" class="text-light-purple hover:text-white transition-colors">Edit</a>
+                                            <span aria-hidden="true" class="text-gray-500">|</span>
+                                            <form action="<?= BASE_URL ?>admin/posts_blog_delete.php" method="post" class="inline">
+                                                <input type="hidden" name="id" value="<?= htmlspecialchars($post['id']) ?>">
+                                                <button type="submit" class="text-red-400 hover:text-red-300 transition-colors" aria-label="Trash: <?= htmlspecialchars($post['title']) ?>">Trash</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                    <td class="py-3 pr-4"><?= htmlspecialchars($post['username'] ?? 'Unknown') ?></td>
+                                    <td class="py-3">
+                                        <p><?= htmlspecialchars(ucfirst($post['status'])) ?></p>
+                                        <p class="text-xs text-gray-400"><?= date('Y/m/d \a\t g:i a', strtotime($post['created_at'])) ?></p>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+
+                            <?php endif; ?>
                         </tbody>
                     </table>
                 </section>
