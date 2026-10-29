@@ -7,7 +7,8 @@ require_once __DIR__ . '/../includes/auth.inc.php';
 require_once __DIR__ . '/../includes/dbh.inc.php';
 require_once __DIR__ . '/../includes/posts_model.inc.php';
 
-$posts = get_blog_posts($pdo);
+$isTrash = ($_GET['view'] ?? '') === 'trash';
+$posts = get_blog_posts($pdo, $isTrash);
 
 require __DIR__ . '/../includes/head.php';
 ?>
@@ -23,10 +24,26 @@ require __DIR__ . '/../includes/head.php';
             <!-- Main content -->
             <main class="flex-1 min-w-0 mt-5">
 
-                
-
                 <section class="flex items-center justify-between mb-5">
-                    <h1 class="font-bold text-lg tracking-wider">Posts - Blog</h1>
+                    
+                    <div class="flex flex-col tracking-wider">
+                        <h1 class="font-bold text-lg tracking-wider"><?= $isTrash ? 'Trash - Blog' : 'Posts - Blog' ?></h1>
+
+                        <nav aria-label="Post views" class="flex gap-2 text-xs mt-1">
+
+                            <p>View:</p>
+                            <a href="<?= BASE_URL ?>admin/posts_blog.php" <?= !$isTrash ? 'aria-current="page"' : '' ?> class="aria-[current=page]:text-xlight-purple aria-[current=page]:font-semibold transition-colors">All posts</a>
+
+                            <span aria-hidden="true" class="text-gray-500">|</span>
+                            
+                            <a href="<?= BASE_URL ?>admin/posts_blog.php?view=trash" <?= $isTrash ? 'aria-current="page"' : '' ?> class="aria-[current=page]:text-xlight-purple aria-[current=page]:font-semibold transition-colors">Trashed</a>
+                            
+                        </nav>
+
+                    </div>
+                        
+                    
+
                     <a href="<?= BASE_URL ?>admin/posts_blog_new.php" class="inline-flex items-center gap-1 bg-dark-purple hover:bg-light-purple/80 transition-colors text-sm font-semibold px-4 py-2 rounded-sm tracking-wider">
                         <span aria-hidden="true">+</span> Add Post
                     </a>
@@ -46,7 +63,11 @@ require __DIR__ . '/../includes/head.php';
 
                             <?php if (empty($posts)): ?>
                                 
-                                <tr><td colspan="3" class="py-3">No posts yet.</td></tr>
+                                <tr>
+                                    <td colspan="3" class="py-3">
+                                        <?= $isTrash ? 'Trash is empty.' : 'No posts yet.' ?>
+                                    </td>
+                                </tr>
 
                             <?php else: ?>
 
@@ -55,6 +76,36 @@ require __DIR__ . '/../includes/head.php';
                                     <td class="py-3 pr-4">
 
                                         <p><?= htmlspecialchars($post['title']) ?></p>
+
+                                        <?php if ($isTrash): ?>
+                                        
+                                        <div class="flex gap-2 text-xs mt-1">
+
+                                            <form action="<?= BASE_URL ?>admin/posts_blog_restore.php" method="post" class="inline">
+
+                                                <?php csrf_field(); ?>
+
+                                                <input type="hidden" name="id" value="<?= htmlspecialchars($post['id']) ?>">
+                                                <button type="submit" class="text-green-400 hover:text-white transition-colors" aria-label="Restore: <?= htmlspecialchars($post['title']) ?>">Restore</button>
+
+                                            </form>
+
+                                            <span aria-hidden="true" class="text-gray-500">|</span>
+
+                                            <form action="<?= BASE_URL ?>admin/posts_blog_delete.php" method="post" class="inline">
+
+                                                <?php csrf_field(); ?>
+
+                                                <input type="hidden" name="id" value="<?= htmlspecialchars($post['id']) ?>">
+                                                <button type="submit" class="text-red-300 hover:text-white transition-colors" aria-label="Restore: <?= htmlspecialchars($post['title']) ?>">Delete</button>
+
+                                            </form>
+
+                                            
+
+                                        </div>    
+
+                                        <?php else: ?>
 
                                         <div class="flex gap-2 text-xs mt-1">
                                             <a href="<?= BASE_URL ?>admin/posts_blog_edit.php?id=<?= htmlspecialchars($post['id']) ?>" class="text-light-purple hover:text-white transition-colors">Edit</a>
@@ -67,10 +118,12 @@ require __DIR__ . '/../includes/head.php';
 
                                                 <input type="hidden" name="id" value="<?= htmlspecialchars($post['id']) ?>">
                                                 <button type="submit" class="text-red-400 hover:text-red-300 transition-colors" aria-label="Trash: <?= htmlspecialchars($post['title']) ?>">Trash</button>
-                                                
+
                                             </form>
                                         </div>
 
+                                        <?php endif; ?>
+                                        
                                     </td>
                                     <td class="py-3 pr-4"><?= htmlspecialchars($post['username'] ?? 'Unknown') ?></td>
                                     <td class="py-3">

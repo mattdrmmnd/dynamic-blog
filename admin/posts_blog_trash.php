@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Then main work isnt nested inside an if
     if ($id === false || $id === null) {
         
-        header('Location: ' . BASE_URL . 'admin/posts_blog.php');
+        header('Location: ' . BASE_URL . '/admin/posts_blog.php?view=trash');
         die();
 
     }
@@ -23,9 +23,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     trash_blog_post($pdo, $id);
 
-    header('Location: ' . BASE_URL . 'admin/posts_blog.php');
+    header('Location: ' . BASE_URL . 'admin/posts_blog.php?view=trash');
     die();
 }
 // For non-POST visits
-header('Location: ' . BASE_URL . 'admin/posts_blog.php');
+header('Location: ' . BASE_URL . 'admin/posts_blog.php?view=trash');
 exit;
