@@ -50,6 +50,15 @@ require __DIR__ . '/../includes/head.php';
                 </section>
 
                 <section class="bg-black/50 rounded-2xl p-7 overflow-x-auto">
+
+                    <?php 
+                        if (isset($_SESSION["posts_message"])) {
+                            echo '<p class="mb-4 text-sm text-orange-200 tracking-wider" role="status">' . htmlspecialchars($_SESSION["posts_message"]) . '</p>';
+
+                            unset($_SESSION["posts_message"]);
+                        }
+                    ?>
+
                     <table class="w-full text-sm text-left border-collapse tracking-wider">
                         <caption class="sr-only">List of blog posts</caption>
                         <thead>

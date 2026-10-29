@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Then main work isnt nested inside an if
     if ($id === false || $id === null) {
         
-        header('Location: ' . BASE_URL . '/admin/posts_blog.php?view=trash');
+        header('Location: ' . BASE_URL . 'admin/posts_blog.php');
         die();
 
     }
@@ -21,11 +21,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     require_once __DIR__ . '/../includes/dbh.inc.php';
     require_once __DIR__ . '/../includes/posts_model.inc.php';
 
-    trash_blog_post($pdo, $id);
+    $trashed = trash_blog_post($pdo, $id);
 
-    header('Location: ' . BASE_URL . 'admin/posts_blog.php?view=trash');
+    $_SESSION["posts_message"] = $trashed === 1 ? 'Post moved to trash.' : 'Post not found.';
+
+    header('Location: ' . BASE_URL . 'admin/posts_blog.php');
     die();
 }
 // For non-POST visits
-header('Location: ' . BASE_URL . 'admin/posts_blog.php?view=trash');
+header('Location: ' . BASE_URL . 'admin/posts_blog.php');
 exit;

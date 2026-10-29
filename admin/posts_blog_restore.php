@@ -21,7 +21,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     require_once __DIR__ . '/../includes/dbh.inc.php';
     require_once __DIR__ . '/../includes/posts_model.inc.php';
 
-    restore_blog_post($pdo, $id);
+    $restored = restore_blog_post($pdo, $id);
+
+    $_SESSION["posts_message"] = $restored === 1 ? 'Post is restored.' : 'Post not found.';
 
     header('Location: ' . BASE_URL . 'admin/posts_blog.php?view=trash');
     die();
