@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-A personal blog ("Matt The Dev") with a public frontend and an admin CMS, built to learn the full web stack. It uses Vite + Tailwind CSS v4 and was designed in Figma. The site now lives in `C:\xampp\htdocs\dynamic-blog` and Apache serves it at http://localhost/dynamic-blog/. **Every page is now a `.php` file built from the shared `includes/`.** The **MySQL backend has started**. The login system is done: database connection, `users` table, login, logout, auth guard, session timeouts, CSRF tokens and login attempt limiting (see "Login and sessions" below). Everything else (posts, users, requests, settings) is still a mockup with hardcoded content. The planned features still to build are tables for posts/categories/comments, the admin form handlers, and small JSON endpoints for features that don't reload the page (e.g. draft autosave). A full REST API isn't planned, because the pages are server-rendered. The README tracks progress.
+A personal blog ("Matt The Dev") with a public frontend and an admin CMS, built to learn the full web stack. It uses Vite + Tailwind CSS v4 and was designed in Figma. The site now lives in `C:\xampp\htdocs\dynamic-blog` and Apache serves it at http://localhost/dynamic-blog/. **Every page is now a `.php` file built from the shared `includes/`.** The **MySQL backend has started**. The login system is done: database connection, `users` table, login, logout, auth guard, session timeouts, CSRF tokens and login attempt limiting (see "Login and sessions" below). Blog posts have started: the `blog_posts` table and the admin list, trash, restore and permanent delete work (see "Blog posts" below). Everything else (new/edit post saving, reading posts, users, requests, settings, the public post pages) is still a mockup with hardcoded content. The planned features still to build are saving and editing posts, tables for reading posts/categories/comments, the admin form handlers, and small JSON endpoints for features that don't reload the page (e.g. draft autosave). A full REST API isn't planned, because the pages are server-rendered. The README tracks progress.
 
 **The user is learning PHP and types the backend code by hand for practice.** For PHP work, explain the plan and review what they write rather than writing it for them, unless they ask. Markup, CSS and docs changes are fine to make directly when asked.
 
@@ -44,12 +44,12 @@ The old copy in `C:\Users\jerse\Documents\github\dynamic-blog` was deleted on 20
   - The `@theme` block defines the custom tokens used throughout the markup: the colors `xlight-purple`, `light-purple`, `dark-purple`, `darkest-purple`, and `mango`; the `font-inter` font; the `bg-check` check-mark image used by checked checkboxes and radios (`checked:bg-check`); and the extra breakpoints `xmid`, `mid`, and `mid1000`.
   - Images used from CSS must be theme tokens pointing at `../public/images/…`, like `--background-image-check`, so Vite rewrites the URL during a build (it copies large files into `build/` and inlines small ones). An arbitrary class like `bg-[url('/images/…')]` breaks under Apache.
   - It also defines the `.button` component, the `grid-cols-autofit` utility, and the plain-CSS Category dropdown.
-- **Category dropdown pattern:** `<details class="dropdown">`, with `<summary class="dropdown-button">` as the toggle and `.dropdown-menu` holding checkboxes named `items[]`. The checkbox values are still placeholders (`item1`…`item10`).
+- **Category dropdown pattern:** `<details class="dropdown">`, with `<summary class="dropdown-button">` as the toggle and `.dropdown-menu` holding checkboxes named `items[]`. The checkbox values are still placeholders (`item1`…`item10`). Only `posts_reading_new.php` uses it now. It was removed from the blog form until categories exist, and the CSS stays for later.
 - **Static assets** live in `public/` (`public/images/`, favicons). Every page links them as `<?= BASE_URL ?>public/…`.
 
 ## Login and sessions
 
-- **Database:** MySQL database `dynamicblog` with two tables so far:
+- **Database:** MySQL database `dynamicblog` with three tables so far (`blog_posts` is described under "Blog posts"). **`database_schema.sql`** in the root is a phpMyAdmin structure-only export, with no data, no password hashes and no `CREATE DATABASE`. Re-export it whenever a table changes, so it stays current.
   - `users`: `id`, `username` (unique), `pwd` (`password_hash()` output, `VARCHAR(255)`), `email` (unique), `created_at` (defaults to `CURRENT_TIMESTAMP`). There's no signup; the admin user was inserted by hand with a hash made by `password_hash()`.
   - `login_attempts`: `id`, `ip` (`VARCHAR(45)`), `username`, `attempted_at` (defaults to `CURRENT_TIMESTAMP`), with an index on `(ip, username, attempted_at)`. One row per failed login.
 - **`includes/dbh.inc.php`** connects with PDO (`utf8mb4`, exceptions on, `FETCH_ASSOC` by default) and creates `$pdo`. It holds the credentials, so it's **gitignored**. `dbh.inc.example.php` is the committed copy with blank values.
@@ -81,15 +81,31 @@ The old copy in `C:\Users\jerse\Documents\github\dynamic-blog` was deleted on 20
   - `csrf_is_valid()` returns true or false. `login.inc.php` uses it so it can redirect back with a message instead.
 - Always follow `header('Location: …')` with `die()` or `exit`.
 
+## Blog posts
+
+- **`blog_posts` table:** `id`, `title` (`VARCHAR(255)`), `body` (`TEXT`), `featured_image` (file name only), `featured_image_alt`, `featured_image_caption` (all three `VARCHAR(255) NULL`), `status` (`ENUM('draft','published')`, default `'draft'`), `trashed_at` (`DATETIME NULL`), `created_at`, `updated_at` (`ON UPDATE CURRENT_TIMESTAMP`), `user_id` (foreign key to `users.id`, `ON DELETE SET NULL`). There are no categories yet; they come later as their own tables.
+- **Trash is a soft delete.** `trashed_at` is `NULL` for a live post and holds a date once trashed. Restore sets it back to `NULL`, so the post keeps its draft/published status. A permanent `DELETE` only matches posts that are already trashed (`AND trashed_at IS NOT NULL`), so a forged id can't delete a live post. Every query that lists posts must filter on `trashed_at`, and the public pages also on `status = 'published'`.
+- **`includes/posts_model.inc.php`** holds the queries:
+  - `get_blog_posts($pdo, bool $trashed = false)` uses a `LEFT JOIN` to `users` for the author name, which is `NULL` if the user was deleted.
+  - `trash_blog_post()`, `restore_blog_post()` and `delete_blog_post()` are prepared statements with `PDO::PARAM_INT` that return `rowCount()`.
+- **`admin/posts_blog.php`** lists live posts. With `?view=trash` it lists the trash instead. The All posts / Trashed links mark the current view with `aria-current="page"`, which also styles it through `aria-[current=page]:` classes. The live rows have Edit and Trash, and the trash rows have Restore and Delete. Each action is a POST form with `csrf_field()` and a hidden `id`.
+- **Handlers:** `admin/posts_blog_trash.php`, `posts_blog_restore.php` and `posts_blog_delete.php` all share one shape:
+  1. The auth guard, POST only, then `csrf_verify()`.
+  2. `filter_input(…, FILTER_VALIDATE_INT)` with a guard clause.
+  3. The model call.
+  4. They set `$_SESSION["posts_message"]` from the row count and redirect back. Trash returns to the list, and Restore and Delete return to `?view=trash`.
+- **Flash message:** `posts_blog.php` prints `$_SESSION["posts_message"]` in a `role="status"` paragraph and then unsets it, so it shows once.
+- **To do:** a JS confirm on Delete, which the user is writing in `main.ts`. Once featured images exist, Delete must also remove the image file.
+
 ## Admin pages and the PHP backend
 
-- Apart from the login system, the admin pages are mockups of the CMS: dashboard, blog and reading post lists, new-post forms, featured posts, users, access requests, request access and settings.
-- Some links and form actions already point at `admin/` handlers that don't exist yet, so they 404: `posts_blog_delete.php`, `posts_reading_delete.php`, `users_delete.php`, `requests_delete.php`, `posts_blog_edit.php?id=N`, `posts_reading_edit.php?id=N`.
+- Apart from the login system and the blog post list, trash, restore and delete, the admin pages are mockups of the CMS: dashboard, reading post list, new-post forms, featured posts, users, access requests, request access and settings.
+- Some links and form actions already point at `admin/` handlers that don't exist yet, so they 404: `posts_reading_delete.php`, `users_delete.php`, `requests_delete.php`, `posts_blog_edit.php?id=N`, `posts_reading_edit.php?id=N`.
 - The other forms (new posts, users, featured posts, settings) submit back to their own `.php` page, and `request_access.php` uses `action=""`. None of them handle `$_POST` yet, and none have `csrf_field()` yet.
 - **New-post forms** (`posts_blog_new.php`, `posts_reading_new.php`):
   - The submit button must stay inside the `<form>`.
   - Every field needs a unique `name`, since that's the `$_POST` key.
-  - The blog form uses `enctype="multipart/form-data"` for its featured image upload.
+  - The blog form uses `enctype="multipart/form-data"` for its featured image upload. It has no Category dropdown. Its fields are `title`, `featured_image`, `featured_image_alt`, `featured_image_caption` and `body`. Alt text isn't `required` in HTML, because a post can have no image; the handler should require it only when an image is uploaded, and check the 255-character limits in PHP.
 
 ## Do not change
 
@@ -97,7 +113,7 @@ The old copy in `C:\Users\jerse\Documents\github\dynamic-blog` was deleted on 20
 
 ## Backend checklist
 
-Already done: build output in `build/`, the Vite `base`, `BASE_URL`, the shared includes, every page converted to `.php`, sidebar links, consistent image paths, the automatic footer year, and the login system (database connection, `users` table, login, logout, auth guard, "Keep me logged in", session timeouts, CSRF on the login and logout forms, login attempt limiting).
+Already done: build output in `build/`, the Vite `base`, `BASE_URL`, the shared includes, every page converted to `.php`, sidebar links, consistent image paths, the automatic footer year, and the login system (database connection, `users` table, login, logout, auth guard, "Keep me logged in", session timeouts, CSRF on the login and logout forms, login attempt limiting), and the blog post list, trash view, trash, restore and permanent delete with flash messages.
 
 When the user works on the backend, or asks what's left, remind them of this checklist:
 
@@ -115,7 +131,7 @@ When the user works on the backend, or asks what's left, remind them of this che
 When the user says they're ready to put the site on a remote host (e.g. Bluehost), remind them of this checklist:
 
 - **Paths:** `BASE_URL` in `includes/config.php` and `base: '/dynamic-blog/build/'` in `vite.config.ts` both assume the site is at `/dynamic-blog/`. At the domain root they become `/` and `/build/`. Change both, then run `npm run build`, because the base is baked into `build/main.css`. Offer to make them switch automatically between localhost and production.
-- **What to upload:** the root `.php` pages, `admin/`, `includes/`, `public/` and `build/`. Leave out `node_modules/`, `src/`, `package.json`, `package-lock.json`, `vite.config.ts`, `tsconfig.json`, `.git/`, `.claude/`, `CLAUDE.md`, `README.md`, `about.html` and `writing.html`. With cPanel Git deployment, `build/` still needs a separate upload because it's gitignored.
+- **What to upload:** the root `.php` pages, `admin/`, `includes/`, `public/` and `build/`. Leave out `node_modules/`, `src/`, `package.json`, `package-lock.json`, `vite.config.ts`, `tsconfig.json`, `.git/`, `.claude/`, `CLAUDE.md`, `README.md`, `database_schema.sql`, `about.html` and `writing.html`. With cPanel Git deployment, `build/` still needs a separate upload because it's gitignored.
 - **Server setup:** pick a PHP version in cPanel that matches or is newer than XAMPP's. Create the MySQL database and user, and import the tables with phpMyAdmin. The database name will likely get a cPanel account prefix. `includes/dbh.inc.php` is gitignored, so create it on the server from `dbh.inc.example.php` with the production credentials. Turn on SSL and redirect to `https`, which the `secure` session cookie requires. Turn `display_errors` off and log errors instead.
 - **Linux differences:** file names are case-sensitive. Block direct access to `includes/` (with `.htaccess`, or move it above `public_html`). Make the featured-image upload folder writable.
-- **Admin:** sessions, login, the auth guard, CSRF and login attempt limiting exist now. Before deploying `admin/`, also have https, blocked access to `includes/`, and the password handling above. Import both tables, `users` and `login_attempts`. Until then, deploy only the public pages.
+- **Admin:** sessions, login, the auth guard, CSRF and login attempt limiting exist now. Before deploying `admin/`, also have https, blocked access to `includes/`, and the password handling above. Import all the tables (`users`, `login_attempts` and `blog_posts`) from `database_schema.sql`. Until then, deploy only the public pages.
