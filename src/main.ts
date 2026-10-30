@@ -30,3 +30,16 @@ document.querySelectorAll<HTMLButtonElement>('button[data-password-toggle]').for
     button.setAttribute('aria-label', show ? 'Hide password' : 'Show password')
   })
 })
+// Locates the Delete button and its message
+document.addEventListener('click', (event) => {
+  if (!(event.target instanceof Element)) return
+  const target = event.target.closest('[data-confirm]')
+
+  if (target) {
+    const message = target.getAttribute('data-confirm') ?? ''
+
+    if (!confirm(message)) {
+      event.preventDefault()
+    }
+  }
+})

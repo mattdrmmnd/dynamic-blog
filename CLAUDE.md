@@ -36,7 +36,7 @@ The old copy in `C:\Users\jerse\Documents\github\dynamic-blog` was deleted on 20
 - **[vite.config.ts](vite.config.ts)** has two modes:
   - **Build** (`build`/`watch`), the one that matters: the only input is `src/main.ts`. Output goes to `build/` with fixed names (`main.js`, `main.css`, no hashes), so PHP can link them directly. `base` is `/dynamic-blog/build/` so asset URLs inside the CSS resolve, and `publicDir` is off because PHP links `public/` directly. `emptyOutDir: true` wipes `build/` on every build, so never put anything else in it.
   - **Dev** (`npm run dev`): normal Vite serving, left over from the `.html` mockups. Only `about.html` and `writing.html` remain for it to serve.
-- **[src/main.ts](src/main.ts) is the only entry point**, and every page loads it through `build/main.js` in `head.php`. It imports the CSS and holds small shared behavior. Right now that's closing an open `details.dropdown` menu when the user clicks outside it, and the show/hide password toggle: a `<button type="button" data-password-toggle aria-controls="<input id>">` placed next to a password input.
+- **[src/main.ts](src/main.ts) is the only entry point**, and every page loads it through `build/main.js` in `head.php`. It imports the CSS and holds small shared behavior. Right now that's closing an open `details.dropdown` menu when the user clicks outside it, the show/hide password toggle: a `<button type="button" data-password-toggle aria-controls="<input id>">` placed next to a password input, and a confirm step: clicking any element with `data-confirm="<message>"` shows `confirm(message)` and cancels the click if the user says no. It uses one page-wide click listener, so it covers rows added later too. The Delete button in the blog trash view uses it.
   - New JS goes in `main.ts` or in a new `src/*.ts` file imported from it, so it lands in the single bundle with no new `<script>` tags. Page-specific code should check for its elements first and do nothing when they're missing.
 - **[src/style.css](src/style.css)** is the Tailwind v4 entry point:
   - Tailwind scans the project, `.php` files included, for classes. `@source "../admin"` adds the admin pages explicitly.
@@ -95,7 +95,8 @@ The old copy in `C:\Users\jerse\Documents\github\dynamic-blog` was deleted on 20
   3. The model call.
   4. They set `$_SESSION["posts_message"]` from the row count and redirect back. Trash returns to the list, and Restore and Delete return to `?view=trash`.
 - **Flash message:** `posts_blog.php` prints `$_SESSION["posts_message"]` in a `role="status"` paragraph and then unsets it, so it shows once.
-- **To do:** a JS confirm on Delete, which the user is writing in `main.ts`. Once featured images exist, Delete must also remove the image file.
+- **Delete confirm:** the Delete button has `data-confirm`, so `main.ts` asks before the form submits.
+- **To do:** once featured images exist, Delete must also remove the image file.
 
 ## Admin pages and the PHP backend
 

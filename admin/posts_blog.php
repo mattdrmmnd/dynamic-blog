@@ -106,7 +106,7 @@ require __DIR__ . '/../includes/head.php';
                                                 <?php csrf_field(); ?>
 
                                                 <input type="hidden" name="id" value="<?= htmlspecialchars($post['id']) ?>">
-                                                <button type="submit" class="text-red-300 hover:text-white transition-colors" aria-label="Delete permanently: <?= htmlspecialchars($post['title']) ?>">Delete</button>
+                                                <button type="submit" data-confirm="Are you sure you want to DELETE this post?" class="text-red-300 hover:text-white transition-colors" aria-label="Delete permanently: <?= htmlspecialchars($post['title']) ?>">Delete</button>
 
                                             </form>
 
