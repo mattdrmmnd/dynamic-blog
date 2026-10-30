@@ -44,65 +44,13 @@ require __DIR__ . '/../includes/head.php';
                                 <input type="file" id="image-upload" name="featured_image" accept="image/png, image/jpeg, image/webp"
                                         class="self-start text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-sm file:border-0 file:text-sm file:font-semibold file:bg-gray-600 file:text-white file:hover:bg-gray-500 file:cursor-pointer file:transition-colors">
 
-                                <details class="dropdown mt-3 w-33">
-                                        <summary class="dropdown-button">
-                                            Category <span class="dropdown-arrow" aria-hidden="true">▼</span>
-                                        </summary>
+                                <!-- Image Alt Text Field -->
+                                <label for="featured-image-alt" class="font-medium text-gray-300 mt-2">Image alt text:</label>
+                                <input type="text" id="featured-image-alt" name="featured_image_alt" maxlength="255" placeholder="Describe the image for screen readers..." class="w-full max-w-120 border border-amber-50 bg-white text-gray-500 p-2 rounded-sm focus:outline-none focus:ring-1 focus:ring-xlight-purple">
 
-                                        <div class="dropdown-menu">
-
-                                            <label>
-                                                <input type="checkbox" name="items[]" value="item1">
-                                                Item 1
-                                            </label>
-
-                                            <label>
-                                                <input type="checkbox" name="items[]" value="item2">
-                                                Item 2
-                                            </label>
-
-                                            <label>
-                                                <input type="checkbox" name="items[]" value="item3">
-                                                Item 3
-                                            </label>
-
-                                            <label>
-                                                <input type="checkbox" name="items[]" value="item4">
-                                                Item 4
-                                            </label>
-
-                                            <label>
-                                                <input type="checkbox" name="items[]" value="item5">
-                                                Item 5
-                                            </label>
-
-                                            <label>
-                                                <input type="checkbox" name="items[]" value="item6">
-                                                Item 6
-                                            </label>
-
-                                            <label>
-                                                <input type="checkbox" name="items[]" value="item7">
-                                                Item 7
-                                            </label>
-
-                                            <label>
-                                                <input type="checkbox" name="items[]" value="item8">
-                                                Item 8
-                                            </label>
-
-                                            <label>
-                                                <input type="checkbox" name="items[]" value="item9">
-                                                Item 9
-                                            </label>
-
-                                            <label>
-                                                <input type="checkbox" name="items[]" value="item10">
-                                                Item 10
-                                            </label>
-
-                                        </div>
-                                </details>
+                                <!-- Image Caption Field -->
+                                <label for="featured-image-caption" class="font-medium text-gray-300 mt-2">Image caption (optional):</label>
+                                <input type="text" id="featured-image-caption" name="featured_image_caption" maxlength="255" placeholder="Shown below the image..." class="w-full max-w-120 border border-amber-50 bg-white text-gray-500 p-2 rounded-sm focus:outline-none focus:ring-1 focus:ring-xlight-purple">
 
                                 <!-- Blog Body Text Field -->
                                 <label for="body" class="font-medium text-gray-300 mt-2">Body Content:</label>
