@@ -34,3 +34,12 @@ function restore_blog_post(object $pdo, int $id): int
 
     return $stmt->rowCount();
 }
+function delete_blog_post(object $pdo, int $id): int
+{
+    $query = "DELETE FROM blog_posts WHERE id = :id AND trashed_at IS NOT NULL;";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $id, PDO::PARAM_INT); // Use PARAM_INT whenever a number is expected
+    $stmt->execute();
+
+    return $stmt->rowCount();
+}

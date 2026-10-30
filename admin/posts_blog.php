@@ -106,7 +106,7 @@ require __DIR__ . '/../includes/head.php';
                                                 <?php csrf_field(); ?>
 
                                                 <input type="hidden" name="id" value="<?= htmlspecialchars($post['id']) ?>">
-                                                <button type="submit" class="text-red-300 hover:text-white transition-colors" aria-label="Restore: <?= htmlspecialchars($post['title']) ?>">Delete</button>
+                                                <button type="submit" class="text-red-300 hover:text-white transition-colors" aria-label="Delete permanently: <?= htmlspecialchars($post['title']) ?>">Delete</button>
 
                                             </form>
 
@@ -126,7 +126,7 @@ require __DIR__ . '/../includes/head.php';
                                                 <?php csrf_field(); ?>
 
                                                 <input type="hidden" name="id" value="<?= htmlspecialchars($post['id']) ?>">
-                                                <button type="submit" class="text-red-400 hover:text-red-300 transition-colors" aria-label="Trash: <?= htmlspecialchars($post['title']) ?>">Trash</button>
+                                                <button type="submit" class="text-red-300 hover:text-white transition-colors" aria-label="Trash: <?= htmlspecialchars($post['title']) ?>">Trash</button>
 
                                             </form>
                                         </div>
