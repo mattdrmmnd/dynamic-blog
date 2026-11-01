@@ -4,6 +4,47 @@ $bodyClass = 'flex flex-col min-h-screen font-inter text-white';
 $activePage = 'posts_blog';
 
 require_once __DIR__ . '/../includes/auth.inc.php';
+require_once __DIR__ . '/../includes/posts_model.inc.php';
+
+$title = '';
+$body = '';
+$errors = [];
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    csrf_verify();
+    $title = trim($_POST["title"] ?? '');
+    $body = trim($_POST["body"] ?? '');
+
+    // Read status value. If it is missing then draft is the default
+    // If the value is one of the two allowed words, it stays otherwise it's draft
+    // true makes in_array use === strict comparison
+    $status = $_POST["status"] ?? 'draft';
+    $status = in_array($status, ['draft', 'published'], true) ? $status : 'draft';
+
+    if ($status === 'published' && $body === '') {
+        $errors["empty_body"] = "The body is empty.";
+    }
+
+    if ($title === '') {
+        $errors["empty_title"] = "The title is empty.";
+    }
+
+    if (mb_strlen($title) > 255) {
+        $errors["title_length"] = "The title is too long.";
+    }    
+        
+    if (!$errors) {
+        require_once __DIR__ . '/../includes/dbh.inc.php'; 
+
+        create_blog_post($pdo, (int) $_SESSION["user_id"], $title, $body, $status);
+
+        $_SESSION["posts_message"] = $status === 'draft' ? 'Draft saved.' : 'Post published.';
+
+        header('Location: ' . BASE_URL . 'admin/posts_blog.php');
+        die();
+    }
+}
 
 require __DIR__ . '/../includes/head.php';
 ?>
@@ -29,14 +70,31 @@ require __DIR__ . '/../includes/head.php';
 
             
 
-                    <!-- Form -->
+                    
                     <section class="flex flex-col gap-3 bg-black/50 rounded-2xl p-7 overflow-x-auto">
-                       
 
+                            <!-- Form -->
                             <form action="<?= BASE_URL ?>admin/posts_blog_new.php" method="post" enctype="multipart/form-data" class="flex flex-col gap-3 tracking-wider">
+
+                                <?php csrf_field(); ?>
+
+                                <div class="flex justify-between items-start gap-4 min-h-10">
+                                    <?php if ($errors): ?>
+                                        
+                                        <ul role="alert" class="text-red-400 font-semibold text-sm tracking-wider">
+                                            <?php foreach ($errors as $error): ?>
+                                                <li><?= htmlspecialchars($error) ?></li>
+                                            <?php endforeach; ?>    
+                                        </ul>
+                                        
+                                    <?php endif; ?>    
+                       
+                                    <button name="status" value="draft" class="ml-auto text-white hover:text-xlight-purple tracking-wider cursor-pointer">Save draft</button>  
+                                </div> 
+
                                 <!-- Title Field -->
                                 <label for="title" class="font-medium text-gray-300">Title:</label>
-                                <input type="text" id="title" name="title" placeholder="Enter article title..." class="w-full max-w-120 border border-amber-50 bg-white text-gray-500 p-2 rounded-sm focus:outline-none focus:ring-1 focus:ring-xlight-purple">  
+                                <input type="text" id="title" name="title" placeholder="Enter article title..." value="<?= htmlspecialchars($title) ?>" class="w-full max-w-120 border border-amber-50 bg-white text-gray-500 p-2 rounded-sm focus:outline-none focus:ring-1 focus:ring-xlight-purple">  
 
                                 <!-- Image Upload Field -->
                                 <label for="image-upload" class="font-medium text-gray-300 mt-2">Choose a featured image:</label>
@@ -55,14 +113,17 @@ require __DIR__ . '/../includes/head.php';
                                 <!-- Blog Body Text Field -->
                                 <label for="body" class="font-medium text-gray-300 mt-2">Body Content:</label>
                                 <textarea id="body" name="body" rows="10" placeholder="Write your blog post content here..." 
-                                            class="border border-amber-50 bg-white text-gray-500 p-2 rounded-sm focus:outline-none focus:ring-1 focus:ring-xlight-purple resize-y w-full"></textarea>
+                                            class="border border-amber-50 bg-white text-gray-500 p-2 rounded-sm focus:outline-none focus:ring-1 focus:ring-xlight-purple resize-y w-full"><?= htmlspecialchars($body) ?></textarea>       
+                                
                                 
 
                                 <div class="flex flex-row justify-center sm:justify-end items-center gap-5 mt-3">
-                                    <a href="" class="text-white hover:text-xlight-purple tracking-wider">Preview Post
-                                    </a>  
-                                    <button type="submit" class="bg-light-purple hover:bg-dark-purple transition w-50 p-2 pb-3 rounded-full cursor-pointer tracking-wider">
-                                        Post
+                                    <button type="button" disabled class="text-white hover:text-xlight-purple tracking-wider cursor-pointer">Preview
+                                    </button>  
+                                    
+
+                                    <button name="status" value="published" class="bg-light-purple hover:bg-dark-purple transition w-50 p-2 pb-3 rounded-full cursor-pointer tracking-wider">
+                                        Publish
                                     </button>  
                                 </div>  
                             </form>

@@ -34,6 +34,7 @@ function restore_blog_post(object $pdo, int $id): int
 
     return $stmt->rowCount();
 }
+
 function delete_blog_post(object $pdo, int $id): int
 {
     $query = "DELETE FROM blog_posts WHERE id = :id AND trashed_at IS NOT NULL;";
@@ -42,4 +43,17 @@ function delete_blog_post(object $pdo, int $id): int
     $stmt->execute();
 
     return $stmt->rowCount();
+}
+
+function create_blog_post(object $pdo, int $userId, string $title, string $body, string $status): int
+{
+    $query = "INSERT INTO blog_posts (user_id, title, body, status) VALUES (:user_id, :title, :body, :status);";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id", $userId, PDO::PARAM_INT); // Use PARAM_INT whenever a number is expected
+    $stmt->bindParam(":title", $title);
+    $stmt->bindParam(":body", $body);
+    $stmt->bindParam(":status", $status);
+    $stmt->execute();
+
+    return (int) $pdo->lastInsertId();
 }
