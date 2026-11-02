@@ -18,8 +18,9 @@ Built with help from Claude Code, which I used for explanations, planning and co
 - [ ] Blog posts (in progress)
   - [x] Database table
   - [x] Admin list with trash, restore and permanent delete
-  - [ ] New/edit form saving
+  - [x] New post saving (draft or publish), with a session keep-alive while typing
   - [ ] Featured image upload
+  - [ ] Edit form
   - [ ] Public post pages
 
 ### Planned

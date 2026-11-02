@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-A personal blog ("Matt The Dev") with a public frontend and an admin CMS, built to learn the full web stack. It uses Vite + Tailwind CSS v4 and was designed in Figma. The site now lives in `C:\xampp\htdocs\dynamic-blog` and Apache serves it at http://localhost/dynamic-blog/. **Every page is now a `.php` file built from the shared `includes/`.** The **MySQL backend has started**. The login system is done: database connection, `users` table, login, logout, auth guard, session timeouts, CSRF tokens and login attempt limiting (see "Login and sessions" below). Blog posts have started: the `blog_posts` table and the admin list, trash, restore and permanent delete work (see "Blog posts" below). Everything else (new/edit post saving, reading posts, users, requests, settings, the public post pages) is still a mockup with hardcoded content. The planned features still to build are saving and editing posts, tables for reading posts/categories/comments, the admin form handlers, and small JSON endpoints for features that don't reload the page (e.g. draft autosave). A full REST API isn't planned, because the pages are server-rendered. The README tracks progress.
+A personal blog ("Matt The Dev") with a public frontend and an admin CMS, built to learn the full web stack. It uses Vite + Tailwind CSS v4 and was designed in Figma. The site now lives in `C:\xampp\htdocs\dynamic-blog` and Apache serves it at http://localhost/dynamic-blog/. **Every page is now a `.php` file built from the shared `includes/`.** The **MySQL backend has started**. The login system is done: database connection, `users` table, login, logout, auth guard, session timeouts, CSRF tokens and login attempt limiting (see "Login and sessions" below). Blog posts have started: the `blog_posts` table, the admin list, trash, restore, permanent delete, and saving a new post as a draft or published (with a session keep-alive while typing) work (see "Blog posts" below). Everything else (featured image upload, editing posts, reading posts, users, requests, settings, the public post pages) is still a mockup with hardcoded content. The planned features still to build are image upload and editing posts, tables for reading posts/categories/comments, the admin form handlers, and small JSON endpoints for features that don't reload the page (e.g. draft autosave). A full REST API isn't planned, because the pages are server-rendered. The README tracks progress.
 
 **The user is learning PHP and types the backend code by hand for practice.** For PHP work, explain the plan and review what they write rather than writing it for them, unless they ask. Markup, CSS and docs changes are fine to make directly when asked.
 
@@ -36,7 +36,7 @@ The old copy in `C:\Users\jerse\Documents\github\dynamic-blog` was deleted on 20
 - **[vite.config.ts](vite.config.ts)** has two modes:
   - **Build** (`build`/`watch`), the one that matters: the only input is `src/main.ts`. Output goes to `build/` with fixed names (`main.js`, `main.css`, no hashes), so PHP can link them directly. `base` is `/dynamic-blog/build/` so asset URLs inside the CSS resolve, and `publicDir` is off because PHP links `public/` directly. `emptyOutDir: true` wipes `build/` on every build, so never put anything else in it.
   - **Dev** (`npm run dev`): normal Vite serving, left over from the `.html` mockups. Only `about.html` and `writing.html` remain for it to serve.
-- **[src/main.ts](src/main.ts) is the only entry point**, and every page loads it through `build/main.js` in `head.php`. It imports the CSS and holds small shared behavior. Right now that's closing an open `details.dropdown` menu when the user clicks outside it, the show/hide password toggle: a `<button type="button" data-password-toggle aria-controls="<input id>">` placed next to a password input, and a confirm step: clicking any element with `data-confirm="<message>"` shows `confirm(message)` and cancels the click if the user says no. It uses one page-wide click listener, so it covers rows added later too. The Delete button in the blog trash view uses it.
+- **[src/main.ts](src/main.ts) is the only entry point**, and every page loads it through `build/main.js` in `head.php`. It imports the CSS and holds small shared behavior. Right now that's closing an open `details.dropdown` menu when the user clicks outside it, the show/hide password toggle: a `<button type="button" data-password-toggle aria-controls="<input id>">` placed next to a password input, and a confirm step: clicking any element with `data-confirm="<message>"` shows `confirm(message)` and cancels the click if the user says no. It uses one page-wide click listener, so it covers rows added later too. The Delete button in the blog trash view uses it. Last is `keepAlive()`, the session keep-alive described under "Blog posts".
   - New JS goes in `main.ts` or in a new `src/*.ts` file imported from it, so it lands in the single bundle with no new `<script>` tags. Page-specific code should check for its elements first and do nothing when they're missing.
 - **[src/style.css](src/style.css)** is the Tailwind v4 entry point:
   - Tailwind scans the project, `.php` files included, for classes. `@source "../admin"` adds the admin pages explicitly.
@@ -88,6 +88,17 @@ The old copy in `C:\Users\jerse\Documents\github\dynamic-blog` was deleted on 20
 - **`includes/posts_model.inc.php`** holds the queries:
   - `get_blog_posts($pdo, bool $trashed = false)` uses a `LEFT JOIN` to `users` for the author name, which is `NULL` if the user was deleted.
   - `trash_blog_post()`, `restore_blog_post()` and `delete_blog_post()` are prepared statements with `PDO::PARAM_INT` that return `rowCount()`.
+  - `create_blog_post($pdo, int $userId, string $title, string $body, string $status)` inserts a post and returns the new id from `lastInsertId()`. The image columns stay `NULL` until the upload is built.
+- **`admin/posts_blog_new.php`** handles its own POST before `head.php` (Post/Redirect/Get):
+  1. `csrf_verify()`, then `trim()` the title and body.
+  2. `status` comes from the clicked button (`name="status"`, Save draft = `draft`, Publish = `published`) and is checked with `in_array(…, true)`, falling back to `'draft'`.
+  3. Validation fills `$errors`: the title is required (max 255 with `mb_strlen()`), and the body is required only when publishing.
+  4. With no errors, it inserts with the session's `user_id` (never a form field), sets the flash message ("Draft saved." / "Post published.") and redirects to the list.
+  5. With errors, it falls through and redraws the form: the error list (`role="alert"`) above it, and the title and body filled back in with `htmlspecialchars()`. The `<textarea>` content must sit right between its tags with no whitespace.
+- **Session keep-alive:** typing doesn't count as activity, so a long writing session could time out and lose the post on save.
+  - `admin/ping.php` loads `config.php` and `config.session.inc.php` (which refreshes `last_activity`) and returns `204`, or `401` when not logged in. It doesn't use `auth.inc.php`, because `fetch()` would quietly follow its redirect.
+  - The new-post form has `data-keep-alive="<message>"`. `keepAlive()` in `main.ts` sets a flag on the form's `input` event, and every 5 minutes pings `ping.php` only if the flag is set, then clears it. So typing keeps the session alive, and an open but idle tab still times out normally. On a `401` it alerts the attribute's message.
+  - To test, set `$idleLimit` to `60` and the interval to 20 seconds, log in without "Keep me logged in", and filter the Firefox Network tab for `ping`. Set both back afterwards.
 - **`admin/posts_blog.php`** lists live posts. With `?view=trash` it lists the trash instead. The All posts / Trashed links mark the current view with `aria-current="page"`, which also styles it through `aria-[current=page]:` classes. The live rows have Edit and Trash, and the trash rows have Restore and Delete. Each action is a POST form with `csrf_field()` and a hidden `id`.
 - **Handlers:** `admin/posts_blog_trash.php`, `posts_blog_restore.php` and `posts_blog_delete.php` all share one shape:
   1. The auth guard, POST only, then `csrf_verify()`.
@@ -96,17 +107,19 @@ The old copy in `C:\Users\jerse\Documents\github\dynamic-blog` was deleted on 20
   4. They set `$_SESSION["posts_message"]` from the row count and redirect back. Trash returns to the list, and Restore and Delete return to `?view=trash`.
 - **Flash message:** `posts_blog.php` prints `$_SESSION["posts_message"]` in a `role="status"` paragraph and then unsets it, so it shows once.
 - **Delete confirm:** the Delete button has `data-confirm`, so `main.ts` asks before the form submits.
-- **To do:** once featured images exist, Delete must also remove the image file.
+- **To do:**
+  - Featured image upload (step 5). Once images exist, Delete must also remove the image file.
+  - Edit, merged with new into one form (step 6). Save draft should then redirect to the edit form for the new post (`?id=` from `create_blog_post()`), so writing can continue, while Publish still goes to the list.
 
 ## Admin pages and the PHP backend
 
-- Apart from the login system and the blog post list, trash, restore and delete, the admin pages are mockups of the CMS: dashboard, reading post list, new-post forms, featured posts, users, access requests, request access and settings.
+- Apart from the login system and the blog post list, trash, restore, delete and new-post saving, the admin pages are mockups of the CMS: dashboard, reading post list, new-post forms, featured posts, users, access requests, request access and settings.
 - Some links and form actions already point at `admin/` handlers that don't exist yet, so they 404: `posts_reading_delete.php`, `users_delete.php`, `requests_delete.php`, `posts_blog_edit.php?id=N`, `posts_reading_edit.php?id=N`.
-- The other forms (new posts, users, featured posts, settings) submit back to their own `.php` page, and `request_access.php` uses `action=""`. None of them handle `$_POST` yet, and none have `csrf_field()` yet.
+- The other forms (the reading new-post form, users, featured posts, settings) submit back to their own `.php` page, and `request_access.php` uses `action=""`. None of them handle `$_POST` yet, and none have `csrf_field()` yet. `posts_blog_new.php` is the one that does, so use it as the model.
 - **New-post forms** (`posts_blog_new.php`, `posts_reading_new.php`):
   - The submit button must stay inside the `<form>`.
   - Every field needs a unique `name`, since that's the `$_POST` key.
-  - The blog form uses `enctype="multipart/form-data"` for its featured image upload. It has no Category dropdown. Its fields are `title`, `featured_image`, `featured_image_alt`, `featured_image_caption` and `body`. Alt text isn't `required` in HTML, because a post can have no image; the handler should require it only when an image is uploaded, and check the 255-character limits in PHP.
+  - The blog form uses `enctype="multipart/form-data"` for its featured image upload. It has no Category dropdown. Its fields are `title`, `featured_image`, `featured_image_alt`, `featured_image_caption` and `body`, plus the two `status` submit buttons. Only the title, body and status are saved so far. Alt text isn't `required` in HTML, because a post can have no image; the handler should require it only when an image is uploaded, and check the 255-character limits in PHP.
 
 ## Do not change
 
@@ -114,13 +127,13 @@ The old copy in `C:\Users\jerse\Documents\github\dynamic-blog` was deleted on 20
 
 ## Backend checklist
 
-Already done: build output in `build/`, the Vite `base`, `BASE_URL`, the shared includes, every page converted to `.php`, sidebar links, consistent image paths, the automatic footer year, and the login system (database connection, `users` table, login, logout, auth guard, "Keep me logged in", session timeouts, CSRF on the login and logout forms, login attempt limiting), and the blog post list, trash view, trash, restore and permanent delete with flash messages.
+Already done: build output in `build/`, the Vite `base`, `BASE_URL`, the shared includes, every page converted to `.php`, sidebar links, consistent image paths, the automatic footer year, and the login system (database connection, `users` table, login, logout, auth guard, "Keep me logged in", session timeouts, CSRF on the login and logout forms, login attempt limiting), and the blog post list, trash view, trash, restore and permanent delete with flash messages, and saving new blog posts (draft or publish) with the session keep-alive.
 
 When the user works on the backend, or asks what's left, remind them of this checklist:
 
 - **Optional `login_attempts` cleanup:** rows from IPs that never log in successfully stay forever. A `DELETE … WHERE attempted_at < NOW() - INTERVAL 1 DAY` in `failed_attempt()` would keep the table small.
 - **Form handling:** write the missing handlers listed above, and handle `$_POST` in the pages that submit to themselves. Every POST form gets `csrf_field()`, and every handler starts with `csrf_verify()`. Use prepared statements for every query.
-- **Drafts:** when the new-post forms start saving, add autosave or a keep-alive. Typing doesn't count as activity, so a long writing session can time out and lose the post on Save.
+- **Drafts:** the blog new-post form has the keep-alive (see "Blog posts"). When the reading new-post form starts saving, give its form `data-keep-alive` too. Real autosave (saving the draft while typing) could come after the edit form exists.
 - **User password handling:** hash every password with `password_hash()` before saving it, and never store plain text. On the add-user page, check the 12-character minimum in PHP too, because the browser check can be bypassed. On the edit-user page the password field is optional: only hash and update the password when `$_POST['password']` isn't empty, and leave the existing hash alone otherwise.
 - **Help email:** the "Need help?" link in `admin/login.php` is a `mailto:` to the placeholder address `matt@email.com`. Swap in the real address.
 - **Merge add/edit pages:** combine `users_add_new.php` and `users_edit_current.php` into one `users_form.php`. With no `?id` it's the Add page (empty fields, password required, "Add user" button, `INSERT`). With `?id=N` it loads that user and becomes the Edit page (filled-in fields, optional password, hidden `id`, "Update" button, `UPDATE`). Escape every printed value with `htmlspecialchars()`, and check the user is a logged-in admin before saving, because the hidden `id` can be changed in the browser. If the `if ($isEdit)` checks pile up, put the form markup in a shared include instead. Do the same for the blog and reading post new/edit pages.
