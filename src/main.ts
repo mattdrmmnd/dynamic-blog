@@ -17,7 +17,7 @@ document.addEventListener('click', (event) => {
 // ?? is called a nullish coalescing operator
 document.querySelectorAll<HTMLButtonElement>('button[data-password-toggle]').forEach((button) => {
   const input = document.getElementById(button.getAttribute('aria-controls') ?? '') 
-  if (!(input instanceof HTMLInputElement)) return
+  if (!(input instanceof HTMLInputElement)) return // This is a Guard Clause
 
   // Once clicked, checks to see if input type is password
   // Toggles between text visibilty and hidden password
@@ -32,7 +32,7 @@ document.querySelectorAll<HTMLButtonElement>('button[data-password-toggle]').for
 })
 // Locates the Delete button and its message
 document.addEventListener('click', (event) => {
-  if (!(event.target instanceof Element)) return
+  if (!(event.target instanceof Element)) return // This is a Guard Clause
   const target = event.target.closest('[data-confirm]')
 
   if (target) {
@@ -43,3 +43,37 @@ document.addEventListener('click', (event) => {
     }
   }
 })
+
+
+function keepAlive() {
+  // This is a Guard Clause. It checks whether the keep-alive form is on the page you're viewing.
+  const keepAliveForm = document.querySelector<HTMLFormElement>('form[data-keep-alive]')
+  if (!keepAliveForm) return   // not on this page: do nothing  
+
+  // everything below only runs on the new-post page
+
+  let typed = false
+
+  // The listener runs on every keystroke and sets the flag
+  keepAliveForm.addEventListener('input', () => {
+    typed = true 
+  })
+  setInterval(async () => {
+
+    // Guard Clause
+    if (!typed) return
+
+    typed = false
+
+    // await waits for an answer before proceeding
+    // await only works inside a function marked async
+    const response = await fetch(new URL('ping.php', keepAliveForm.action))
+
+    if (response.status === 401) alert(keepAliveForm.getAttribute('data-keep-alive') ?? '')
+
+
+  }, 5 * 60 * 1000)
+}
+
+keepAlive()
+

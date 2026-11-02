@@ -74,7 +74,7 @@ require __DIR__ . '/../includes/head.php';
                     <section class="flex flex-col gap-3 bg-black/50 rounded-2xl p-7 overflow-x-auto">
 
                             <!-- Form -->
-                            <form action="<?= BASE_URL ?>admin/posts_blog_new.php" method="post" enctype="multipart/form-data" class="flex flex-col gap-3 tracking-wider">
+                            <form action="<?= BASE_URL ?>admin/posts_blog_new.php" method="post" data-keep-alive="Your session has expired. Copy your post before saving." enctype="multipart/form-data" class="flex flex-col gap-3 tracking-wider">
 
                                 <?php csrf_field(); ?>
 
