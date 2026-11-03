@@ -27,3 +27,7 @@ dist-ssr
 
 # Database credentials
 /includes/dbh.inc.php
+
+# Uploads (keep the folder's .htaccess)
+/public/uploads/blog/*
+!/public/uploads/blog/.htaccess

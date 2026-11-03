@@ -44,7 +44,7 @@ document.addEventListener('click', (event) => {
   }
 })
 
-
+// If user types into blog form, reset the idle time-out, checks every 5 mins
 function keepAlive() {
   // This is a Guard Clause. It checks whether the keep-alive form is on the page you're viewing.
   const keepAliveForm = document.querySelector<HTMLFormElement>('form[data-keep-alive]')

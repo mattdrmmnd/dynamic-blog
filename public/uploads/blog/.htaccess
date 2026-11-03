@@ -1,0 +1,8 @@
+# Only serve images from this folder; nothing here can run as code
+Require all denied
+
+<FilesMatch "\.(jpe?g|png|webp)$">
+    Require all granted
+</FilesMatch>
+
+Options -Indexes
