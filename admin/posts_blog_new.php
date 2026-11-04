@@ -12,39 +12,61 @@ $errors = [];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    csrf_verify();
-    $title = trim($_POST["title"] ?? '');
-    $body = trim($_POST["body"] ?? '');
-
-    // Read status value. If it is missing then draft is the default
-    // If the value is one of the two allowed words, it stays otherwise it's draft
-    // true makes in_array use === strict comparison
-    $status = $_POST["status"] ?? 'draft';
-    $status = in_array($status, ['draft', 'published'], true) ? $status : 'draft';
-
-    if ($status === 'published' && $body === '') {
-        $errors["empty_body"] = "The body is empty.";
-    }
-
-    if ($title === '') {
-        $errors["empty_title"] = "The title is empty.";
-    }
-
-    if (mb_strlen($title) > 255) {
-        $errors["title_length"] = "The title is too long.";
-    }    
+    if ($_POST === []) {
+        $errors['too_large'] = "The upload is too large (max 8 MB in total).";
         
-    if (!$errors) {
-        require_once __DIR__ . '/../includes/dbh.inc.php'; 
+    } else {
 
-        create_blog_post($pdo, (int) $_SESSION["user_id"], $title, $body, $status);
+        csrf_verify();
 
-        $_SESSION["posts_message"] = $status === 'draft' ? 'Draft saved.' : 'Post published.';
+        $title = trim($_POST["title"] ?? '');
+        $body = trim($_POST["body"] ?? '');
 
-        header('Location: ' . BASE_URL . 'admin/posts_blog.php');
-        die();
-    }
+        // Read status value. If it is missing then draft is the default
+        // If the value is one of the two allowed words, it stays otherwise it's draft
+        // true makes in_array use === strict comparison
+        $status = $_POST["status"] ?? 'draft';
+        $status = in_array($status, ['draft', 'published'], true) ? $status : 'draft';
+
+        if ($status === 'published' && $body === '') {
+            $errors["empty_body"] = "The body is empty.";
+        }
+
+        if ($title === '') {
+            $errors["empty_title"] = "The title is empty.";
+        }
+
+        if (mb_strlen($title) > 255) {
+            $errors["title_length"] = "The title is too long.";
+        }
+        
+        $image = $_FILES["featured_image"] ?? null;
+        $imageError = $image["error"] ?? UPLOAD_ERR_NO_FILE;
+
+        if ($imageError === UPLOAD_ERR_NO_FILE) {
+            // No image chosen: images are optional
+        } elseif ($imageError === UPLOAD_ERR_INI_SIZE) {
+            $errors["img_too_large"] = "The image is too large (max 2 MB).";
+        } elseif ($imageError !== UPLOAD_ERR_OK) {
+            $errors["upload_failed"] = "The image upload failed.";  
+        }
+
+        $hasImage = $imageError === UPLOAD_ERR_OK;
+        
+        if (!$errors) {
+            require_once __DIR__ . '/../includes/dbh.inc.php'; 
+
+            create_blog_post($pdo, (int) $_SESSION["user_id"], $title, $body, $status);
+
+            $_SESSION["posts_message"] = $status === 'draft' ? 'Draft saved.' : 'Post published.';
+
+            header('Location: ' . BASE_URL . 'admin/posts_blog.php');
+            die();
+        }  
+    }       
 }
+    
+
 
 require __DIR__ . '/../includes/head.php';
 ?>
@@ -70,10 +92,9 @@ require __DIR__ . '/../includes/head.php';
 
             
 
-                    
+                    <!-- Form -->
                     <section class="flex flex-col gap-3 bg-black/50 rounded-2xl p-7 overflow-x-auto">
 
-                            <!-- Form -->
                             <form action="<?= BASE_URL ?>admin/posts_blog_new.php" method="post" data-keep-alive="Your session has expired. Copy your post before saving." enctype="multipart/form-data" class="flex flex-col gap-3 tracking-wider">
 
                                 <?php csrf_field(); ?>
