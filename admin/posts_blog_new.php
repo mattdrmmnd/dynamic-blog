@@ -1,4 +1,4 @@
-<?php
+255<?php
 $pageTitle = 'ADMIN - New Blog Post';
 $bodyClass = 'flex flex-col min-h-screen font-inter text-white';
 $activePage = 'posts_blog';
@@ -8,6 +8,8 @@ require_once __DIR__ . '/../includes/posts_model.inc.php';
 
 $title = '';
 $body = '';
+$imageAlt = '';
+$imageCaption = '';
 $errors = [];
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -21,6 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $title = trim($_POST["title"] ?? '');
         $body = trim($_POST["body"] ?? '');
+        $imageAlt = trim($_POST["featured_image_alt"] ?? '');
+        $imageCaption = trim($_POST["featured_image_caption"] ?? '');
 
         // Read status value. If it is missing then draft is the default
         // If the value is one of the two allowed words, it stays otherwise it's draft
@@ -63,7 +67,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             // 2MB Image filesize
             if ($image["size"] > 2 * 1024 * 1024) {
                 $errors["img_too_large"] = "The image is too large (max 2 MB).";   
-            }    
+            }
+            
+            if ($imageAlt === '') {
+                $errors["no_image_alt"] = "Add alt text for the image.";
+            }
+        }
+
+        if (mb_strlen($imageAlt) > 255) {
+            $errors["alt_length"] = "The alt text is too long.";
+        }
+        
+        if (mb_strlen($imageCaption) > 255) {
+            $errors["caption_length"] = "The caption text is too long.";
         }
 
         if (!$errors) {
@@ -78,8 +94,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }  
     }       
 }
-    
-
 
 require __DIR__ . '/../includes/head.php';
 ?>
@@ -138,11 +152,11 @@ require __DIR__ . '/../includes/head.php';
 
                                 <!-- Image Alt Text Field -->
                                 <label for="featured-image-alt" class="font-medium text-gray-300 mt-2">Image alt text:</label>
-                                <input type="text" id="featured-image-alt" name="featured_image_alt" maxlength="255" placeholder="Describe the image for screen readers..." class="w-full max-w-120 border border-amber-50 bg-white text-gray-500 p-2 rounded-sm focus:outline-none focus:ring-1 focus:ring-xlight-purple">
+                                <input type="text" id="featured-image-alt" name="featured_image_alt" maxlength="255" placeholder="Describe the image for screen readers..." value="<?= htmlspecialchars($imageAlt) ?>" class="w-full max-w-120 border border-amber-50 bg-white text-gray-500 p-2 rounded-sm focus:outline-none focus:ring-1 focus:ring-xlight-purple">
 
                                 <!-- Image Caption Field -->
                                 <label for="featured-image-caption" class="font-medium text-gray-300 mt-2">Image caption (optional):</label>
-                                <input type="text" id="featured-image-caption" name="featured_image_caption" maxlength="255" placeholder="Shown below the image..." class="w-full max-w-120 border border-amber-50 bg-white text-gray-500 p-2 rounded-sm focus:outline-none focus:ring-1 focus:ring-xlight-purple">
+                                <input type="text" id="featured-image-caption" name="featured_image_caption" maxlength="255" placeholder="Shown below the image..." value="<?= htmlspecialchars($imageCaption) ?>" class="w-full max-w-120 border border-amber-50 bg-white text-gray-500 p-2 rounded-sm focus:outline-none focus:ring-1 focus:ring-xlight-purple">
 
                                 <!-- Blog Body Text Field -->
                                 <label for="body" class="font-medium text-gray-300 mt-2">Body Content:</label>
