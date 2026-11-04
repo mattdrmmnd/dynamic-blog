@@ -52,7 +52,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         $hasImage = $imageError === UPLOAD_ERR_OK;
-        
+
+        if ($hasImage) {
+            $mimeType = new finfo(FILEINFO_MIME_TYPE)->file($image["tmp_name"]);
+            
+            if (!in_array($mimeType, ['image/jpeg', 'image/png', 'image/webp'], true)) {
+                $errors["image_type"] = "The image must be a JPG, PNG or WebP.";
+            }
+
+            // 2MB Image filesize
+            if ($image["size"] > 2 * 1024 * 1024) {
+                $errors["img_too_large"] = "The image is too large (max 2 MB).";   
+            }    
+        }
+
         if (!$errors) {
             require_once __DIR__ . '/../includes/dbh.inc.php'; 
 
