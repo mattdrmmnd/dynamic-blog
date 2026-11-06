@@ -1,4 +1,4 @@
-255<?php
+<?php
 $pageTitle = 'ADMIN - New Blog Post';
 $bodyClass = 'flex flex-col min-h-screen font-inter text-white';
 $activePage = 'posts_blog';
@@ -25,6 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $body = trim($_POST["body"] ?? '');
         $imageAlt = trim($_POST["featured_image_alt"] ?? '');
         $imageCaption = trim($_POST["featured_image_caption"] ?? '');
+        $imageTypes = ['image/jpeg' => 'jpg', 'image/png' => 'png', 'image/webp' => 'webp'];
+
 
         // Read status value. If it is missing then draft is the default
         // If the value is one of the two allowed words, it stays otherwise it's draft
@@ -56,11 +58,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         $hasImage = $imageError === UPLOAD_ERR_OK;
+        $mimeType = '';
 
         if ($hasImage) {
             $mimeType = new finfo(FILEINFO_MIME_TYPE)->file($image["tmp_name"]);
             
-            if (!in_array($mimeType, ['image/jpeg', 'image/png', 'image/webp'], true)) {
+            if (!isset($imageTypes[$mimeType])) {
                 $errors["image_type"] = "The image must be a JPG, PNG or WebP.";
             }
 
@@ -83,17 +86,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         if (!$errors) {
-            require_once __DIR__ . '/../includes/dbh.inc.php'; 
+            require_once __DIR__ . '/../includes/dbh.inc.php';
+            
+            $fileName = null;
 
-            create_blog_post($pdo, (int) $_SESSION["user_id"], $title, $body, $status);
+            if ($hasImage) {
+                $fileName = bin2hex(random_bytes(16)) . '.' . $imageTypes[$mimeType];
+                $destination = __DIR__ . '/../public/uploads/blog/' . $fileName;    
+                
+                if (!move_uploaded_file($image["tmp_name"], $destination)) {
+                    $errors["upload_failed"] = "The image couldn't be saved.";
+                }
+            }    
 
-            $_SESSION["posts_message"] = $status === 'draft' ? 'Draft saved.' : 'Post published.';
+            if (!$errors) {
+                $altToSave = $hasImage ? $imageAlt : null;
+                $captionToSave = ($hasImage && $imageCaption !== '') ? $imageCaption : null;
+            
+                create_blog_post($pdo, (int) $_SESSION["user_id"], $title, $body, $status, $fileName, $altToSave, $captionToSave);
 
-            header('Location: ' . BASE_URL . 'admin/posts_blog.php');
-            die();
+                $_SESSION["posts_message"] = $status === 'draft' ? 'Draft saved.' : 'Post published.';
+
+                header('Location: ' . BASE_URL . 'admin/posts_blog.php');
+                die();
+            }    
         }  
-    }       
-}
+    }  
+}       
+
 
 require __DIR__ . '/../includes/head.php';
 ?>

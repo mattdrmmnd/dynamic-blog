@@ -45,14 +45,17 @@ function delete_blog_post(object $pdo, int $id): int
     return $stmt->rowCount();
 }
 
-function create_blog_post(object $pdo, int $userId, string $title, string $body, string $status): int
+function create_blog_post(object $pdo, int $userId, string $title, string $body, string $status, ?string $filename, ?string $imageAlt, ?string $imageCaption): int
 {
-    $query = "INSERT INTO blog_posts (user_id, title, body, status) VALUES (:user_id, :title, :body, :status);";
+    $query = "INSERT INTO blog_posts (user_id, title, body, status, featured_image, featured_image_alt, featured_image_caption) VALUES (:user_id, :title, :body, :status, :featured_image, :featured_image_alt, :featured_image_caption);";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":user_id", $userId, PDO::PARAM_INT); // Use PARAM_INT whenever a number is expected
     $stmt->bindParam(":title", $title);
     $stmt->bindParam(":body", $body);
     $stmt->bindParam(":status", $status);
+    $stmt->bindParam(":featured_image", $filename);
+    $stmt->bindParam(":featured_image_alt", $imageAlt);
+    $stmt->bindParam(":featured_image_caption", $imageCaption);
     $stmt->execute();
 
     return (int) $pdo->lastInsertId();
