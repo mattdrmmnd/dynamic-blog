@@ -20,8 +20,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     require_once __DIR__ . '/../includes/dbh.inc.php';
     require_once __DIR__ . '/../includes/posts_model.inc.php';
-
+    
+    $imageFile = get_blog_post_image($pdo, $id);
     $deleted = delete_blog_post($pdo, $id);
+
+    if ($deleted === 1 && $imageFile !== null) {
+         
+        $imagePath = __DIR__ . '/../public/uploads/blog/' . $imageFile;
+        if (is_file($imagePath)) {
+            unlink($imagePath);
+        }
+    }
 
     $_SESSION["posts_message"] = $deleted === 1 ? 'Post deleted permanently.' : 'Post not found.';
 

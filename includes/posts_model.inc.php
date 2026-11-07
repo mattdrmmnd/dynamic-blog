@@ -45,6 +45,17 @@ function delete_blog_post(object $pdo, int $id): int
     return $stmt->rowCount();
 }
 
+function get_blog_post_image(object $pdo, int $id): ?string
+{
+    $query = "SELECT featured_image FROM blog_posts WHERE id = :id AND trashed_at IS NOT NULL";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $id, PDO::PARAM_INT); // Use PARAM_INT whenever a number is expected
+    $stmt->execute();
+
+    $image = $stmt->fetchColumn();
+    return $image ?: null;
+}
+
 function create_blog_post(object $pdo, int $userId, string $title, string $body, string $status, ?string $filename, ?string $imageAlt, ?string $imageCaption): int
 {
     $query = "INSERT INTO blog_posts (user_id, title, body, status, featured_image, featured_image_alt, featured_image_caption) VALUES (:user_id, :title, :body, :status, :featured_image, :featured_image_alt, :featured_image_caption);";
