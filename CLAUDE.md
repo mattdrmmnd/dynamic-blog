@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-A personal blog ("Matt The Dev") with a public frontend and an admin CMS, built to learn the full web stack. It uses Vite + Tailwind CSS v4 and was designed in Figma. The site now lives in `C:\xampp\htdocs\dynamic-blog` and Apache serves it at http://localhost/dynamic-blog/. **Every page is now a `.php` file built from the shared `includes/`.** The **MySQL backend has started**. The login system is done: database connection, `users` table, login, logout, auth guard, session timeouts, CSRF tokens and login attempt limiting (see "Login and sessions" below). Blog posts have started: the `blog_posts` table, the admin list, trash, restore, permanent delete, and saving a new post as a draft or published (with a session keep-alive while typing) work (see "Blog posts" below). Everything else (featured image upload, editing posts, reading posts, users, requests, settings, the public post pages) is still a mockup with hardcoded content. The planned features still to build are image upload and editing posts, tables for reading posts/categories/comments, the admin form handlers, and small JSON endpoints for features that don't reload the page (e.g. draft autosave). A full REST API isn't planned, because the pages are server-rendered. The README tracks progress.
+A personal blog ("Matt The Dev") with a public frontend and an admin CMS, built to learn the full web stack. It uses Vite + Tailwind CSS v4 and was designed in Figma. The site now lives in `C:\xampp\htdocs\dynamic-blog` and Apache serves it at http://localhost/dynamic-blog/. **Every page is now a `.php` file built from the shared `includes/`.** The **MySQL backend has started**. The login system is done: database connection, `users` table, login, logout, auth guard, session timeouts, CSRF tokens and login attempt limiting (see "Login and sessions" below). Blog posts have started: the `blog_posts` table, the admin list, trash, restore, permanent delete, and saving a new post as a draft or published (with a session keep-alive while typing), and the featured image upload work (see "Blog posts" below). Everything else (editing posts, reading posts, users, requests, settings, the public post pages) is still a mockup with hardcoded content. The planned features still to build are editing posts, the public post pages, tables for reading posts/categories/comments, the admin form handlers, and small JSON endpoints for features that don't reload the page (e.g. draft autosave). A full REST API isn't planned, because the pages are server-rendered. The README tracks progress.
 
 **The user is learning PHP and types the backend code by hand for practice.** For PHP work, explain the plan and review what they write rather than writing it for them, unless they ask. Markup, CSS and docs changes are fine to make directly when asked.
 
@@ -88,13 +88,24 @@ The old copy in `C:\Users\jerse\Documents\github\dynamic-blog` was deleted on 20
 - **`includes/posts_model.inc.php`** holds the queries:
   - `get_blog_posts($pdo, bool $trashed = false)` uses a `LEFT JOIN` to `users` for the author name, which is `NULL` if the user was deleted.
   - `trash_blog_post()`, `restore_blog_post()` and `delete_blog_post()` are prepared statements with `PDO::PARAM_INT` that return `rowCount()`.
-  - `create_blog_post($pdo, int $userId, string $title, string $body, string $status)` inserts a post and returns the new id from `lastInsertId()`. The image columns stay `NULL` until the upload is built.
+  - `create_blog_post($pdo, int $userId, string $title, string $body, string $status, ?string $filename, ?string $imageAlt, ?string $imageCaption)` inserts a post and returns the new id from `lastInsertId()`. The three image values are nullable and are `NULL` when there's no image.
+  - `get_blog_post_image($pdo, int $id): ?string` returns a **trashed** post's `featured_image` with `fetchColumn()`, or `null`. The delete handler calls it before the `DELETE`, while the row still exists.
 - **`admin/posts_blog_new.php`** handles its own POST before `head.php` (Post/Redirect/Get):
-  1. `csrf_verify()`, then `trim()` the title and body.
-  2. `status` comes from the clicked button (`name="status"`, Save draft = `draft`, Publish = `published`) and is checked with `in_array(…, true)`, falling back to `'draft'`.
-  3. Validation fills `$errors`: the title is required (max 255 with `mb_strlen()`), and the body is required only when publishing.
-  4. With no errors, it inserts with the session's `user_id` (never a form field), sets the flash message ("Draft saved." / "Post published.") and redirects to the list.
-  5. With errors, it falls through and redraws the form: the error list (`role="alert"`) above it, and the title and body filled back in with `htmlspecialchars()`. The `<textarea>` content must sit right between its tags with no whitespace.
+  1. If `$_POST === []`, the request was over `post_max_size` and PHP threw the whole form away, so it only adds a "too large" error. This branch comes before `csrf_verify()`, which would otherwise stop with a 403.
+  2. Otherwise `csrf_verify()`, then `trim()` the title, body, alt text and caption.
+  3. `status` comes from the clicked button (`name="status"`, Save draft = `draft`, Publish = `published`) and is checked with `in_array(…, true)`, falling back to `'draft'`.
+  4. Validation fills `$errors`: the title is required (max 255 with `mb_strlen()`), the body is required only when publishing, and the alt text and caption are max 255 each.
+  5. The image (see "Featured images" below) adds its own errors, and sets `$hasImage`.
+  6. With no errors, it moves the image (if any), then inserts with the session's `user_id` (never a form field), sets the flash message ("Draft saved." / "Post published.") and redirects to the list. A second `if (!$errors)` around the insert catches a failed move.
+  7. With errors, it falls through and redraws the form: the error list (`role="alert"`) above it, and the text fields filled back in with `htmlspecialchars()`. The `<textarea>` content must sit right between its tags with no whitespace. Browsers never refill a file input, so the image has to be chosen again.
+- **Featured images:**
+  - Uploads go in `public/uploads/blog/`. The images in it are gitignored, but its `.htaccess` is committed, which keeps the folder in the repo. The `.htaccess` is an allowlist: `Require all denied`, then only `.jpg`/`.jpeg`/`.png`/`.webp` are granted, and `Options -Indexes` hides the file list. So nothing in the folder can run as PHP.
+  - `$_FILES["featured_image"]["error"]` is checked first with the `UPLOAD_ERR_*` constants: `NO_FILE` is fine (images are optional), `INI_SIZE` means over php.ini's `upload_max_filesize`, and any other non-`OK` code is a failed upload. `$hasImage` is `true` only for `UPLOAD_ERR_OK`.
+  - Inside `if ($hasImage)`: the real type comes from `new finfo(FILEINFO_MIME_TYPE)->file($image["tmp_name"])`, never the browser's `type` or the file name, and must be a key in `$imageTypes` (`image/jpeg` → `jpg`, `image/png` → `png`, `image/webp` → `webp`). The same map gives the saved extension. The page's own 2 MB limit checks `$image["size"]`, because a host's php.ini may allow more. Alt text is required.
+  - Saving: the name is `bin2hex(random_bytes(16))` plus the extension, and `move_uploaded_file()` puts it in the folder (a `__DIR__` path, not `BASE_URL`). PHP deletes the temporary file when the request ends, so the move must happen in the same request.
+  - The database gets the file name, the alt text only when there's an image, and the caption only when there's an image and it isn't empty (`$altToSave`, `$captionToSave`). Otherwise those columns are `NULL`.
+  - XAMPP's php.ini has `upload_max_filesize = 2M` and `post_max_size = 8M`, and `display_errors = Off`, so PHP errors only show in `C:\xampp\apache\logs\error.log`. Check there when a page goes blank.
+  - Known gap: if the insert fails after the move, the file stays in the folder with no post.
 - **Session keep-alive:** typing doesn't count as activity, so a long writing session could time out and lose the post on save.
   - `admin/ping.php` loads `config.php` and `config.session.inc.php` (which refreshes `last_activity`) and returns `204`, or `401` when not logged in. It doesn't use `auth.inc.php`, because `fetch()` would quietly follow its redirect.
   - The new-post form has `data-keep-alive="<message>"`. `keepAlive()` in `main.ts` sets a flag on the form's `input` event, and every 5 minutes pings `ping.php` only if the flag is set, then clears it. So typing keeps the session alive, and an open but idle tab still times out normally. On a `401` it alerts the attribute's message.
@@ -105,21 +116,23 @@ The old copy in `C:\Users\jerse\Documents\github\dynamic-blog` was deleted on 20
   2. `filter_input(…, FILTER_VALIDATE_INT)` with a guard clause.
   3. The model call.
   4. They set `$_SESSION["posts_message"]` from the row count and redirect back. Trash returns to the list, and Restore and Delete return to `?view=trash`.
+  - Delete also removes the image: it reads the name with `get_blog_post_image()` before the `DELETE`, and after it, only if `$deleted === 1` and there was an image, calls `unlink()` when `is_file()` finds the file.
 - **Flash message:** `posts_blog.php` prints `$_SESSION["posts_message"]` in a `role="status"` paragraph and then unsets it, so it shows once.
 - **Delete confirm:** the Delete button has `data-confirm`, so `main.ts` asks before the form submits.
 - **To do:**
-  - Featured image upload (step 5). Once images exist, Delete must also remove the image file.
-  - Edit, merged with new into one form (step 6). Save draft should then redirect to the edit form for the new post (`?id=` from `create_blog_post()`), so writing can continue, while Publish still goes to the list.
+  - Edit, merged with new into one form (step 6). Save draft should then redirect to the edit form for the new post (`?id=` from `create_blog_post()`), so writing can continue, while Publish still goes to the list. Editing must keep, replace or remove the existing image, and delete the old file when it's replaced or removed.
+  - Public post pages (step 7): only published, untrashed posts.
+  - Later, optional: a thumbnail of each featured image in the admin list.
 
 ## Admin pages and the PHP backend
 
-- Apart from the login system and the blog post list, trash, restore, delete and new-post saving, the admin pages are mockups of the CMS: dashboard, reading post list, new-post forms, featured posts, users, access requests, request access and settings.
+- Apart from the login system and the blog post list, trash, restore, delete and new-post saving with its image upload, the admin pages are mockups of the CMS: dashboard, reading post list, new-post forms, featured posts, users, access requests, request access and settings.
 - Some links and form actions already point at `admin/` handlers that don't exist yet, so they 404: `posts_reading_delete.php`, `users_delete.php`, `requests_delete.php`, `posts_blog_edit.php?id=N`, `posts_reading_edit.php?id=N`.
 - The other forms (the reading new-post form, users, featured posts, settings) submit back to their own `.php` page, and `request_access.php` uses `action=""`. None of them handle `$_POST` yet, and none have `csrf_field()` yet. `posts_blog_new.php` is the one that does, so use it as the model.
 - **New-post forms** (`posts_blog_new.php`, `posts_reading_new.php`):
   - The submit button must stay inside the `<form>`.
   - Every field needs a unique `name`, since that's the `$_POST` key.
-  - The blog form uses `enctype="multipart/form-data"` for its featured image upload. It has no Category dropdown. Its fields are `title`, `featured_image`, `featured_image_alt`, `featured_image_caption` and `body`, plus the two `status` submit buttons. Only the title, body and status are saved so far. Alt text isn't `required` in HTML, because a post can have no image; the handler should require it only when an image is uploaded, and check the 255-character limits in PHP.
+  - The blog form uses `enctype="multipart/form-data"` for its featured image upload. It has no Category dropdown. Its fields are `title`, `featured_image`, `featured_image_alt`, `featured_image_caption` and `body`, plus the two `status` submit buttons. All of them are saved. Alt text isn't `required` in HTML, because a post can have no image; the handler requires it only when an image is uploaded, and checks the 255-character limits in PHP. The `maxlength="255"` attributes are only a convenience: to test the PHP checks, remove them in DevTools before typing.
 
 ## Do not change
 
@@ -127,7 +140,7 @@ The old copy in `C:\Users\jerse\Documents\github\dynamic-blog` was deleted on 20
 
 ## Backend checklist
 
-Already done: build output in `build/`, the Vite `base`, `BASE_URL`, the shared includes, every page converted to `.php`, sidebar links, consistent image paths, the automatic footer year, and the login system (database connection, `users` table, login, logout, auth guard, "Keep me logged in", session timeouts, CSRF on the login and logout forms, login attempt limiting), and the blog post list, trash view, trash, restore and permanent delete with flash messages, and saving new blog posts (draft or publish) with the session keep-alive.
+Already done: build output in `build/`, the Vite `base`, `BASE_URL`, the shared includes, every page converted to `.php`, sidebar links, consistent image paths, the automatic footer year, and the login system (database connection, `users` table, login, logout, auth guard, "Keep me logged in", session timeouts, CSRF on the login and logout forms, login attempt limiting), and the blog post list, trash view, trash, restore and permanent delete with flash messages, and saving new blog posts (draft or publish) with the session keep-alive and the featured image upload.
 
 When the user works on the backend, or asks what's left, remind them of this checklist:
 
@@ -147,5 +160,5 @@ When the user says they're ready to put the site on a remote host (e.g. Bluehost
 - **Paths:** `BASE_URL` in `includes/config.php` and `base: '/dynamic-blog/build/'` in `vite.config.ts` both assume the site is at `/dynamic-blog/`. At the domain root they become `/` and `/build/`. Change both, then run `npm run build`, because the base is baked into `build/main.css`. Offer to make them switch automatically between localhost and production.
 - **What to upload:** the root `.php` pages, `admin/`, `includes/`, `public/` and `build/`. Leave out `node_modules/`, `src/`, `package.json`, `package-lock.json`, `vite.config.ts`, `tsconfig.json`, `.git/`, `.claude/`, `CLAUDE.md`, `README.md`, `database_schema.sql`, `about.html` and `writing.html`. With cPanel Git deployment, `build/` still needs a separate upload because it's gitignored.
 - **Server setup:** pick a PHP version in cPanel that matches or is newer than XAMPP's. Create the MySQL database and user, and import the tables with phpMyAdmin. The database name will likely get a cPanel account prefix. `includes/dbh.inc.php` is gitignored, so create it on the server from `dbh.inc.example.php` with the production credentials. Turn on SSL and redirect to `https`, which the `secure` session cookie requires. Turn `display_errors` off and log errors instead.
-- **Linux differences:** file names are case-sensitive. Block direct access to `includes/` (with `.htaccess`, or move it above `public_html`). Make the featured-image upload folder writable.
+- **Linux differences:** file names are case-sensitive. Block direct access to `includes/` (with `.htaccess`, or move it above `public_html`). Make `public/uploads/blog/` writable, and check its `.htaccess` was uploaded (dot files are easy to miss). Uploaded images aren't in git, so copy them across separately. If the host's PHP is older than 8.4, `new finfo(…)->file(…)` needs brackets: `(new finfo(…))->file(…)`.
 - **Admin:** sessions, login, the auth guard, CSRF and login attempt limiting exist now. Before deploying `admin/`, also have https, blocked access to `includes/`, and the password handling above. Import all the tables (`users`, `login_attempts` and `blog_posts`) from `database_schema.sql`. Until then, deploy only the public pages.
