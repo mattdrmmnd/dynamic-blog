@@ -12,6 +12,8 @@ $body = '';
 $imageAlt = '';
 $imageCaption = '';
 $errors = [];
+$formAction = BASE_URL . 'admin/posts_blog_form.php';
+$isPublished = false;
 
 $isEdit = isset($_GET["id"]);
 
@@ -25,6 +27,12 @@ if ($isEdit) {
         http_response_code(404);
         die("No post was found.");
     }
+
+    $isPublished = $post["status"] === 'published';
+    
+    $pageTitle = 'ADMIN - Edit Blog Post';
+
+    $formAction .= '?id=' . $id;
 
     $title = $post["title"];
     $body = $post["body"];
@@ -150,7 +158,7 @@ require __DIR__ . '/../includes/head.php';
             <main class="flex-1 min-w-0 mt-5">
 
                 <div class="flex items-center justify-between mb-5">
-                    <h1 class="font-bold text-lg tracking-wider">New - Blog Post</h1>
+                    <h1 class="font-bold text-lg tracking-wider"><?= $isEdit ? 'Edit' : 'New' ?> - Blog Post</h1>
                     <a href="<?= BASE_URL ?>admin/posts_blog.php" class="inline-flex items-center gap-1 bg-dark-purple hover:bg-light-purple/80 tracking-wider transition-colors text-sm font-semibold px-4 py-2 rounded-sm">
                         <span aria-hidden="true">x</span> Close
                     </a>
@@ -161,7 +169,7 @@ require __DIR__ . '/../includes/head.php';
                     <!-- Form -->
                     <section class="flex flex-col gap-3 bg-black/50 rounded-2xl p-7 overflow-x-auto">
 
-                            <form action="<?= BASE_URL ?>admin/posts_blog_form.php" method="post" data-keep-alive="Your session has expired. Copy your post before saving." enctype="multipart/form-data" class="flex flex-col gap-3 tracking-wider">
+                            <form action="<?= htmlspecialchars($formAction) ?>" method="post" data-keep-alive="Your session has expired. Copy your post before saving." enctype="multipart/form-data" class="flex flex-col gap-3 tracking-wider">
 
                                 <?php csrf_field(); ?>
 
@@ -176,7 +184,7 @@ require __DIR__ . '/../includes/head.php';
                                         
                                     <?php endif; ?>    
                        
-                                    <button name="status" value="draft" class="ml-auto text-white hover:text-xlight-purple tracking-wider cursor-pointer">Save draft</button>  
+                                    <button name="status" value="draft" class="ml-auto text-white hover:text-xlight-purple tracking-wider cursor-pointer"><?= $isPublished ? 'Unpublish' : 'Save draft' ?></button>  
                                 </div> 
 
                                 <!-- Title Field -->
@@ -210,7 +218,7 @@ require __DIR__ . '/../includes/head.php';
                                     
 
                                     <button name="status" value="published" class="bg-light-purple hover:bg-dark-purple transition w-50 p-2 pb-3 rounded-full cursor-pointer tracking-wider">
-                                        Publish
+                                        <?= $isPublished ? 'Update' : 'Publish' ?>
                                     </button>  
                                 </div>  
                             </form>
