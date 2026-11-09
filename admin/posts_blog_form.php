@@ -4,6 +4,7 @@ $bodyClass = 'flex flex-col min-h-screen font-inter text-white';
 $activePage = 'posts_blog';
 
 require_once __DIR__ . '/../includes/auth.inc.php';
+require_once __DIR__ . '/../includes/dbh.inc.php';
 require_once __DIR__ . '/../includes/posts_model.inc.php';
 
 $title = '';
@@ -11,6 +12,25 @@ $body = '';
 $imageAlt = '';
 $imageCaption = '';
 $errors = [];
+
+$isEdit = isset($_GET["id"]);
+
+if ($isEdit) {
+
+    $id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT);
+
+    $post = $id ? get_blog_post($pdo, $id) : null;
+
+    if (!$post) {
+        http_response_code(404);
+        die("No post was found.");
+    }
+
+    $title = $post["title"];
+    $body = $post["body"];
+    $imageAlt = $post["featured_image_alt"] ?? '';
+    $imageCaption = $post["featured_image_caption"] ?? '';  
+}
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
@@ -86,7 +106,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         if (!$errors) {
-            require_once __DIR__ . '/../includes/dbh.inc.php';
             
             $fileName = null;
 
@@ -142,7 +161,7 @@ require __DIR__ . '/../includes/head.php';
                     <!-- Form -->
                     <section class="flex flex-col gap-3 bg-black/50 rounded-2xl p-7 overflow-x-auto">
 
-                            <form action="<?= BASE_URL ?>admin/posts_blog_new.php" method="post" data-keep-alive="Your session has expired. Copy your post before saving." enctype="multipart/form-data" class="flex flex-col gap-3 tracking-wider">
+                            <form action="<?= BASE_URL ?>admin/posts_blog_form.php" method="post" data-keep-alive="Your session has expired. Copy your post before saving." enctype="multipart/form-data" class="flex flex-col gap-3 tracking-wider">
 
                                 <?php csrf_field(); ?>
 

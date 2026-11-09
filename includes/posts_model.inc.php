@@ -6,13 +6,26 @@ function get_blog_posts(object $pdo, bool $trashed = false): array
 {
     $condition = $trashed ? 'IS NOT NULL' : 'IS NULL';
     
-    $query = "SELECT blog_posts.id, title, blog_posts.created_at, blog_posts.trashed_at, users.username, status FROM blog_posts LEFT JOIN  users ON users.id = blog_posts.user_id 
-    WHERE blog_posts.trashed_at $condition ORDER BY blog_posts.created_at DESC";
+    $query = "SELECT blog_posts.id, title, blog_posts.created_at, blog_posts.trashed_at, users.username, status FROM blog_posts LEFT JOIN  users ON users.id = blog_posts.user_id WHERE blog_posts.trashed_at $condition ORDER BY blog_posts.created_at DESC;";
     
     $stmt = $pdo->query($query);
 
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     return $result;
+}
+// ?array because this returns null when no post is found
+function get_blog_post(object $pdo, int $id): ?array
+{
+
+    $query = "SELECT id, title, body, status, featured_image, featured_image_alt, featured_image_caption FROM blog_posts WHERE id = :id AND trashed_at IS NULL;";
+
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $id, PDO::PARAM_INT); // Use PARAM_INT whenever a number is expected  
+    $stmt->execute();
+
+    $post = $stmt->fetch();
+    return $post ?: null;
+
 }
 
 function trash_blog_post(object $pdo, int $id): int
@@ -47,7 +60,7 @@ function delete_blog_post(object $pdo, int $id): int
 
 function get_blog_post_image(object $pdo, int $id): ?string
 {
-    $query = "SELECT featured_image FROM blog_posts WHERE id = :id AND trashed_at IS NOT NULL";
+    $query = "SELECT featured_image FROM blog_posts WHERE id = :id AND trashed_at IS NOT NULL;";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $id, PDO::PARAM_INT); // Use PARAM_INT whenever a number is expected
     $stmt->execute();

@@ -44,7 +44,7 @@ require __DIR__ . '/../includes/head.php';
                         
                     
 
-                    <a href="<?= BASE_URL ?>admin/posts_blog_new.php" class="inline-flex items-center gap-1 bg-dark-purple hover:bg-light-purple/80 transition-colors text-sm font-semibold px-4 py-2 rounded-sm tracking-wider">
+                    <a href="<?= BASE_URL ?>admin/posts_blog_form.php" class="inline-flex items-center gap-1 bg-dark-purple hover:bg-light-purple/80 transition-colors text-sm font-semibold px-4 py-2 rounded-sm tracking-wider">
                         <span aria-hidden="true">+</span> Add Post
                     </a>
                 </section>
@@ -117,7 +117,7 @@ require __DIR__ . '/../includes/head.php';
                                         <?php else: ?>
 
                                         <div class="flex gap-2 text-xs mt-1">
-                                            <a href="<?= BASE_URL ?>admin/posts_blog_edit.php?id=<?= htmlspecialchars($post['id']) ?>" class="text-light-purple hover:text-white transition-colors">Edit</a>
+                                            <a href="<?= BASE_URL ?>admin/posts_blog_form.php?id=<?= htmlspecialchars($post['id']) ?>" class="text-light-purple hover:text-white transition-colors">Edit</a>
 
                                             <span aria-hidden="true" class="text-gray-500">|</span>
 
