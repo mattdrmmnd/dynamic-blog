@@ -33,7 +33,7 @@ if (isset($_COOKIE[session_name()])) //PHPSESSID
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=call_made" />
 
     <!--Built by Vite: npm run build or npm run watch-->
-    <link rel="stylesheet" href="<?= BASE_URL ?>build/main.css">
+    <link rel="stylesheet" href="<?= BASE_URL ?>build/main.css?v=<?= filemtime(__DIR__ . '/../build/main.css') ?>">
     <script type="module" src="<?= BASE_URL ?>build/main.js"></script>
 
     <title><?= htmlspecialchars($pageTitle) ?></title>

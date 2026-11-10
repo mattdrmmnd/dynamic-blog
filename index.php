@@ -50,7 +50,7 @@ require __DIR__ . '/includes/head.php';
                   
                   <div>
                     <p class="text-lg tracking-wider"><b>Location: </b>USA</p>
-                    <p class="text-md max-w-71 tracking-wider mt-1">Contact me: <a href="mailto:matt@optmzd.net" class="text-gray-400 hover:text-white" target="_blank" rel="noopener noreferrer">matt@optmzd.net</a></p>
+                    <p class="text-md max-w-71 tracking-wider mt-1">Contact me: <a href="mailto:matt@optmzd.net" class="text-gray-400 hover:text-white" rel="noopener noreferrer">matt@optmzd.net</a></p>
                   </div>
                   
                 </div> 
