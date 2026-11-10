@@ -84,3 +84,14 @@ function create_blog_post(object $pdo, int $userId, string $title, string $body,
 
     return (int) $pdo->lastInsertId();
 }
+
+function update_blog_post(object $pdo, int $id, string $title, string $body, string $status): void
+{
+    $query = "UPDATE blog_posts SET title = :title, body = :body, status = :status WHERE id = :id AND trashed_at IS NULL";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":id", $id, PDO::PARAM_INT); // Use PARAM_INT whenever a number is expected
+    $stmt->bindParam(":title", $title);
+    $stmt->bindParam(":body", $body);
+    $stmt->bindParam(":status", $status);
+    $stmt->execute();
+}

@@ -129,8 +129,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if (!$errors) {
                 $altToSave = $hasImage ? $imageAlt : null;
                 $captionToSave = ($hasImage && $imageCaption !== '') ? $imageCaption : null;
-            
-                create_blog_post($pdo, (int) $_SESSION["user_id"], $title, $body, $status, $fileName, $altToSave, $captionToSave);
+
+                if ($isEdit) {
+                    update_blog_post($pdo, $id, $title, $body, $status);        
+                } else {
+                    create_blog_post($pdo, (int) $_SESSION["user_id"], $title, $body, $status, $fileName, $altToSave, $captionToSave);
+                }
+                
 
                 $_SESSION["posts_message"] = $status === 'draft' ? 'Draft saved.' : 'Post published.';
 
