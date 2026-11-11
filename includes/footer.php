@@ -1,5 +1,5 @@
 <?php require_once __DIR__ . '/config.php'; ?>
-    <footer class="relative z-10 w-full min-h-55 footer:h-35 p-6 bg-darkest-purple">
+    <footer class="relative z-10 w-full min-h-55 footer:h-35 p-6 bg-darkest-purple bg-linear-to-b from-darkest-purple from-97% to-xlight-purple to-97%">
 
       <div class="flex flex-col space-y-6 footer:space-y-1 footer:grid footer:grid-cols-[1fr_auto_1fr] max-w-5xl mx-auto justify-center items-center tracking-wider">
 
@@ -29,10 +29,10 @@
           </a>
         </div>
 
-        <p class="col-start-2 text-center text-orange-200 footer:absolute footer:inset-x-0 footer:bottom-8">Matt The Dev | <?= date('Y') ?></p>
+        <p class="col-start-2 text-center text-xlight-purple footer:absolute footer:inset-x-0 footer:bottom-8">Matt The Dev | <?= date('Y') ?></p>
 
-        <a href="https://optmzd.net" target="_blank" rel="noopener noreferrer" class="col-start-3 justify-self-end transition-colors hover:text-orange-200 text-xs mt-4 footer:mt-0">Powered by OPTMZD</a>
-        <p class="col-start-3 text-white text-xs justify-self-end">v0.9.0</p>
+        <a href="https://optmzd.net" target="_blank" rel="noopener noreferrer" class="col-start-3 justify-self-end transition-colors hover:text-orange-200 text-xs mt-1 footer:mt-0">Powered by OPTMZD</a>
+        <p class="col-start-3 text-white text-xs justify-self-end pb-2 footer:pb-0">v0.9.0</p>
       </div>
 
     </footer>
