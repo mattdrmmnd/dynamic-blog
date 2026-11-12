@@ -69,7 +69,7 @@ function get_blog_post_image(object $pdo, int $id): ?string
     return $image ?: null;
 }
 
-function create_blog_post(object $pdo, int $userId, string $title, string $body, string $status, ?string $filename, ?string $imageAlt, ?string $imageCaption): int
+function create_blog_post(object $pdo, int $userId, string $title, string $body, string $status, ?string $featured_image, ?string $featured_image_alt, ?string $featured_image_caption): int
 {
     $query = "INSERT INTO blog_posts (user_id, title, body, status, featured_image, featured_image_alt, featured_image_caption) VALUES (:user_id, :title, :body, :status, :featured_image, :featured_image_alt, :featured_image_caption);";
     $stmt = $pdo->prepare($query);
@@ -77,21 +77,23 @@ function create_blog_post(object $pdo, int $userId, string $title, string $body,
     $stmt->bindParam(":title", $title);
     $stmt->bindParam(":body", $body);
     $stmt->bindParam(":status", $status);
-    $stmt->bindParam(":featured_image", $filename);
-    $stmt->bindParam(":featured_image_alt", $imageAlt);
-    $stmt->bindParam(":featured_image_caption", $imageCaption);
+    $stmt->bindParam(":featured_image", $featured_image);
+    $stmt->bindParam(":featured_image_alt", $featured_image_alt);
+    $stmt->bindParam(":featured_image_caption", $featured_image_caption);
     $stmt->execute();
 
     return (int) $pdo->lastInsertId();
 }
 
-function update_blog_post(object $pdo, int $id, string $title, string $body, string $status): void
+function update_blog_post(object $pdo, int $id, string $title, string $body, string $status, ?string $featured_image_alt, ?string $featured_image_caption): void
 {
-    $query = "UPDATE blog_posts SET title = :title, body = :body, status = :status WHERE id = :id AND trashed_at IS NULL";
+    $query = "UPDATE blog_posts SET title = :title, body = :body, status = :status, featured_image_alt = :featured_image_alt, featured_image_caption = :featured_image_caption  WHERE id = :id AND trashed_at IS NULL";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":id", $id, PDO::PARAM_INT); // Use PARAM_INT whenever a number is expected
     $stmt->bindParam(":title", $title);
     $stmt->bindParam(":body", $body);
     $stmt->bindParam(":status", $status);
+    $stmt->bindParam(":featured_image_alt", $featured_image_alt);
+    $stmt->bindParam(":featured_image_caption", $featured_image_caption);
     $stmt->execute();
 }

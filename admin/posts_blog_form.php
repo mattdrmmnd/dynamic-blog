@@ -14,6 +14,8 @@ $imageCaption = '';
 $errors = [];
 $formAction = BASE_URL . 'admin/posts_blog_form.php';
 $isPublished = false;
+$post = null;
+$currentImage = null;
 
 $isEdit = isset($_GET["id"]);
 
@@ -27,6 +29,8 @@ if ($isEdit) {
         http_response_code(404);
         die("No post was found.");
     }
+
+    $currentImage = $post["featured_image"];
 
     $isPublished = $post["status"] === 'published';
     
@@ -88,6 +92,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $hasImage = $imageError === UPLOAD_ERR_OK;
         $mimeType = '';
 
+        $willHaveImage = $hasImage || $currentImage;
+
         if ($hasImage) {
             $mimeType = new finfo(FILEINFO_MIME_TYPE)->file($image["tmp_name"]);
             
@@ -99,10 +105,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($image["size"] > 2 * 1024 * 1024) {
                 $errors["img_too_large"] = "The image is too large (max 2 MB).";   
             }
-            
-            if ($imageAlt === '') {
-                $errors["no_image_alt"] = "Add alt text for the image.";
-            }
+        }
+
+        if ($imageAlt === '' && $willHaveImage) {
+            $errors["no_image_alt"] = "Add alt text for the image.";
         }
 
         if (mb_strlen($imageAlt) > 255) {
@@ -127,11 +133,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }    
 
             if (!$errors) {
-                $altToSave = $hasImage ? $imageAlt : null;
-                $captionToSave = ($hasImage && $imageCaption !== '') ? $imageCaption : null;
+                $altToSave = $willHaveImage ? $imageAlt : null;
+                $captionToSave = ($willHaveImage && $imageCaption !== '') ? $imageCaption : null;
 
                 if ($isEdit) {
-                    update_blog_post($pdo, $id, $title, $body, $status);        
+                    update_blog_post($pdo, $id, $title, $body, $status, $altToSave, $captionToSave);        
                 } else {
                     create_blog_post($pdo, (int) $_SESSION["user_id"], $title, $body, $status, $fileName, $altToSave, $captionToSave);
                 }
@@ -195,6 +201,14 @@ require __DIR__ . '/../includes/head.php';
                                 <!-- Title Field -->
                                 <label for="title" class="font-medium text-gray-300">Title:</label>
                                 <input type="text" id="title" name="title" placeholder="Enter article title..." value="<?= htmlspecialchars($title) ?>" class="w-full max-w-120 border border-amber-50 bg-white text-gray-500 p-2 rounded-sm focus:outline-none focus:ring-1 focus:ring-xlight-purple">  
+                                
+                                <!-- Current Image (edit only) -->
+                                <?php if ($currentImage): ?>
+
+                                    <p class="font-medium text-gray-300 mt-2">Current image:</p>
+                                    <img src="<?= BASE_URL ?>public/uploads/blog/<?= htmlspecialchars($currentImage) ?>" alt="<?= htmlspecialchars($post["featured_image_alt"] ?? '') ?>" class="max-h-40 w-auto rounded-sm self-start">
+
+                                <?php endif; ?>
 
                                 <!-- Image Upload Field -->
                                 <label for="image-upload" class="font-medium text-gray-300 mt-2">Choose a featured image:</label>
