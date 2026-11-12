@@ -1,7 +1,7 @@
 <?php
 $pageTitle = 'Matt Drummond - Full-Stack Developer | Matt The Dev';
 
-$pageDescription = 'Full-stack software developer Matt Drummond writes about building secure three-tier web apps with PHP, MySQL and TypeScript.';
+$pageDescription = 'Full-stack web developer Matt Drummond writes about building secure three-tier web apps with PHP, MySQL and TypeScript.';
 
 $bodyClass = 'home flex flex-col min-h-screen bg-cover bg-center bg-fixed font-inter text-white';
 
@@ -21,8 +21,9 @@ require __DIR__ . '/includes/head.php';
       <div class="w-full max-w-[725px] min-h-full bg-black/50 rounded-xl p-12 text-center">
 
         <h1 class="font-semibold text-3xl sm:text-4xl tracking-wider">Matt Drummond</h1>
-        <p class="mt-5 font-extralight text-lg sm:text-2xl tracking-wider"><span class="text-xlight-purple">Full-Stack</span> Software Developer</p>
-        <p class="mt-3 font-extralight text-lg sm:text-xl tracking-wider">Web Applications <span class="text-light-purple" aria-hidden="true">&&</span> <span class="sr-only">and</span> Modern Web Technologies</p>
+        <p class="mt-5 font-extralight text-lg sm:text-2xl tracking-wider"><span class="text-xlight-purple">Full-Stack</span> Web Developer</p>
+        <!--<p class="mt-3 font-extralight text-lg sm:text-xl tracking-wider">Secure Back Ends <span class="text-light-purple" aria-hidden="true">&&</span> <span class="sr-only">and</span> User-Focused Front Ends</p>-->
+        <p class="mt-3 font-extralight text-lg sm:text-xl tracking-wider">Building Secure, <span class="text-xlight-purple">Database-Driven</span> Web Applications</p>
 
       </div>
 
@@ -66,7 +67,7 @@ require __DIR__ . '/includes/head.php';
                   Experience:
                   </h2>
 
-                  <p class="text-md sm:text-lg pb-3 max-w-lg tracking-wider">Software Developer @ <a href="https://optmzd.net" class="text-xlight-purple hover:text-white" target="_blank" rel="noopener noreferrer">OPTMZD</a></p>
+                  <p class="text-md sm:text-lg pb-3 max-w-lg tracking-wider">Full-Stack Web Developer @ <a href="https://optmzd.net" class="text-xlight-purple hover:text-white" target="_blank" rel="noopener noreferrer">OPTMZD</a></p>
 
                   <p class="text-md sm:text-lg max-w-lg tracking-wider pb-8">Front-End Development @ <a href="https://sieb.com/" class="text-xlight-purple hover:text-white" target="_blank" rel="noopener noreferrer">SIEB</a></p>
                 </div>
@@ -90,7 +91,6 @@ require __DIR__ . '/includes/head.php';
                           <li>CSS</li>
                           <li>HTML</li>
                           <li>Javascript</li>
-                          <li>React.js</li>
                           <li>Tailwind</li>
                           <li>TypeScript</li>
                       </ul>
