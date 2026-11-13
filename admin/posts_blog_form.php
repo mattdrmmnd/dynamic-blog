@@ -16,6 +16,7 @@ $formAction = BASE_URL . 'admin/posts_blog_form.php';
 $isPublished = false;
 $post = null;
 $currentImage = null;
+$uploadDir = __DIR__ . '/../public/uploads/blog/';
 
 $isEdit = isset($_GET["id"]);
 
@@ -125,7 +126,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             if ($hasImage) {
                 $fileName = bin2hex(random_bytes(16)) . '.' . $imageTypes[$mimeType];
-                $destination = __DIR__ . '/../public/uploads/blog/' . $fileName;    
+                $destination = $uploadDir . $fileName;    
                 
                 if (!move_uploaded_file($image["tmp_name"], $destination)) {
                     $errors["upload_failed"] = "The image couldn't be saved.";
@@ -134,15 +135,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             if (!$errors) {
                 $altToSave = $willHaveImage ? $imageAlt : null;
+                $imageToSave = $hasImage ? $fileName : $currentImage;
                 $captionToSave = ($willHaveImage && $imageCaption !== '') ? $imageCaption : null;
 
                 if ($isEdit) {
-                    update_blog_post($pdo, $id, $title, $body, $status, $altToSave, $captionToSave);        
+                    update_blog_post($pdo, $id, $title, $body, $status, $imageToSave, $altToSave, $captionToSave);
+                    
+                    if ($hasImage && $currentImage) {
+                        $imagePath = $uploadDir . $currentImage;
+                        if (is_file($imagePath)) {
+                            unlink($imagePath);
+                        }       
+                    }
                 } else {
                     create_blog_post($pdo, (int) $_SESSION["user_id"], $title, $body, $status, $fileName, $altToSave, $captionToSave);
                 }
                 
-
                 $_SESSION["posts_message"] = $status === 'draft' ? 'Draft saved.' : 'Post published.';
 
                 header('Location: ' . BASE_URL . 'admin/posts_blog.php');
