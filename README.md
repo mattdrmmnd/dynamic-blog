@@ -1,8 +1,14 @@
-# Dynamic Blogging Application
+# Blog CMS Application
 
 A custom blogging platform with a public frontend and an admin CMS for managing posts. I'm building it to learn how the whole web stack fits together.
 
 Built with help from Claude Code, which I used for explanations, planning and code review. I wrote the PHP myself.
+
+&nbsp;
+
+<img src="public/images/mtd_social_preview.jpg" alt="Home page preview" width="700">
+
+&nbsp;
 
 **Stack:** Vite, Tailwind CSS v4, TypeScript, Figma. Backend: PHP (PDO) and MySQL (in progress).
 
@@ -19,13 +25,18 @@ Built with help from Claude Code, which I used for explanations, planning and co
   - [x] Database table
   - [x] Admin list with trash, restore and permanent delete
   - [x] New post saving (draft or publish), with a session keep-alive while typing
-  - [x] Featured image upload (type and size checks, random file names, removed when the post is deleted)
-  - [ ] Edit form
+  - [x] Featured image upload (type and size checks, random file names, the old file deleted when it's replaced or the post is deleted)
+  - [ ] Edit form (in progress)
+    - [x] Load a post into the form, update its text and status
+    - [x] Keep or replace the featured image
+    - [ ] Remove the featured image
+    - [ ] Save draft returns to the edit form
   - [ ] Public post pages
 
 ### Planned
-- Reading posts, featured posts and user management
-- Access requests and site settings
+- Featured posts
+- Deploy to production (v0.1.0)
+- After launch: reading posts, user management, access requests and site settings, released as they're finished on the way to v1.0.0
 - Categories and comments tables
 - JSON endpoints for features that don't reload the page (e.g. draft autosave)
 
@@ -69,7 +80,7 @@ width="700">
 
 &nbsp;
 
-<img src="public/images/admin_posts_blog_new.jpg" alt="Admin new blog post form" width="700">
+<img src="public/images/admin_posts_blog_new.jpg" alt="Admin new/edit blog post form" width="700">
 
 &nbsp;
 
