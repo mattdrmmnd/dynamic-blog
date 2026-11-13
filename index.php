@@ -60,7 +60,7 @@ require __DIR__ . '/includes/head.php';
                 I'm an alumnus of Full Sail University, where I completed the <a href="https://www.fullsail.edu/degrees/digital-arts-design-bachelor-degree-program" class="text-xlight-purple hover:text-white" target="_blank" rel="noopener noreferrer">Digital Arts & Design</a> program and achieved a Bachelor of Science degree. My interests include developing secure three-tier applications. <!--My workflow includes the use of AI tools like Claude to accelerate learning & debugging.-->
                 </p>
                 
-                <p class="text-lg pb-8 max-w-lg tracking-wider">Visit <a href="https://github.com/mattdrmmnd" class="text-xlight-purple hover:text-white" target="_blank" rel="noopener noreferrer">my GitHub</a> profile to see the latest.</p>
+                <p class="text-lg pb-8 max-w-lg tracking-wider">Visit <a href="https://x.com/itsmattdev" class="text-xlight-purple hover:text-white" target="_blank" rel="noopener noreferrer">my X</a> profile to see the latest.</p>
 
                 <div class="w-full max-w-lg min-h-full">
                   <h2 class="font-bold text-xl sm:text-xl tracking-wider pb-3">
